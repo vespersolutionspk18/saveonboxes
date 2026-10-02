@@ -17,7 +17,7 @@ function BrandHero() {
       <span className="hero-gold-disc" />
       <span className="hero-spark hero-spark-one">✦</span>
       <span className="hero-spark hero-spark-two">✦</span>
-      <img src="/assets/herocutout.png" alt="" fetchPriority="high" />
+      <img src="/assets/herocutout.webp" alt="" fetchPriority="high" />
     </div>
   </section>;
 }

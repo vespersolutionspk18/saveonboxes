@@ -64,7 +64,7 @@ function ContactForm() {
 
 export function ContactPage() {
   return <main className="page-container">
-    <PageIntro eyebrow="CONTACT & SUPPORT" title="A little help for your big move." description="From picking the right box to getting an order update, start here. Tell us what you’re packing and we’ll help you find your next step." image="/boxes/dishpack1.png" breadcrumb="Contact" />
+    <PageIntro eyebrow="CONTACT & SUPPORT" title="A little help for your big move." description="From picking the right box to getting an order update, start here. Tell us what you’re packing and we’ll help you find your next step." image="/boxes/dishpack1.webp" breadcrumb="Contact" />
     <div className={styles.container}>
       <div className={styles.contactLayout}><Suspense fallback={<section className={styles.formPanel}><h2>How can we help?</h2><p>Loading your enquiry form…</p></section>}><ContactForm /></Suspense><aside className={styles.helpAside}>
         <div className={styles.asideIntro}><span className={styles.eyebrow}>FIND YOUR ANSWER</span><h2>A good place to start.</h2><p>Your order confirmation and the product details contain the information you’ll use most often.</p></div><SupportLinks />
@@ -131,7 +131,7 @@ function OrderResult({ order }) {
 
 export function TrackingPage() {
   return <main className="page-container">
-    <PageIntro eyebrow="ORDER TRACKING" title="Follow your boxes to your door." description="Look up an order, check its latest recorded update and find the next step for your delivery." image="/boxes/medium.png" breadcrumb="Order Tracking" />
+    <PageIntro eyebrow="ORDER TRACKING" title="Follow your boxes to your door." description="Look up an order, check its latest recorded update and find the next step for your delivery." image="/boxes/medium.webp" breadcrumb="Order Tracking" />
     <div className={styles.container}><div className={styles.trackingLayout}><Suspense fallback={<section className={styles.formPanel}><h2>Find your order.</h2><p>Loading your order lookup…</p></section>}><TrackingForm /></Suspense><aside className={styles.helpAside}>
       <div className={styles.asideIntro}><span className={styles.eyebrow}>HAVE THESE HANDY</span><h2>Two details. One order.</h2><p>Your order reference identifies the purchase. Your matching email address helps keep its details private.</p></div>
       <div className={styles.checklist}><h3>Before you look it up</h3><ul><li>Check the reference in your order confirmation.</li><li>Use the email address entered for the order.</li><li>Copy the full reference, including any letters.</li><li>Check your dispatch email for a carrier link.</li></ul></div><SupportLinks />

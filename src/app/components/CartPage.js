@@ -35,7 +35,7 @@ export default function CartPage() {
       <p>Payment and delivery are still to be confirmed. This request does not take payment or reserve stock.</p>
       <div className={styles.actions}><Link className="orange-button" href={`/tracking?reference=${encodeURIComponent(receipt.reference)}`}>View request status</Link><Link className="text-link" href="/boxes">Keep shopping</Link></div>
     </section> : !storageReady ? <p className={styles.loading}>Loading your cart…</p> : !cart.length ? <section className={styles.empty}>
-      <img src="/boxes/small.png" alt="Save On Boxes moving carton" /><h2>Your next move starts with a box.</h2><p>Your cart is empty. Choose individual boxes, start with a moving kit or pick up the packing essentials.</p><div className={styles.actions}><Link className="orange-button" href="/boxes">Shop boxes</Link><Link className="text-link" href="/kits">Choose a moving kit</Link></div>
+      <img src="/boxes/small.webp" alt="Save On Boxes moving carton" /><h2>Your next move starts with a box.</h2><p>Your cart is empty. Choose individual boxes, start with a moving kit or pick up the packing essentials.</p><div className={styles.actions}><Link className="orange-button" href="/boxes">Shop boxes</Link><Link className="text-link" href="/kits">Choose a moving kit</Link></div>
     </section> : <div className={styles.layout}>
       <div>
         <section className={styles.items} aria-labelledby="cart-items-heading"><div className={styles.sectionTop}><h2 id="cart-items-heading">Your items <span>({cart.reduce((sum, item) => sum + item.quantity, 0)})</span></h2><Link className="text-link" href="/boxes">Continue shopping</Link></div>

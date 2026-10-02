@@ -19,7 +19,7 @@ const pages = {
     eyebrow: "CUSTOMER CARE",
     title: "Returns & refunds",
     description: "Something isn’t right with your order? Here’s how to get help with a damaged carton, a missing item or a return request.",
-    image: "/boxes/" + encodeURIComponent("mighty box with handles.png"),
+    image: "/boxes/" + encodeURIComponent("mighty box with handles.webp"),
     cards: [
       ["Order issue", "Tell us what arrived and what you expected."],
       ["Keep the details", "Your order reference and photos help us resolve it."],
@@ -44,7 +44,7 @@ const pages = {
     eyebrow: "DELIVERY & DISPATCH",
     title: "From our boxes to your door",
     description: "How delivery is arranged, what to include with your order and what to do when a parcel needs attention.",
-    image: "/boxes/" + encodeURIComponent("large.png"),
+    image: "/boxes/" + encodeURIComponent("large.webp"),
     cards: [
       ["Address first", "A complete address helps us confirm delivery."],
       ["Delivery confirmed", "Charges and timing are agreed with your order."],
@@ -69,7 +69,7 @@ const pages = {
     eyebrow: "SHOPPING WITH SAVE ON BOXES",
     title: "Terms & conditions",
     description: "Clear information about using our store, requesting an order and choosing the products for your move.",
-    image: "/boxes/" + encodeURIComponent("medium.png"),
+    image: "/boxes/" + encodeURIComponent("medium.webp"),
     cards: [
       ["Products & prices", "Review the item, size and quantity before ordering."],
       ["Order confirmation", "Availability and delivery are confirmed by the store."],
@@ -92,7 +92,7 @@ const pages = {
     eyebrow: "YOUR INFORMATION",
     title: "Privacy policy",
     description: "What we collect when you shop or contact us, how it is used and how to manage your saved information.",
-    image: "/boxes/" + encodeURIComponent("file storage box with lid.png"),
+    image: "/boxes/" + encodeURIComponent("file storage box with lid.webp"),
     cards: [
       ["Only what you provide", "Contact and order details support your request."],
       ["Your browser, your cart", "Shopping selections are saved on your device."],
@@ -113,7 +113,7 @@ const pages = {
     eyebrow: "YOUR BROWSER SETTINGS",
     title: "Cookies & browser storage",
     description: "Understand how your shopping selections are saved and clear them whenever you choose.",
-    image: "/boxes/" + encodeURIComponent("small.png"),
+    image: "/boxes/" + encodeURIComponent("small.webp"),
     cards: [
       ["Saved cart", "Products and quantities stay in this browser."],
       ["Saved products", "Your wishlist is stored on this device."],
