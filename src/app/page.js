@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { boxProducts, getRoomProducts, kits, rooms, supplies } from "./catalog";
+import { getHomeBoxSections, kits, rooms, supplies } from "./catalog";
 import { Icon, ProductSection } from "./components/Storefront";
 
 function BrandHero() {
@@ -41,7 +41,8 @@ function RoomTiles({ selectedRoom, onSelect }) {
 export default function HomePage() {
   const [activeRoom, setActiveRoom] = useState(null);
   const selectedRoom = rooms.find((room) => room.id === activeRoom);
-  const visibleProducts = activeRoom ? getRoomProducts(activeRoom) : boxProducts;
+  const visibleSections = getHomeBoxSections(activeRoom);
+  const visibleProductCount = visibleSections.reduce((count, section) => count + section.products.length, 0);
   const chooseRoom = (roomId) => {
     setActiveRoom(roomId);
     requestAnimationFrame(() => document.getElementById("room-products")?.scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -51,10 +52,10 @@ export default function HomePage() {
     <RoomTiles selectedRoom={activeRoom} onSelect={chooseRoom} />
     <section className="catalogue room-results" id="room-products" aria-label="Boxes for the selected room" data-room={activeRoom || "all"}>
       <div className="room-results-toolbar">
-        <p role="status" aria-live="polite">{selectedRoom ? selectedRoom.title : "All moving boxes"} <span>· {visibleProducts.length} products</span></p>
+        <p role="status" aria-live="polite">{selectedRoom ? selectedRoom.title : "All moving boxes"} <span>· {visibleProductCount} products</span></p>
         {activeRoom && <button onClick={() => setActiveRoom(null)}>View all boxes <span aria-hidden="true">→</span></button>}
       </div>
-      <ProductSection key={activeRoom || "all"} id="room-product-row" title={selectedRoom ? `Boxes for ${selectedRoom.tile}` : "Moving Boxes"} products={visibleProducts} carousel />
+      {visibleSections.map((section) => <ProductSection key={`${activeRoom || "all"}-${section.id}`} id={`room-product-${section.id}`} title={section.title} products={section.products} carousel />)}
     </section>
     <section className="kit-section" id="kits">
       <div className="catalogue-intro kit-intro"><div><span className="eyebrow-label">BOX-ONLY BUNDLES</span><h2>Moving kits, made simple</h2></div><p>Standard box quantities for each home size. Add specialty boxes only for the things you own.</p></div>

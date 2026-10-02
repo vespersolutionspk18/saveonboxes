@@ -76,6 +76,29 @@ export function getRoomProducts(roomId) {
   return boxProducts.filter((product) => ids.has(product.baseId || product.id));
 }
 
+const homeBoxCategories = [
+  { id: "small", title: "Small Boxes", productIds: ["small", "snap-open-small"] },
+  { id: "medium", title: "Medium Boxes", productIds: ["medium"] },
+  { id: "large", title: "Large Boxes", productIds: ["large"] },
+  { id: "xlarge", title: "X-Large Boxes", productIds: ["xlarge"] },
+  { id: "wardrobe", title: "Wardrobe & Clothing Boxes", type: "wardrobe" },
+  { id: "electronics", title: "TV & Electronics Boxes", type: "electronics" },
+  { id: "dish", title: "Dish & Glass Boxes", type: "dish" },
+  { id: "mirror", title: "Mirror & Picture Boxes", type: "mirror" },
+  { id: "specialty", title: "Specialty Moving Boxes", type: "specialty" },
+  { id: "storage", title: "File & Storage Boxes", type: "storage" },
+];
+
+export function getHomeBoxSections(roomId) {
+  const roomProducts = getRoomProducts(roomId);
+  return homeBoxCategories.map((category) => ({
+    ...category,
+    products: roomProducts.filter((product) => category.productIds
+      ? category.productIds.includes(product.baseId || product.id)
+      : product.type === category.type),
+  })).filter((category) => category.products.length > 0);
+}
+
 export const supplies = [
   { id: "bubble-wrap", name: "Bubble Wrap (5 metres)", image: "/images/bubble-wrap-5m-500x625.jpg.webp", price: 12, type: "supply", purpose: "Cushion fragile belongings", detail: "5 metre roll" },
   { id: "packing-tape", name: "Packing Tape", image: "/images/sellotape-1-500x625.jpg.webp", price: 5, type: "supply", purpose: "Seal boxes securely", detail: "Heavy-duty clear tape" },
