@@ -5,15 +5,35 @@
   "scripts": {
     "dev": "next dev --hostname 0.0.0.0",
     "build": "next build",
-    "start": "next start --hostname 0.0.0.0"
+    "start": "next start --hostname 0.0.0.0",
+    "test:auth-navigation": "node --test tests/auth-navigation.test.mjs",
+    "test:app-origin": "node --test tests/app-origin.test.js",
+    "test:http-origin": "node --test tests/http-origin.test.js",
+    "test:db-dns": "node --test tests/db-dns.test.js",
+    "db:migrate": "node --env-file-if-exists=.env.local scripts/migrate.js",
+    "admin:bootstrap": "node --env-file-if-exists=.env.local scripts/bootstrap-super-admin.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "jszip": "^3.10.2",
+    "lucide-react": "^1.52.0",
     "next": "^16.3.8",
+    "nodemailer": "^10.0.14",
+    "pdf-lib": "^1.17.1",
+    "pg": "^8.23.1",
+    "qr-scanner": "^1.4.2",
+    "qrcode": "^1.5.4",
+    "radix-ui": "^1.6.7",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "zod": "^4.6.5"
   }
 }

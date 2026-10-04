@@ -120,7 +120,7 @@ function OrderResult({ order }) {
     <dl className={styles.orderDetails}>
       {order.createdAt && <div><dt>Order date</dt><dd>{new Date(order.createdAt).toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" })}</dd></div>}
       {order.updatedAt && <div><dt>Last updated</dt><dd>{new Date(order.updatedAt).toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" })}</dd></div>}
-      {order.subtotal != null && <div><dt>Products subtotal</dt><dd>${Number(order.subtotal).toFixed(2)}</dd></div>}
+      {order.subtotal != null && <div><dt>Products subtotal</dt><dd>USD ${Number(order.subtotal).toFixed(2)}</dd></div>}
       {order.carrier && <div><dt>Carrier</dt><dd>{order.carrier}</dd></div>}
       {order.trackingNumber && <div><dt>Tracking number</dt><dd>{order.trackingNumber}</dd></div>}
     </dl>{order.update && <p>{order.update}</p>}

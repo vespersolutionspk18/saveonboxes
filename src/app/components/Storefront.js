@@ -7,10 +7,14 @@ import { boxProducts, kitAddonGroups, kits, productsById, supplies } from "../ca
 
 const StoreContext = createContext(null);
 export function useStore() { return useContext(StoreContext); }
+const storeSearchIndex = [...kits, ...boxProducts, ...supplies].map((product) => ({
+  product,
+  text: product.searchText || `${product.name} ${product.purpose || ""} ${product.detail || ""} ${product.description || ""} ${product.sku || ""} ${product.vendorCategory || ""} ${product.supplier || ""}`.toLowerCase(),
+}));
 
 export const productImage = (product) => product.image.startsWith("/") ? product.image : `/boxes/${encodeURIComponent(product.image)}`;
 export const productTitle = (product) => product.packQty ? `${product.packQty} × ${product.name}` : product.name;
-export const formatPrice = (price) => price == null ? "Price coming soon" : `$${price.toFixed(2)}`;
+export const formatPrice = (price) => price == null ? "Price coming soon" : `USD $${price.toFixed(2)}`;
 
 export function Icon({ name, size = 20 }) {
   const props = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true };
@@ -134,8 +138,7 @@ export default function Storefront({ children }) {
   const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const cartHasPendingPrice = cart.some((item) => item.price == null);
   const cartTotal = cart.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
-  const allProducts = [...kits, ...boxProducts, ...supplies];
-  const visibleSearch = allProducts.filter((product) => productTitle(product).toLowerCase().includes(searchTerm.toLowerCase())).slice(0, 7);
+  const visibleSearch = searchTerm ? storeSearchIndex.filter(({ text }) => text.includes(searchTerm.toLowerCase())).slice(0, 7).map(({ product }) => product) : [];
   const selectedKitAddons = quickProduct?.boxCount ? boxProducts.filter((product) => kitAddons[product.id] > 0) : [];
   const includedWardrobeCount = quickProduct?.contents?.find(([name]) => name === 'Wardrobe 20"')?.[1] || 0;
   const wardrobeUpgradeCost = wardrobe24Upgrade ? includedWardrobeCount * (productsById["wardrobe-24"].price - productsById["wardrobe-20"].price) : 0;
@@ -206,7 +209,7 @@ export default function Storefront({ children }) {
         <nav className="desktop-nav" aria-label="Main navigation">{nav}</nav>
         <div className="header-tools">
           <button className="search-trigger" aria-label="Search store" onClick={() => setSearchOpen(true)}><Icon name="search" size={19} /></button>
-          <a className="login-link" href="/account"><Icon name="user" size={17} /><span>Login</span></a>
+          <a className="login-link" href="/login"><Icon name="user" size={17} /><span>Login</span></a>
           <button className="cart-trigger" onClick={() => setCartOpen(true)} aria-label={`Shopping cart, ${cartCount} items`}><Icon name="cart" size={22} /><span className="cart-count">{cartCount}</span></button>
           <button className="mobile-menu-trigger" onClick={() => setMenuOpen((open) => !open)} aria-label={menuOpen ? "Close menu" : "Open menu"}><Icon name={menuOpen ? "close" : "menu"} size={27} /></button>
         </div>
@@ -253,6 +256,10 @@ export default function Storefront({ children }) {
         </> : <>
           {quickProduct.purpose && <p className="quick-purpose">{quickProduct.purpose}</p>}
           {quickProduct.detail && <p className="quick-product-detail">{quickProduct.detail}</p>}
+          {quickProduct.description && <p className="quick-product-detail">{quickProduct.description}</p>}
+          {quickProduct.supplier && <p className="quick-product-detail">Supplier: {quickProduct.supplier}{quickProduct.sku ? ` · SKU: ${quickProduct.sku}` : ""}{quickProduct.availability ? ` · Supplier listing: ${quickProduct.availability}` : ""}</p>}
+          {quickProduct.vendorCategory && <p className="quick-product-detail">Supplier category: {quickProduct.vendorCategory}{quickProduct.vendorCategories?.length > 1 ? ` · Also filed under: ${quickProduct.vendorCategories.slice(1).join(", ")}` : ""}</p>}
+          {quickProduct.estimatedPrice && <p className="quick-product-detail">Estimated USD price. Confirm the final price when placing an order.</p>}
           {quickProduct.packQty && <p className="quick-product-detail">Pack of {quickProduct.packQty}</p>}
           <button className="checkout-button" onClick={() => { addToCart(quickProduct); setQuickProduct(null); }}>Add to cart</button>
         </>}

@@ -1,0 +1,46 @@
+.page { gap: 13px; }
+.pageHeading > :global([data-slot="badge"]) { display: inline-flex; align-items: center; gap: 5px; background: #eef2f0; color: #6f8077; font-size: 8px; }
+.auditCard { overflow: hidden; border-radius: 10px; box-shadow: 0 1px 3px #15251d08, 0 5px 16px #15251d05; }
+.auditHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 15px 10px; }
+.auditTitle { display: flex; align-items: center; gap: 8px; }
+.auditTitle > span { display: grid; width: 29px; height: 29px; place-items: center; border-radius: 9px; background: #eef1f5; color: #6c7a91; }
+.auditTitle h2 { margin: 0; color: #334038; font-size: 11px; font-weight: 750; letter-spacing: -.035em; }
+.auditTitle p { margin: 3px 0 0; color: #98a19c; font-size: 8px; }
+.totalPill { padding: 6px 8px; border-radius: 6px; background: #f1f4f2; color: #78877e; font-size: 8px; font-weight: 700; }
+.filters { display: flex; gap: 8px; padding: 0 14px 10px; }
+.search { display: flex; height: 31px; min-width: 180px; flex: 1; align-items: center; gap: 6px; padding: 0 9px; border-radius: 7px; background: #f6f8f6; color: #9ba49f; }
+.search :global(input) { height: 27px; padding: 0; border: 0; outline: none; background: transparent; font-size: 9px; box-shadow: none; }
+.search :global(input:focus-visible) { outline: none; box-shadow: none; }
+.kindSelect { width: 142px; height: 31px; background: #f5f7f5; color: #758279; font-size: 9px; box-shadow: none; }
+.tableWrap { min-width: 0; overflow: auto; padding: 0 8px; }
+.table { min-width: 760px; color: #748078; font-size: 8px; }
+.table :global(th) { height: 29px; padding: 0 7px; color: #a0a9a4; font-size: 7px; font-weight: 800; text-transform: uppercase; letter-spacing: -.015em; }
+.table :global(th:last-child) { display: flex; align-items: center; gap: 4px; }
+.table :global(td) { max-width: 275px; height: 41px; padding: 5px 7px; white-space: nowrap; }
+.table :global(tr) { border: 0; }
+.table :global(tr:hover) { background: #f8f9f8; }
+.table :global([data-slot="badge"]) { padding: 3px 6px; font-size: 7px; }
+.actionName { display: block; color: #526158; font-size: 8px; font-weight: 700; text-transform: capitalize; }
+.eventId { display: block; margin-top: 3px; color: #a4aca8; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 6px; }
+.reason { max-width: 290px; overflow: hidden; color: #7e8983; text-overflow: ellipsis; }
+.reason span { color: #a2aaa6; }
+.recordLink { color: #5c7668; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-weight: 700; }
+.recordLink:hover { color: #1c7b54; }
+.timeCell { color: #929c96; font-size: 7px; }
+.loading { display: grid; height: 30px; place-items: center; color: #9da7a1; font-size: 8px; }
+.empty { display: grid; min-height: 150px; place-content: center; justify-items: center; gap: 5px; color: #a1aaa5; }
+.empty strong { color: #6f7e75; font-size: 10px; }
+.empty span { font-size: 8px; }
+.pagination { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px 13px; color: #9ca6a0; font-size: 8px; }
+.pagination > div { display: flex; gap: 5px; }
+.pagination :global([data-slot="button"]) { height: 26px; padding-inline: 7px; color: #6d7e74; font-size: 8px; }
+.retention { display: flex; align-items: center; gap: 6px; color: #98a29c; font-size: 8px; }
+.retention svg { flex: 0 0 auto; color: #819a8b; }
+@media (max-width: 760px) {
+  .auditHead { padding: 11px 12px 9px; }
+  .filters { padding-inline: 10px; }
+  .search { min-width: 0; }
+  .kindSelect { width: 128px; }
+  .pagination { align-items: flex-start; flex-direction: column; gap: 7px; padding-inline: 10px; }
+  .pagination > div { align-self: flex-end; }
+}

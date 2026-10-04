@@ -4,3 +4,5 @@ out/
 .vercel/
 *.log
 .data/
+.env.local
+.env.*.local

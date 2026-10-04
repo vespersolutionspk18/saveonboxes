@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { boxProducts, getRoomProducts, kitAddonGroups, kits, productsById, rooms, supplies, types } from "../catalog";
 import { ProductCard, formatPrice, productImage, useStore } from "./Storefront";
 import { Accordion, HelpCTA, PageIntro } from "./PageContent";
+import { supplierSupplyCategories } from "../supplier-products";
 import styles from "./ShopPages.module.css";
 
 const roomAdvice = {
@@ -63,7 +64,7 @@ export function BoxShopPage() {
     const result = roomProducts.filter((product) =>
       (type === "all" || product.type === type) &&
       (packSize === "all" || (packSize === "single" ? !product.packQty : Boolean(product.packQty))) &&
-      (!search || `${product.name} ${product.purpose} ${product.detail} ${product.packQty || ""}`.toLowerCase().includes(search))
+      (!search || (product.searchText || `${product.name} ${product.purpose} ${product.detail} ${product.description || ""} ${product.sku || ""} ${product.vendorCategory || ""} ${product.supplier || ""} ${product.packQty || ""}`).toLowerCase().includes(search))
     );
     if (sort === "price-low") result.sort((a, b) => a.price - b.price);
     if (sort === "price-high") result.sort((a, b) => b.price - a.price);
@@ -163,9 +164,13 @@ export function KitsShopPage() {
 
 const supplyGroups = [
   { id: "all", label: "All supplies", productIds: supplies.map((product) => product.id) },
-  { id: "seal", label: "Tape & sealing", productIds: ["packing-tape", "fragile-tape", "tape-dispenser"] },
-  { id: "protect", label: "Wrap & covers", productIds: ["bubble-wrap", "mattress-cover", "sofa-cover"] },
-  { id: "tools", label: "Tools & labels", productIds: ["cutter-knife", "marker-pen"] },
+  { id: "seal", label: "Tape & sealing", productIds: supplies.filter((product) => product.categoryId === "seal").map((product) => product.id) },
+  { id: "protect", label: "Wrap & covers", productIds: supplies.filter((product) => product.categoryId === "protect").map((product) => product.id) },
+  { id: "tools", label: "Tools & labels", productIds: supplies.filter((product) => product.categoryId === "tools").map((product) => product.id) },
+  ...supplierSupplyCategories.map((category) => ({
+    ...category,
+    productIds: supplies.filter((product) => product.categoryId === category.id).map((product) => product.id),
+  })).filter((category) => category.productIds.length),
 ];
 
 export function ExtrasShopPage() {
@@ -176,7 +181,7 @@ export function ExtrasShopPage() {
   const visibleSupplies = useMemo(() => {
     const selected = supplyGroups.find((item) => item.id === group);
     const search = query.trim().toLowerCase();
-    const result = supplies.filter((product) => selected.productIds.includes(product.id) && (!search || `${product.name} ${product.purpose} ${product.detail}`.toLowerCase().includes(search)));
+    const result = supplies.filter((product) => selected.productIds.includes(product.id) && (!search || (product.searchText || `${product.name} ${product.purpose} ${product.detail} ${product.description || ""} ${product.sku || ""} ${product.vendorCategory || ""} ${product.supplier || ""}`).toLowerCase().includes(search)));
     if (sort === "price-low") result.sort((a, b) => a.price - b.price);
     if (sort === "price-high") result.sort((a, b) => b.price - a.price);
     return result;

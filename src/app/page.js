@@ -63,7 +63,7 @@ export default function HomePage() {
     </section>
     <section className="catalogue supplies-section" id="extras">
       <div className="catalogue-intro"><div><span className="eyebrow-label">PACKING SUPPLIES</span><h2>Tape, tools &amp; protection</h2></div><p>Everything you need to seal, label and protect your belongings through moving day.</p></div>
-      <ProductSection id="supply-row" title="Packing Supplies & Extras:" products={supplies} carousel />
+      <ProductSection id="supply-row" title="Packing Supplies & Extras:" products={supplies.filter((product) => !product.isSupplierCatalog)} carousel />
     </section>
   </main>;
 }

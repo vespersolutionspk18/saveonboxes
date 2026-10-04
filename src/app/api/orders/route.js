@@ -39,13 +39,13 @@ export async function POST(request) {
     const items = [...quantities].map(([id, quantity]) => {
       const product = findProduct(id);
       const unitCents = Math.round(product.price * 100);
-      return { id, name: product.packQty ? `${product.packQty} × ${product.name}` : product.name, quantity, unitPrice: unitCents / 100, lineTotal: unitCents * quantity / 100 };
+      return { id, name: product.packQty ? `${product.packQty} × ${product.name}` : product.name, sku: product.sku || null, supplier: product.supplier || null, quantity, unitPrice: unitCents / 100, lineTotal: unitCents * quantity / 100, currency: "USD" };
     });
     const subtotal = items.reduce((sum, item) => sum + Math.round(item.lineTotal * 100), 0) / 100;
     const record = await saveRecord("orders.json", {
-      status: "received", customer, items, subtotal, notes: cleanText(body.notes, 2000),
+      status: "received", currency: "USD", customer, items, subtotal, notes: cleanText(body.notes, 2000),
       update: "Your order request has been recorded. Payment, stock availability and delivery are still to be confirmed. No payment has been taken and no courier booking has been made.",
     });
-    return NextResponse.json({ reference: record.reference, receivedAt: record.createdAt, total: subtotal }, { status: 201, headers: { "Cache-Control": "no-store" } });
+    return NextResponse.json({ reference: record.reference, receivedAt: record.createdAt, total: subtotal, currency: "USD" }, { status: 201, headers: { "Cache-Control": "no-store" } });
   } catch { return NextResponse.json({ error: "Your order request could not be saved. Please try again in a moment." }, { status: 500 }); }
 }

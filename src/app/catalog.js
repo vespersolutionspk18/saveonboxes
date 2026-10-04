@@ -1,3 +1,5 @@
+import { supplierBoxCategories, supplierBoxProducts, supplierSupplyProducts } from "./supplier-products";
+
 export const rooms = [
   { id: "bedroom", title: "Bedroom & Closet", tile: "Bedroom", image: "wardrobe 24.webp" },
   { id: "kitchen", title: "Kitchen & Dining", tile: "Kitchen", image: "dishpack1.webp" },
@@ -55,7 +57,7 @@ const packVariants = ["small", "medium", "large"].flatMap((id) => {
   }));
 });
 
-export const boxProducts = [...baseBoxes, ...packVariants];
+export const boxProducts = [...baseBoxes, ...packVariants, ...supplierBoxProducts].map((product) => ({ ...product, currency: "USD" }));
 export const productsById = Object.fromEntries(boxProducts.map((product) => [product.id, product]));
 
 // Room collections follow the packing lists supplied for this store.
@@ -73,7 +75,7 @@ export const roomProductIds = {
 export function getRoomProducts(roomId) {
   if (!roomId || roomId === "all") return boxProducts;
   const ids = new Set(roomProductIds[roomId] || []);
-  return boxProducts.filter((product) => ids.has(product.baseId || product.id));
+  return boxProducts.filter((product) => ids.has(product.baseId || product.id) || product.rooms?.includes(roomId));
 }
 
 const homeBoxCategories = [
@@ -87,10 +89,11 @@ const homeBoxCategories = [
   { id: "mirror", title: "Mirror & Picture Boxes", type: "mirror" },
   { id: "specialty", title: "Specialty Moving Boxes", type: "specialty" },
   { id: "storage", title: "File & Storage Boxes", type: "storage" },
+  ...supplierBoxCategories.map((category) => ({ ...category, type: category.id })),
 ];
 
 export function getHomeBoxSections(roomId) {
-  const roomProducts = getRoomProducts(roomId);
+  const roomProducts = getRoomProducts(roomId).filter((product) => !product.isSupplierCatalog);
   return homeBoxCategories.map((category) => ({
     ...category,
     products: roomProducts.filter((product) => category.productIds
@@ -99,18 +102,19 @@ export function getHomeBoxSections(roomId) {
   })).filter((category) => category.products.length > 0);
 }
 
-export const supplies = [
-  { id: "bubble-wrap", name: "Bubble Wrap (5 metres)", image: "/images/bubble-wrap-5m-500x625.jpg.webp", price: 12, type: "supply", purpose: "Cushion fragile belongings", detail: "5 metre roll" },
-  { id: "packing-tape", name: "Packing Tape", image: "/images/sellotape-1-500x625.jpg.webp", price: 5, type: "supply", purpose: "Seal boxes securely", detail: "Heavy-duty clear tape" },
-  { id: "fragile-tape", name: "Fragile Tape", image: "/images/fragile-tape-1-500x625.jpg.webp", price: 15, type: "supply", purpose: "Mark delicate boxes clearly", detail: "2 rolls" },
-  { id: "cutter-knife", name: "Cutter Knife", image: "/images/cutter-knife2.jpg", price: 10, type: "supply", purpose: "Open and cut packing material", detail: "Retractable blade" },
-  { id: "marker-pen", name: "Marker Pen", image: "/images/marker-pen-500x625.jpg.webp", price: 5, type: "supply", purpose: "Label boxes by room", detail: "Permanent marker" },
-  { id: "mattress-cover", name: "Mattress Cover (King Size)", image: "/images/matthress-cover-plastic-x1-1-500x625.jpg.webp", price: 12, type: "supply", purpose: "Protect your mattress in transit", detail: "King size" },
-  { id: "sofa-cover", name: "Sofa Cover", image: "/images/sofa-cover-500x625.jpg.webp", price: 18, type: "supply", purpose: "Keep upholstery clean during the move", detail: "Stretch-fit cover" },
-  { id: "tape-dispenser", name: "Tape Dispenser", image: "/images/tape-dispenser-2-500x625.jpg.webp", price: 15.95, type: "supply", purpose: "Apply packing tape quickly", detail: "Heavy-duty dispenser" },
-];
+export const featuredSupplies = [
+  { id: "bubble-wrap", name: "Bubble Wrap (5 metres)", image: "/images/bubble-wrap-5m-500x625.jpg.webp", price: 12, type: "supply", categoryId: "protect", purpose: "Cushion fragile belongings", detail: "5 metre roll" },
+  { id: "packing-tape", name: "Packing Tape", image: "/images/sellotape-1-500x625.jpg.webp", price: 5, type: "supply", categoryId: "seal", purpose: "Seal boxes securely", detail: "Heavy-duty clear tape" },
+  { id: "fragile-tape", name: "Fragile Tape", image: "/images/fragile-tape-1-500x625.jpg.webp", price: 15, type: "supply", categoryId: "seal", purpose: "Mark delicate boxes clearly", detail: "2 rolls" },
+  { id: "cutter-knife", name: "Cutter Knife", image: "/images/cutter-knife2.jpg", price: 10, type: "supply", categoryId: "tools", purpose: "Open and cut packing material", detail: "Retractable blade" },
+  { id: "marker-pen", name: "Marker Pen", image: "/images/marker-pen-500x625.jpg.webp", price: 5, type: "supply", categoryId: "tools", purpose: "Label boxes by room", detail: "Permanent marker" },
+  { id: "mattress-cover", name: "Mattress Cover (King Size)", image: "/images/matthress-cover-plastic-x1-1-500x625.jpg.webp", price: 12, type: "supply", categoryId: "protect", purpose: "Protect your mattress in transit", detail: "King size" },
+  { id: "sofa-cover", name: "Sofa Cover", image: "/images/sofa-cover-500x625.jpg.webp", price: 18, type: "supply", categoryId: "protect", purpose: "Keep upholstery clean during the move", detail: "Stretch-fit cover" },
+  { id: "tape-dispenser", name: "Tape Dispenser", image: "/images/tape-dispenser-2-500x625.jpg.webp", price: 15.95, type: "supply", categoryId: "seal", purpose: "Apply packing tape quickly", detail: "Heavy-duty dispenser" },
+].map((product) => ({ ...product, currency: "USD" }));
+export const supplies = [...featuredSupplies, ...supplierSupplyProducts];
 
-export const types = [
+const existingTypes = [
   { id: "standard", title: "Standard Moving Boxes", blurb: "Small — Books & Heavy Items · Medium — Everyday Packing · Large — Clothes & Household Items · X-Large — Bedding & Bulky Items", productIds: boxProducts.filter((product) => product.type === "standard").map((product) => product.id) },
   { id: "wardrobe", title: "Wardrobe & Clothing Boxes", blurb: "Keep clothes ready to hang and easy to unpack.", productIds: boxProducts.filter((product) => product.type === "wardrobe").map((product) => product.id) },
   { id: "electronics", title: "TV & Electronics Boxes", blurb: "Specialty protection for screens, computers and electronics.", productIds: boxProducts.filter((product) => product.type === "electronics").map((product) => product.id) },
@@ -119,6 +123,11 @@ export const types = [
   { id: "specialty", title: "Specialty Moving Boxes", blurb: "Bicycle, crib, lamp and heavy-duty cartons.", productIds: boxProducts.filter((product) => product.type === "specialty").map((product) => product.id) },
   { id: "storage", title: "File & Storage Boxes", blurb: "Lidded storage for files and documents.", productIds: boxProducts.filter((product) => product.type === "storage").map((product) => product.id) },
 ];
+export const types = [...existingTypes, ...supplierBoxCategories.map((category) => ({
+  ...category,
+  blurb: category.blurb,
+  productIds: boxProducts.filter((product) => product.type === category.id).map((product) => product.id),
+}))];
 
 export const kits = [
   { id: "kit-studio", name: "Studio Moving Kit", image: "/kits/studio.webp", badge: "STUDIO", boxCount: 17, price: 95, contents: [["Small", 4], ["Medium", 6], ["Large", 4], ["X-Large", 1], ["Wardrobe 20\"", 1], ["Dish Pack", 1]] },
@@ -127,7 +136,7 @@ export const kits = [
   { id: "kit-3-bedroom", name: "3 Bedroom Moving Kit", image: "/kits/3-bedroom.webp", badge: "3 BEDROOMS", boxCount: 60, price: 265, contents: [["Small", 15], ["Medium", 18], ["Large", 12], ["X-Large", 6], ["Wardrobe 20\"", 6], ["Dish Pack", 3]] },
   { id: "kit-4-bedroom", name: "4 Bedroom Moving Kit", image: "/kits/4-bedroom.webp", badge: "4 BEDROOMS", boxCount: 80, price: 415, contents: [["Small", 20], ["Medium", 24], ["Large", 16], ["X-Large", 8], ["Wardrobe 20\"", 8], ["Dish Pack", 4]] },
   { id: "kit-5-bedroom", name: "5 Bedroom Moving Kit", image: "/kits/5-bedroom.webp", badge: "5 BEDROOMS", boxCount: 100, price: 515, contents: [["Small", 25], ["Medium", 30], ["Large", 20], ["X-Large", 10], ["Wardrobe 20\"", 10], ["Dish Pack", 5]] },
-];
+].map((product) => ({ ...product, currency: "USD" }));
 
 export const kitAddonGroups = [
   { title: "Extra clothing storage", options: ["laydown-wardrobe"] },

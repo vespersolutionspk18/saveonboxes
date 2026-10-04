@@ -18,6 +18,7 @@ export async function POST(request) {
     return NextResponse.json({ order: {
       reference: cleanText(String(order.reference || order.orderNumber || order.id), 80),
       status: cleanText(order.status, 80) === "received" ? "Order request received" : cleanText(order.status, 80) || "Recorded",
+      currency: "USD",
       createdAt: dateValue(order.createdAt), updatedAt: dateValue(order.updatedAt),
       subtotal: Number.isFinite(order.subtotal) ? order.subtotal : null,
       carrier: cleanText(order.carrier, 120), trackingNumber: cleanText(order.trackingNumber, 120), trackingUrl: safeTrackingUrl(order.trackingUrl),
