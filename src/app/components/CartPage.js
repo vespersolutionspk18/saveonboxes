@@ -27,9 +27,9 @@ export default function CartPage() {
     finally { setSubmitting(false); }
   };
   return <main className="page-container">
-    <PageIntro eyebrow="YOUR MOVE STARTS HERE" title="Your shopping cart" description="Review your boxes and supplies, adjust quantities and send your order request." breadcrumb="Shopping cart" />
+    <PageIntro eyebrow="Your move starts here" title="Your shopping cart" description="Review your boxes and supplies, adjust quantities and send your order request." breadcrumb="Shopping cart" />
     {receipt ? <section className={styles.confirmation} role="status">
-      <span className={styles.check} aria-hidden="true">✓</span><span className="eyebrow-label">REQUEST RECEIVED</span><h2>Let’s get your move organised.</h2>
+      <span className={styles.check} aria-hidden="true">✓</span><span className="eyebrow-label">Request received</span><h2>Let’s get your move organised.</h2>
       <p>Your order request has been saved with reference <strong>{receipt.reference}</strong>. Keep this reference to check the request status.</p>
       <dl><div><dt>Product subtotal</dt><dd>{formatPrice(receipt.total)}</dd></div><div><dt>Current status</dt><dd>Order request received</dd></div></dl>
       <p>Payment and delivery are still to be confirmed. This request does not take payment or reserve stock.</p>
@@ -45,9 +45,9 @@ export default function CartPage() {
             <div className={styles.itemQuantity}><label htmlFor={`qty-${item.id}`}>Quantity</label><div><button onClick={() => updateQuantity(item.id, item.quantity - 1)} aria-label={`Decrease ${productTitle(item)} quantity`}>−</button><input id={`qty-${item.id}`} type="number" min="1" max="999" value={item.quantity} onChange={(event) => { const value = Number(event.target.value); if (event.target.value && Number.isFinite(value)) updateQuantity(item.id, value); }} /><button onClick={() => updateQuantity(item.id, item.quantity + 1)} aria-label={`Increase ${productTitle(item)} quantity`}>+</button></div><strong>{formatPrice(item.price * item.quantity)}</strong></div>
           </article>)}
         </section>
-        <section className={styles.deliveryNote}><h3>Everything for moving day</h3><p>Before you finish, check that you have tape to seal your cartons, a marker for room labels and protective wrap for fragile items.</p><Link className="text-link" href="/extras">Add packing supplies →</Link></section>
+        <section className={styles.deliveryNote}><h3>Everything for moving day</h3><p>Before you finish, check that you have tape to seal your cartons, a marker for room labels and protective wrap for fragile items.</p><Link className="text-link" href="/extras">Add packing supplies</Link></section>
         <form className={styles.form} onSubmit={submitOrder} aria-labelledby="order-details-heading">
-          <span className="eyebrow-label">THE NEXT STEP</span><h2 id="order-details-heading">Your delivery details</h2><p>Send a request with your product choices and delivery address. Payment and delivery charges will be confirmed separately.</p>
+          <span className="eyebrow-label">The next step</span><h2 id="order-details-heading">Your delivery details</h2><p>Send a request with your product choices and delivery address. Payment and delivery charges will be confirmed separately.</p>
           <div className={styles.fields}>
             <label>Full name<input name="name" autoComplete="name" required maxLength={120} /></label>
             <label>Email address<input name="email" type="email" autoComplete="email" required maxLength={200} /></label>
@@ -62,7 +62,7 @@ export default function CartPage() {
           <button className="orange-button" type="submit" disabled={submitting}>{submitting ? "Saving your request…" : "Send order request"}</button>
         </form>
       </div>
-      <aside className={styles.summary}><span className="eyebrow-label">ORDER SUMMARY</span><h2>Ready to pack?</h2><dl><div><dt>Products</dt><dd>{formatPrice(cartTotal)}</dd></div><div><dt>Delivery</dt><dd>To be confirmed</dd></div><div className={styles.total}><dt>Product subtotal</dt><dd>{formatPrice(cartTotal)}</dd></div></dl><p>No payment is taken when you send a request. We’ll confirm availability and delivery before payment.</p><a className="orange-button" href="#order-details-heading">Complete your details ↓</a><div className={styles.summaryLinks}><Link href="/delivery-policy">Delivery information</Link><Link href="/return-policy">Returns & support</Link><Link href="/contact">Need help with your order?</Link></div></aside>
+      <aside className={styles.summary}><span className="eyebrow-label">Order summary</span><h2>Ready to pack?</h2><dl><div><dt>Products</dt><dd>{formatPrice(cartTotal)}</dd></div><div><dt>Delivery</dt><dd>To be confirmed</dd></div><div className={styles.total}><dt>Product subtotal</dt><dd>{formatPrice(cartTotal)}</dd></div></dl><p>No payment is taken when you send a request. We’ll confirm availability and delivery before payment.</p><a className="orange-button" href="#order-details-heading">Complete your details</a><div className={styles.summaryLinks}><Link href="/delivery-policy">Delivery information</Link><Link href="/return-policy">Returns & support</Link><Link href="/contact">Need help with your order?</Link></div></aside>
     </div>}
   </main>;
 }

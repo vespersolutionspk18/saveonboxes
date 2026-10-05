@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Activity, ArrowRight, CalendarDays, ChevronLeft, ChevronRight, CircleAlert, Download, ScanLine, Search, ShieldCheck } from "lucide-react";
+import { Activity, CalendarDays, CircleAlert, Download, ScanLine, Search, ShieldCheck } from "lucide-react";
 import { Badge } from "../../../components/ui/badge.jsx";
 import { Button } from "../../../components/ui/button.jsx";
 import { Card } from "../../../components/ui/card.jsx";
@@ -61,7 +61,7 @@ export default function ReportsPage() {
 
   return <div className={`${styles.page} ${reportStyles.page}`}>
     <div className={styles.pageHeading}>
-      <div><div className={styles.kicker}><span className={styles.liveDot} /> REPORTING</div><h1>Scan reports</h1><p>Claim rates, QR scans and label health across production.</p></div>
+      <div><h1>Scan reports</h1><p>Claim rates, QR scans and label health across production.</p></div>
       <Button asChild variant="secondary" className={reportStyles.exportButton}><Link href={`/api/admin/reports/labels?${csvParams.toString()}`}><Download size={14} /> Download report</Link></Button>
     </div>
     {error && <div className={styles.errorBanner} role="alert"><CircleAlert size={16} /><span>{error}</span>{(error.toLowerCase().includes("access") || error.toLowerCase().includes("sign in")) && <Link href="/login">Sign in</Link>}</div>}
@@ -92,17 +92,18 @@ export default function ReportsPage() {
 
     <Card className={reportStyles.tablePanel}>
       <div className={reportStyles.tableHeading}><div><h2>Label scan detail</h2><p>Date filters apply to deduplicated customer opens and in-app camera detections; admin previews are excluded. Scan counts and first/last scan dates reflect the selected window.</p></div><div className={reportStyles.eventsCount}><ScanLine size={14} /> {fmtNumber(summary?.scanned)} scanned labels</div></div>
-      <div className={reportStyles.tableWrap}>
+      <div className={reportStyles.tableWrap} role="region" aria-label="Label scan detail" tabIndex={0}>
+        <p className={reportStyles.scrollHint}>Scroll horizontally to view all scan fields.</p>
         <Table className={reportStyles.table}>
-          <TableHeader><TableRow><TableHead>Serial</TableHead><TableHead>State</TableHead><TableHead>Customer</TableHead><TableHead>Batch</TableHead><TableHead>Scans</TableHead><TableHead>First seen</TableHead><TableHead>Last seen</TableHead><TableHead>Claimed</TableHead><TableHead /></TableRow></TableHeader>
+          <TableHeader><TableRow><TableHead>Serial</TableHead><TableHead>State</TableHead><TableHead>Customer</TableHead><TableHead>Batch</TableHead><TableHead>Scans</TableHead><TableHead>First seen</TableHead><TableHead>Last seen</TableHead><TableHead>Claimed</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
           <TableBody>{loading ? Array.from({ length: 6 }, (_, i) => <TableRow key={i}><TableCell colSpan={9}><span className={reportStyles.loadingRow}>Loading activity…</span></TableCell></TableRow>) : filteredRows.map((row) => <TableRow key={row.id}>
             <TableCell className={reportStyles.serial}>{row.serial}</TableCell><TableCell><Badge variant={variant(row.status)}>{row.status}</Badge></TableCell><TableCell>{row.owner?.email || <span className={reportStyles.muted}>Unclaimed</span>}</TableCell><TableCell>{row.batchName || String(row.batchId || "—").slice(0, 8)}</TableCell>
-            <TableCell><span className={reportStyles.scanCount}>{fmtNumber(row.scans)}</span><span className={reportStyles.scanTrack}><i style={{ width: `${Math.max(row.scans ? 8 : 0, (Number(row.scans) || 0) * 100 / maxScans)}%` }} /></span></TableCell><TableCell>{fmtDate(row.firstScannedAt)}</TableCell><TableCell>{fmtDate(row.lastScannedAt)}</TableCell><TableCell>{fmtDate(row.claimedAt)}</TableCell><TableCell><Link href={`/admin/support?label=${encodeURIComponent(row.id)}`} className={reportStyles.detailLink}>Details <ArrowRight size={12} /></Link></TableCell>
+            <TableCell><span className={reportStyles.scanCount}>{fmtNumber(row.scans)}</span><span className={reportStyles.scanTrack}><i style={{ width: `${Math.max(row.scans ? 8 : 0, (Number(row.scans) || 0) * 100 / maxScans)}%` }} /></span></TableCell><TableCell>{fmtDate(row.firstScannedAt)}</TableCell><TableCell>{fmtDate(row.lastScannedAt)}</TableCell><TableCell>{fmtDate(row.claimedAt)}</TableCell><TableCell><Link href={`/admin/support?label=${encodeURIComponent(row.id)}`} className={reportStyles.detailLink}>Details</Link></TableCell>
           </TableRow>)}</TableBody>
         </Table>
         {!loading && filteredRows.length === 0 && <div className={reportStyles.empty}><Activity size={20} /><strong>No matching scan records</strong><span>Try another date range or remove a filter.</span></div>}
       </div>
-      <div className={reportStyles.pagination}><span>Showing {total ? `${Math.min((page - 1) * 50 + 1, total)}–${Math.min(page * 50, total)}` : "0"} of {fmtNumber(total)} labels</span><div><Button size="sm" variant="ghost" disabled={page <= 1 || loading} onClick={() => setPage((value) => Math.max(1, value - 1))}><ChevronLeft size={14} /> Previous</Button><span>Page {page}</span><Button size="sm" variant="ghost" disabled={page * 50 >= total || loading} onClick={() => setPage((value) => value + 1)}>Next <ChevronRight size={14} /></Button></div></div>
+      <div className={reportStyles.pagination}><span>Showing {total ? `${Math.min((page - 1) * 50 + 1, total)}–${Math.min(page * 50, total)}` : "0"} of {fmtNumber(total)} labels</span><div><Button size="sm" variant="ghost" disabled={page <= 1 || loading} onClick={() => setPage((value) => Math.max(1, value - 1))}>Previous</Button><span>Page {page}</span><Button size="sm" variant="ghost" disabled={page * 50 >= total || loading} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
     </Card>
 
     <div className={reportStyles.reportFoot}><ShieldCheck size={14} /><span>Reports show serials and account data only. Claim URLs and QR bearer tokens stay in production files.</span></div>

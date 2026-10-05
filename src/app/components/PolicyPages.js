@@ -11,12 +11,12 @@ const changeOfMind = "https://www.consumerprotection.govt.nz/general-help/common
 const privacyRights = "https://www.privacy.org.nz/privacy-principles/";
 
 function ExternalLink({ href, children }) {
-  return <a href={href} target="_blank" rel="noopener noreferrer">{children}<span aria-hidden="true"> ↗</span></a>;
+  return <a href={href} target="_blank" rel="noopener noreferrer">{children}</a>;
 }
 
 const pages = {
   "return-policy": {
-    eyebrow: "CUSTOMER CARE",
+    eyebrow: "Customer care",
     title: "Returns & refunds",
     description: "Something isn’t right with your order? Here’s how to get help with a damaged carton, a missing item or a return request.",
     image: "/boxes/" + encodeURIComponent("mighty box with handles.webp"),
@@ -41,7 +41,7 @@ const pages = {
     ctaDescription: "Have your reference and the affected product details ready, then send a return or order enquiry.",
   },
   "delivery-policy": {
-    eyebrow: "DELIVERY & DISPATCH",
+    eyebrow: "Delivery & dispatch",
     title: "From our boxes to your door",
     description: "How delivery is arranged, what to include with your order and what to do when a parcel needs attention.",
     image: "/boxes/" + encodeURIComponent("large.webp"),
@@ -51,7 +51,7 @@ const pages = {
       ["Follow your order", "Keep your reference handy for status enquiries."],
     ],
     sections: [
-      { id: "placing-your-order", title: "Delivery starts with your order", content: <><p>Select your boxes, kit and packing supplies, then submit your order request from the cart. The request records the products, quantities and your contact details. It does not charge a payment card.</p><p>Delivery availability, delivery charges, payment arrangements and the expected dispatch timing are confirmed when the store reviews your request. Submitting a request is not a promise of delivery on a particular date.</p><p>Tell us your moving date if you have one. We can assess the order against the available delivery arrangements before you commit to a confirmed order.</p><Link className={styles.textLink} href="/cart">Review your cart <span aria-hidden="true">→</span></Link></> },
+      { id: "placing-your-order", title: "Delivery starts with your order", content: <><p>Select your boxes, kit and packing supplies, then submit your order request from the cart. The request records the products, quantities and your contact details. It does not charge a payment card.</p><p>Delivery availability, delivery charges, payment arrangements and the expected dispatch timing are confirmed when the store reviews your request. Submitting a request is not a promise of delivery on a particular date.</p><p>Tell us your moving date if you have one. We can assess the order against the available delivery arrangements before you commit to a confirmed order.</p><Link className={styles.textLink} href="/cart">Review your cart</Link></> },
       { id: "address-and-access", title: "Your address & delivery instructions", content: <><p>Provide the recipient’s name, street number and name, suburb, town or city, and postcode. Include a unit or apartment number where applicable. Use an email address and phone number where you can be reached about the delivery.</p><div className={styles.twoColumns}><div><h3>For homes & apartments</h3><ul><li>Building or unit number</li><li>Gate, entry or intercom instructions</li><li>Access restrictions for a bulky delivery</li><li>Any requested safe-place instructions</li></ul></div><div><h3>For workplaces</h3><ul><li>Business name and recipient</li><li>Reception or goods-entry location</li><li>Opening hours that affect access</li><li>Loading-area restrictions</li></ul></div></div><p>Special instructions are requests and must be confirmed as part of the delivery arrangement. If your address changes after submitting your order, <Link href="/contact?topic=Delivery">contact us</Link> with the order reference as soon as possible.</p></> },
       { id: "charges-and-timing", title: "Delivery charges & timing", content: <><p>The product subtotal in your cart is the cost of the selected products. Delivery is confirmed separately using the destination and the size of the order. Large specialty cartons and a full moving kit can require different handling from a small supply order.</p><p>Check the delivery charge and expected timing in your order confirmation before making payment. If an order needs to be split, the store will explain the arrangement. A collection request also needs to be agreed; there is no walk-in collection address listed on this website.</p><div className={styles.note}><strong>Planning around moving day?</strong><p>Order with enough time to pack, assemble boxes and resolve any last-minute additions. Include your preferred date in the order notes so it can be considered during confirmation.</p></div></> },
       { id: "tracking-and-receiving", title: "Tracking & receiving your boxes", content: <><p>Use the <Link href="/tracking">order tracking page</Link> with your order reference and the email address used for the order to see the recorded status. If courier tracking is supplied with a confirmed dispatch, use those details for the courier’s latest updates.</p><p>When the delivery arrives, count the items and compare the box sizes, supplies and kit contents with the order. Keep the delivery label and packaging until you have checked everything. Store cardboard in a dry, sheltered space before your move.</p><p>If you cannot locate a parcel marked as delivered, check the agreed delivery location and whether another household member or reception accepted it. Then contact us with the reference and the latest delivery information.</p></> },
@@ -66,7 +66,7 @@ const pages = {
     ctaDescription: "Send your order reference and delivery details so we can identify the right order.",
   },
   terms: {
-    eyebrow: "SHOPPING WITH SAVE ON BOXES",
+    eyebrow: "Shopping with save on boxes",
     title: "Terms & conditions",
     description: "Clear information about using our store, requesting an order and choosing the products for your move.",
     image: "/boxes/" + encodeURIComponent("medium.webp"),
@@ -89,7 +89,7 @@ const pages = {
     ctaDescription: "Ask about a box, a kit configuration or the details of your order request.",
   },
   privacy: {
-    eyebrow: "YOUR INFORMATION",
+    eyebrow: "Your information",
     title: "Privacy policy",
     description: "What we collect when you shop or contact us, how it is used and how to manage your saved information.",
     image: "/boxes/" + encodeURIComponent("file storage box with lid.webp"),
@@ -110,7 +110,7 @@ const pages = {
     ctaDescription: "Use the contact page for access, correction, deletion or another privacy enquiry.",
   },
   cookies: {
-    eyebrow: "YOUR BROWSER SETTINGS",
+    eyebrow: "Your browser settings",
     title: "Cookies & browser storage",
     description: "Understand how your shopping selections are saved and clear them whenever you choose.",
     image: "/boxes/" + encodeURIComponent("small.webp"),
@@ -180,17 +180,17 @@ export default function PolicyPage({ slug }) {
   return <main className="page-container">
     <PageIntro eyebrow={page.eyebrow} title={page.title} description={page.description} image={page.image} breadcrumb={page.title} />
     <div className={styles.page}>
-      <div className={styles.summary} aria-label="At a glance">{page.cards.map(([title, description], index) => <div key={title}><span className={styles.summaryNumber}>{String(index + 1).padStart(2, "0")}</span><div><h2>{title}</h2><p>{description}</p></div></div>)}</div>
+      <div className={styles.summary} aria-label="At a glance">{page.cards.map(([title, description]) => <div key={title}><div><h2>{title}</h2><p>{description}</p></div></div>)}</div>
       <div className={styles.layout}>
         <aside className={styles.sidebar}>
           <nav aria-label="On this page"><h2>On this page</h2>{page.sections.map((section) => <a href={`#${section.id}`} key={section.id}>{section.title.replace(/^\d+\. /, "")}</a>)}{page.faqs && <a href="#common-questions">Common questions</a>}</nav>
-          <div className={styles.sidebarHelp}><span className={styles.helpIcon} aria-hidden="true">?</span><h3>We’re here to help</h3><p>Have a question about your order or a product?</p><Link href="/contact">Contact our team <span aria-hidden="true">→</span></Link></div>
+          <div className={styles.sidebarHelp}><span className={styles.helpIcon} aria-hidden="true">?</span><h3>We’re here to help</h3><p>Have a question about your order or a product?</p><Link href="/contact">Contact our team</Link></div>
         </aside>
         <div className={styles.article}>
           <div className={styles.policyMeta}><span>Save On Boxes customer information</span><span>Updated 2 October 2026</span></div>
           {page.sections.map((section) => <section className={styles.section} id={section.id} key={section.id}><h2>{section.title}</h2>{section.content}</section>)}
-          {page.faqs && <section className={styles.section} id="common-questions"><span className={styles.eyebrow}>A LITTLE MORE HELP</span><h2>Common questions</h2><Accordion items={page.faqs} /></section>}
-          <nav className={styles.related} aria-label="Related customer information"><h3>More customer information</h3><div>{Object.entries(pages).filter(([key]) => key !== slug).map(([key, item]) => <Link key={key} href={`/${key}`}>{item.title}<span aria-hidden="true">→</span></Link>)}</div></nav>
+          {page.faqs && <section className={styles.section} id="common-questions"><span className={styles.eyebrow}>A little more help</span><h2>Common questions</h2><Accordion items={page.faqs} /></section>}
+          <nav className={styles.related} aria-label="Related customer information"><h3>More customer information</h3><div>{Object.entries(pages).filter(([key]) => key !== slug).map(([key, item]) => <Link key={key} href={`/${key}`}>{item.title}</Link>)}</div></nav>
         </div>
       </div>
     </div>

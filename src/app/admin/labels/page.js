@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowRight, Boxes, Check, ChevronLeft, ChevronRight, CircleAlert, FileArchive, FileImage, FileText, LoaderCircle, PackagePlus, QrCode, Search, Sparkles, X } from "lucide-react";
+import { Boxes, Check, CircleAlert, FileArchive, FileImage, FileText, LoaderCircle, PackagePlus, QrCode, Search, Sparkles, X } from "lucide-react";
 import { Badge } from "../../../components/ui/badge.jsx";
 import { Button } from "../../../components/ui/button.jsx";
 import { Card, CardContent } from "../../../components/ui/card.jsx";
@@ -105,12 +105,12 @@ function LabelProductionContent() {
 
   return <div className={`${styles.page} ${pageStyles.page}`}>
     <div className={styles.pageHeading}>
-      <div><div className={styles.kicker}><span className={styles.liveDot} /> LABEL OPERATIONS</div><h1>QR production</h1><p>Issue permanent labels, keep every serial accounted for, and prepare print files.</p></div>
+      <div><h1>QR production</h1><p>Issue permanent labels, keep every serial accounted for, and prepare print files.</p></div>
       <div className={pageStyles.headingCount}><QrCode size={15} /><span>{fmtNumber(total)} labels in view</span></div>
     </div>
 
     {error && <div className={styles.errorBanner} role="alert"><CircleAlert size={16} /><span>{error}</span>{(error.toLowerCase().includes("access") || error.toLowerCase().includes("sign in")) && <Link href="/login">Sign in</Link>}</div>}
-    {notice && <div className={pageStyles.successNotice} role="status"><span className={pageStyles.successIcon}><Check size={15} /></span><div><strong>{fmtNumber(notice.count)} unique labels created and saved</strong><small>{notice.batch?.name || `Batch ${String(notice.batch?.id || "").slice(0, 8)}`} is ready. Exports contain the saved label identifiers.</small></div><button type="button" onClick={() => setNotice(null)} aria-label="Dismiss"><X size={15} /></button></div>}
+    {notice && <div className={pageStyles.successNotice} role="status"><span className={pageStyles.successIcon}><Check size={15} /></span><div><strong>{notice.count === 1 ? "1 unique label created and saved" : `${fmtNumber(notice.count)} unique labels created and saved`}</strong><small>{notice.batch?.name || `Batch ${String(notice.batch?.id || "").slice(0, 8)}`} is ready. Exports contain the saved label identifiers.</small></div><button type="button" onClick={() => setNotice(null)} aria-label="Dismiss"><X size={15} /></button></div>}
 
     <div className={pageStyles.productionGrid}>
       <Card className={pageStyles.generatorCard}>
@@ -119,7 +119,7 @@ function LabelProductionContent() {
           <label className={pageStyles.quantityField}><span>How many labels?</span><div className={pageStyles.quantityInput}><Input type="number" min="1" max={LIMIT} step="1" required value={quantity} onChange={(event) => setQuantity(event.target.value)} aria-label="Number of labels to generate" /><span>labels</span></div><small>1–{LIMIT.toLocaleString()} per batch. Generate another batch at any time.</small></label>
           <label className={pageStyles.batchNameField}><span>Batch name <em>optional</em></span><Input maxLength={80} placeholder="e.g. October retail run" value={batchName} onChange={(event) => setBatchName(event.target.value)} /></label>
           <div className={pageStyles.layoutPreview}>
-            <div className={pageStyles.previewCard} aria-hidden="true"><div className={pageStyles.previewLogo}>SAVE ON BOXES</div><div className={pageStyles.previewScratch}><div className={pageStyles.previewQr}>QR</div><span>SCRATCH TO REVEAL</span></div><div className={pageStyles.previewMeta}><span>BX-008241</span><span>BOX NO. ____</span></div></div>
+            <div className={pageStyles.previewCard} aria-hidden="true"><div className={pageStyles.previewLogo}>SaveOnBoxes</div><div className={pageStyles.previewScratch}><div className={pageStyles.previewQr}>QR</div><span>Scratch to reveal</span></div><div className={pageStyles.previewMeta}><span>BX-008241</span><span>Box no. ____</span></div></div>
             <div className={pageStyles.layoutText}><strong>Gift-card format</strong><span>85.6 × 54 mm · one label per PDF page</span><span>Serial and write-in box number included</span><span>Scratch-off QR area needs printer proofing</span><small>Preview artwork is decorative and cannot be scanned.</small></div>
           </div>
           <Button type="submit" className={pageStyles.generateButton} disabled={creating}>
@@ -155,7 +155,7 @@ function LabelProductionContent() {
         })}
         {!loading && !batches.length && <div className={pageStyles.emptyBatch}><QrCode size={20} /><strong>Your first batch starts here</strong><span>Choose a quantity and generate production labels.</span></div>}
       </div>
-      {batchTotal > 6 && <div className={pageStyles.batchPagination}><span>Page {batchPage} of {Math.ceil(batchTotal / 6)}</span><div><Button variant="ghost" size="sm" disabled={batchPage <= 1 || loading} onClick={() => setBatchPage((value) => Math.max(1, value - 1))}><ChevronLeft size={14} /> Previous</Button><Button variant="ghost" size="sm" disabled={batchPage * 6 >= batchTotal || loading} onClick={() => setBatchPage((value) => value + 1)}>Next <ChevronRight size={14} /></Button></div></div>}
+      {batchTotal > 6 && <div className={pageStyles.batchPagination}><span>Page {batchPage} of {Math.ceil(batchTotal / 6)}</span><div><Button variant="ghost" size="sm" disabled={batchPage <= 1 || loading} onClick={() => setBatchPage((value) => Math.max(1, value - 1))}>Previous</Button><Button variant="ghost" size="sm" disabled={batchPage * 6 >= batchTotal || loading} onClick={() => setBatchPage((value) => value + 1)}>Next</Button></div></div>}
     </Card>
 
     <Card className={pageStyles.labelPanel}>
@@ -168,17 +168,18 @@ function LabelProductionContent() {
         </Select>
         <Select value={status} onValueChange={(value) => { setStatus(value); setPage(1); }}><SelectTrigger className={pageStyles.selectTrigger} aria-label="Status filter"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="all">All statuses</SelectItem><SelectItem value="available">Available</SelectItem><SelectItem value="claimed">Claimed</SelectItem><SelectItem value="disabled">Disabled</SelectItem></SelectContent></Select>
       </form>
-      <div className={pageStyles.registryTable}>
+      <div className={pageStyles.registryTable} role="region" aria-label="Label registry results" tabIndex={0}>
+        <p className={pageStyles.scrollHint}>Scroll horizontally to view all label details.</p>
         <Table className={pageStyles.labelTable}>
-          <TableHeader><TableRow><TableHead>Label serial</TableHead><TableHead>Batch</TableHead><TableHead>State</TableHead><TableHead>Account</TableHead><TableHead className={pageStyles.numberCell}>Scans</TableHead><TableHead>First scan</TableHead><TableHead>Last scan</TableHead><TableHead /></TableRow></TableHeader>
+          <TableHeader><TableRow><TableHead>Label serial</TableHead><TableHead>Batch</TableHead><TableHead>State</TableHead><TableHead>Account</TableHead><TableHead className={pageStyles.numberCell}>Scans</TableHead><TableHead>First scan</TableHead><TableHead>Last scan</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
           <TableBody>{loading ? Array.from({ length: 5 }, (_, i) => <TableRow key={i}><TableCell colSpan={8}><div className={pageStyles.loadingRow}>Loading label records…</div></TableCell></TableRow>) : labels.map((label) => <TableRow key={label.id}>
             <TableCell><Link className={pageStyles.serial} href={`/admin/support?label=${encodeURIComponent(label.id)}`}>{label.serial}</Link><small className={pageStyles.boxSub}>{label.box?.boxNumber ? `Box ${label.box.boxNumber}` : "Unassigned"}</small></TableCell>
-            <TableCell>{label.batchName || String(label.batchId || "—").slice(0, 8)}</TableCell><TableCell><Badge variant={statusVariant(label.status)}>{label.status}</Badge></TableCell><TableCell>{label.owner?.email || <span className={pageStyles.dim}>—</span>}</TableCell><TableCell className={pageStyles.numberCell}>{fmtNumber(label.scans)}</TableCell><TableCell>{fmtDate(label.firstScannedAt)}</TableCell><TableCell>{fmtDate(label.lastScannedAt)}</TableCell><TableCell><Link className={pageStyles.rowAction} href={`/admin/support?label=${encodeURIComponent(label.id)}`} aria-label={`Open support record for ${label.serial}`}><ArrowRight size={14} /></Link></TableCell>
+            <TableCell>{label.batchName || String(label.batchId || "—").slice(0, 8)}</TableCell><TableCell><Badge variant={statusVariant(label.status)}>{label.status}</Badge></TableCell><TableCell>{label.owner?.email || <span className={pageStyles.dim}>—</span>}</TableCell><TableCell className={pageStyles.numberCell}>{fmtNumber(label.scans)}</TableCell><TableCell>{fmtDate(label.firstScannedAt)}</TableCell><TableCell>{fmtDate(label.lastScannedAt)}</TableCell><TableCell><Link className={pageStyles.rowAction} href={`/admin/support?label=${encodeURIComponent(label.id)}`}>Open</Link></TableCell>
           </TableRow>)}</TableBody>
         </Table>
         {!loading && labels.length === 0 && <div className={pageStyles.emptyLabels}><Search size={18} /><strong>No matching labels</strong><span>Adjust the filters or issue a new batch.</span></div>}
       </div>
-      <div className={pageStyles.pagination}><span>Showing {total ? `${Math.min((page - 1) * 50 + 1, total)}–${Math.min(page * 50, total)}` : "0"} of {fmtNumber(total)} labels</span><div><Button size="sm" variant="ghost" disabled={page <= 1 || loading} onClick={() => setPage((value) => Math.max(1, value - 1))}><ChevronLeft size={14} /> Previous</Button><span>Page {page}</span><Button size="sm" variant="ghost" disabled={page * 50 >= total || loading} onClick={() => setPage((value) => value + 1)}>Next <ChevronRight size={14} /></Button></div></div>
+      <div className={pageStyles.pagination}><span>Showing {total ? `${Math.min((page - 1) * 50 + 1, total)}–${Math.min(page * 50, total)}` : "0"} of {fmtNumber(total)} labels</span><div><Button size="sm" variant="ghost" disabled={page <= 1 || loading} onClick={() => setPage((value) => Math.max(1, value - 1))}>Previous</Button><span>Page {page}</span><Button size="sm" variant="ghost" disabled={page * 50 >= total || loading} onClick={() => setPage((value) => value + 1)}>Next</Button></div></div>
     </Card>
   </div>;
 }

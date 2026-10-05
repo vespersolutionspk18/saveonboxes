@@ -267,3 +267,201 @@
   .essentialsImages img { height: 100px; }
   .coverSection img { height: 150px; }
 }
+
+/* Room-first catalogue presentation with fill states instead of outlines. */
+.shopPage { color: var(--navy); }
+.eyebrow { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: -.01em; text-transform: none; }
+.benefits { gap: 24px; padding: 25px 0; margin-bottom: 40px; border: 0; }
+.benefits > div { gap: 0; }
+.benefitNumber { color: var(--orange); font-size: 20px; }
+.benefits strong { color: var(--navy); font-size: 16px; }
+.benefits p { color: var(--muted); }
+.sectionHeading h2 { color: var(--navy); font-size: clamp(26px, 3vw, 38px); letter-spacing: -.045em; }
+.sectionHeading > p { color: var(--muted); font-size: 15px; }
+.roomFilters { gap: 10px; }
+.roomFilters button { min-height: 44px; padding: 12px 9px; border: 0; border-radius: 12px; background: var(--warm); transition: background .18s ease; }
+.roomFilters button:hover, .roomFilters .activeRoom { border: 0; background: var(--quiet); }
+.roomFilters img, .allRoomIcon { height: 76px; }
+.roomFilters strong { font-size: 14px; }
+.roomFilters button > span:last-child { color: var(--muted); font-size: 12px; }
+.collection { gap: 26px; padding-bottom: 32px; border: 0; }
+.filterSidebar h2 { color: var(--navy); }
+.categoryFilters { gap: 5px; }
+.categoryFilters button { min-height: 44px; border-radius: 9px; background: transparent; color: var(--muted); font-size: 14px; }
+.categoryFilters button:hover, .categoryFilters .activeCategory { border: 0; background: var(--warm); color: var(--navy); }
+.categoryFilters .activeCategory { box-shadow: inset 3px 0 0 var(--orange); }
+.sidebarTip { border-radius: 14px; background: var(--warm); }
+.sidebarTip h3 { color: var(--navy); font-size: 20px; }
+.sidebarTip p, .resultsHeading p { color: var(--muted); }
+.sidebarTip a { min-height: 44px; display: flex; align-items: center; color: var(--navy); font-size: 14px; }
+.resultsHeading h2 { color: var(--navy); font-size: 24px; }
+.resetButton { min-height: 44px; display: inline-flex; align-items: center; padding: 0 8px; color: var(--navy); text-decoration: none; }
+.toolbar { padding: 14px; border-radius: 14px; background: var(--warm); }
+.fieldLabel { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: -.01em; text-transform: none; }
+.toolbar input, .toolbar select { min-height: 48px; height: auto; border: 0; border-radius: 9px; background: var(--paper); padding: 10px 12px; font-size: 16px; }
+.toolbar input:focus, .toolbar select:focus { outline: 3px solid #f36a1680; outline-offset: 2px; }
+.resultCount { color: var(--muted); font-size: 14px; }
+.boxGrid, .suppliesGrid { gap: 24px 18px; }
+.buyCard :global(.product-name) { color: var(--navy); font-size: 16px; }
+.cardButtons { gap: 8px; margin-top: 10px; }
+.primaryButton { min-height: 48px; gap: 8px; border: 0; border-radius: 10px; background: var(--navy); padding: 11px 14px; font-size: 14px; font-weight: 700; }
+.primaryButton:hover { border: 0; background: var(--action-orange); }
+.primaryButton > span { margin-left: 0; font-size: inherit; }
+.detailsButton { min-height: 44px; padding: 8px; color: var(--muted); font-size: 13px; }
+.emptyResults { min-height: 270px; padding: 40px 20px; border-radius: 14px; background: var(--warm); }
+.emptyResults h3 { color: var(--navy); }
+.emptyResults p { color: var(--muted); }
+.guidanceSection, .faqSection, .comparisonSection, .customiseSection, .packingSteps { margin: 52px 0; }
+.sizeGuide { gap: 14px; }
+.sizeGuide article { border-radius: 14px; background: var(--warm); }
+.sizeGuide h3 { color: var(--navy); font-size: 22px; }
+.sizeGuide p { color: var(--muted); }
+.textLink { min-height: 44px; display: inline-flex; align-items: center; border: 0; color: var(--navy); font-size: 14px; }
+.kitGrid { gap: 18px; }
+.kitCard { border: 0; border-radius: 14px; overflow: hidden; background: var(--warm); }
+.kitImage { background: var(--paper); }
+.kitBadge { border-radius: 9px; background: var(--navy); font-size: 13px; letter-spacing: -.01em; }
+.kitBadge span { font-size: 12px; letter-spacing: -.01em; }
+.kitBody { padding: 14px 19px 19px; }
+.kitCount { color: var(--muted); font-size: 13px; letter-spacing: -.01em; text-transform: none; }
+.kitBody h2 { color: var(--navy); }
+.kitDescription, .kitContents span, .kitPrice span { color: var(--muted); }
+.kitDescription { min-height: 0; font-size: 14px; }
+.kitContents { gap: 8px 12px; padding: 9px 0; border: 0; }
+.kitContents strong { min-width: 20px; }
+.kitContents span { font-size: 13px; }
+.kitPrice { margin: 13px 0; color: var(--navy); font-size: 25px; }
+.kitPrice span { font-size: 12px; }
+.kitBody .primaryButton { width: 100%; }
+.kitAddButton { min-height: 44px; padding: 10px 8px 0; color: var(--muted); font-size: 13px; }
+.tableScroll { border: 0; border-radius: 12px; background: var(--warm); scrollbar-color: var(--muted) var(--warm); }
+.kitTable { min-width: 860px; }
+.kitTable th, .kitTable td { border: 0; padding: 14px 13px; }
+.kitTable thead { background: var(--navy); }
+.kitTable tbody tr:nth-child(even) { background: var(--paper); }
+.kitTable .totalRow { background: var(--quiet); color: var(--navy); }
+.chooseRow button { min-height: 44px; border-radius: 8px; padding: 8px 12px; background: var(--navy); color: #fff; font-size: 13px; }
+.chooseRow button:hover { background: var(--orange); }
+.wardrobeCallout, .essentialsSection { border-radius: 16px; background: var(--warm); }
+.wardrobeCallout h3, .essentialsSection h2, .coverSection h2 { color: var(--navy); }
+.wardrobeCallout p, .essentialsSection p, .coverSection p { color: var(--muted); }
+.upgradePrice { color: var(--navy); }
+.addonGrid article { border: 0; border-radius: 13px; background: var(--warm); }
+.addonGrid button { min-height: 44px; align-items: center; border: 0; padding: 9px 0; color: var(--muted); font-size: 14px; }
+.addonGrid strong { color: var(--navy); font-size: 14px; }
+.stepGrid article { border-radius: 14px; background: var(--warm); }
+.stepGrid article > span { color: var(--orange); font-size: 30px; }
+.stepGrid h3 { color: var(--navy); }
+.stepGrid p { color: var(--muted); }
+.stepGrid a { min-height: 44px; display: inline-flex; align-items: center; color: var(--navy); font-size: 14px; }
+.supplyFilters { gap: 8px; }
+.supplyFilters button { min-height: 44px; border: 0; border-radius: 10px; background: var(--warm); padding: 10px 14px; color: var(--navy); font-size: 14px; }
+.supplyFilters button:hover, .supplyFilters .activeSupply { border: 0; background: var(--navy); color: #fff; }
+.supplyFilters button span { font-size: 13px; }
+.essentialsSection { gap: 32px; padding: 32px; margin: 52px 0; }
+.essentialsSection h2 { font-size: clamp(26px, 3vw, 36px); }
+.essentialsSection li { min-height: 44px; align-items: center; border: 0; border-radius: 8px; padding: 9px 10px; color: var(--muted); }
+.essentialsSection li:nth-child(odd) { background: #fff9f5; }
+.essentialsTotal { color: var(--navy); }
+.essentialsTotal strong { font-size: 25px; }
+.essentialsImages { gap: 10px; }
+.essentialsImages > div { border-radius: 12px; background: var(--paper); }
+.essentialsImages span { color: var(--navy); font-size: 13px; }
+.coverSection { padding: 24px 0; margin-bottom: 52px; border: 0; }
+.coverSection img { border-radius: 12px; background: var(--warm); }
+.textButton { min-height: 44px; display: inline-flex; align-items: center; border: 0; color: var(--navy); font-size: 14px; text-align: left; }
+
+@media (max-width: 760px) {
+  .benefits { gap: 10px; padding: 18px 0; margin-bottom: 28px; }
+  .benefits > div { gap: 12px; padding: 11px 0; }
+  .benefits p { max-width: none; font-size: 14px; }
+  .sectionHeading { display: block; margin-bottom: 18px; }
+  .sectionHeading > p { max-width: none; margin-top: 9px; font-size: 15px; }
+  .roomFilters { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .roomFilters button { padding: 10px 6px; }
+  .roomFilters img, .allRoomIcon { height: 66px; margin-bottom: 7px; }
+  .roomFilters strong { font-size: 13px; }
+  .roomFilters button > span:last-child { font-size: 12px; }
+  .collection { display: block; padding-bottom: 28px; }
+  .filterSidebar { margin-bottom: 18px; }
+  .filterSidebar h2 { font-size: 16px; }
+  .categoryFilters { flex-direction: row; gap: 6px; overflow-x: auto; padding: 0 0 5px; }
+  .categoryFilters button { flex: 0 0 auto; min-height: 44px; white-space: nowrap; border: 0; border-radius: 10px; background: var(--warm); padding: 9px 12px; font-size: 14px; }
+  .categoryFilters button span { display: none; }
+  .categoryFilters .activeCategory { box-shadow: none; background: var(--navy); color: #fff; }
+  .boxGrid, .suppliesGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
+  .cardButtons { align-items: stretch; flex-direction: column; gap: 4px; }
+  .cardButtons .primaryButton { min-height: 44px; padding: 9px; font-size: 13px; }
+  .detailsButton { width: 100%; }
+  .kitGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .kitBody { padding: 12px; }
+  .kitBody h2 { font-size: 20px; }
+  .kitDescription { font-size: 13px; }
+  .kitContents { grid-template-columns: 1fr; gap: 5px; }
+  .kitContents span { font-size: 12px; }
+  .kitPrice { flex-direction: row; align-items: center; gap: 5px; font-size: 21px; }
+  .kitPrice span { font-size: 11px; }
+  .kitBadge { left: 8px; top: 8px; padding: 7px 8px; font-size: 11px; }
+  .kitBadge span { font-size: 11px; }
+  .addonGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .addonGrid article { padding: 14px; }
+  .addonGrid button { font-size: 13px; }
+  .wardrobeCallout { grid-template-columns: 96px minmax(0, 1fr); gap: 14px; padding: 17px; }
+  .wardrobeCallout img { height: 110px; }
+  .wardrobeCallout h3 { font-size: 20px; }
+  .wardrobeCallout p { font-size: 14px; }
+  .stepGrid { grid-template-columns: 1fr; gap: 9px; }
+  .stepGrid article { padding: 18px; }
+  .stepGrid article > span { margin-bottom: 12px; font-size: 25px; }
+  .essentialsSection { grid-template-columns: 1fr; gap: 20px; padding: 20px; margin: 36px 0; }
+  .essentialsSection h2 { font-size: 27px; }
+  .essentialsImages img { height: 110px; }
+  .essentialsImages > div { padding: 11px; }
+  .essentialsImages span { font-size: 12px; }
+  .coverSection { grid-template-columns: 1fr; gap: 18px; margin-bottom: 38px; }
+  .coverSection > div:last-child { gap: 10px; }
+  .coverSection img { height: 145px; }
+  .guidanceSection, .faqSection, .comparisonSection, .customiseSection, .packingSteps { margin: 36px 0; }
+}
+
+@media (max-width: 460px) {
+  .roomFilters { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+  .roomFilters button { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 6px 10px; min-height: 68px; padding: 7px 9px; text-align: left; }
+  .roomFilters img, .allRoomIcon { grid-row: span 2; width: 56px; height: 52px; margin: 0; }
+  .roomFilters strong { align-self: end; font-size: 14px; }
+  .roomFilters button > span:last-child { align-self: start; margin: 0; font-size: 12px; }
+  .allRoomIcon { font-size: 35px; }
+  .toolbar, .supplyToolbar { grid-template-columns: minmax(0, 1fr); gap: 11px; padding: 12px; }
+  .toolbar .searchField, .supplyToolbar .searchField { grid-column: auto; }
+  .toolbar input, .toolbar select { font-size: 16px; padding-inline: 11px; }
+  .kitGrid { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .kitImage img { aspect-ratio: 1.55 / 1; }
+  .kitBody { padding: 13px 16px 16px; }
+  .kitBody h2 { font-size: 23px; }
+  .kitDescription { font-size: 14px; }
+  .kitContents { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kitContents span { font-size: 13px; }
+  .kitPrice { font-size: 25px; }
+  .kitBadge { left: 12px; top: 12px; padding: 9px 11px; }
+  .addonGrid { grid-template-columns: 1fr; }
+  .addonGrid article { display: grid; grid-template-columns: 75px minmax(0, 1fr); gap: 8px 13px; padding: 14px; }
+  .addonGrid img { width: 75px; height: 90px; grid-row: 1 / 3; margin: 0; }
+  .addonGrid h3 { align-self: center; font-size: 17px; }
+  .addonGrid article > div { grid-column: 1 / -1; }
+  .addonGrid button { min-height: 44px; gap: 8px; font-size: 14px; }
+  .wardrobeCallout { grid-template-columns: minmax(0, 1fr); text-align: left; }
+  .wardrobeCallout img { width: 100%; height: 120px; }
+  .essentialsImages { gap: 8px; }
+  .essentialsImages img { height: 94px; }
+  .coverSection img { height: 130px; }
+}
+
+@media (max-width: 360px) {
+  .roomFilters button { grid-template-columns: 46px minmax(0, 1fr); gap: 5px 8px; padding: 6px 7px; }
+  .roomFilters img, .allRoomIcon { width: 46px; height: 46px; }
+  .roomFilters strong { font-size: 13px; }
+  .roomFilters button > span:last-child { font-size: 11px; }
+  .boxGrid, .suppliesGrid { gap: 18px 8px; }
+  .buyCard :global(.product-name) { font-size: 14px; }
+  .cardButtons .primaryButton { padding-inline: 6px; font-size: 12px; }
+}

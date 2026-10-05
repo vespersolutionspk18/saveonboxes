@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-10-04T23:10:36.461Z",
+  "environment": "local production server",
+  "results": [
+    {
+      "endpoint": "/api/auth/login",
+      "status": 200,
+      "elapsedMs": 25722,
+      "authenticated": true,
+      "role": "customer"
+    },
+    {
+      "endpoint": "/api/auth/session",
+      "status": 200,
+      "elapsedMs": 341,
+      "authenticated": true
+    },
+    {
+      "endpoint": "/api/auth/logout",
+      "status": 200,
+      "elapsedMs": 323,
+      "loggedOut": true
+    }
+  ],
+  "phase": "Before checked-out-client recovery fix"
+}

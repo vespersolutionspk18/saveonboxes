@@ -1,8 +1,13 @@
+import { safeNextPath, safeQrContinuation } from "../../../lib/auth-navigation.js";
+
+export { safeNextPath };
+
 export async function api(path, options = {}) {
+  const isFormData = typeof FormData !== "undefined" && options.body instanceof FormData;
   const response = await fetch(path, {
     credentials: "same-origin",
     ...options,
-    headers: { ...(options.body ? { "Content-Type": "application/json" } : {}), ...options.headers },
+    headers: { ...(options.body && !isFormData ? { "Content-Type": "application/json" } : {}), ...options.headers },
   });
   let payload = {};
   try { payload = await response.json(); } catch { /* Some successful endpoints have no body. */ }
@@ -16,24 +21,16 @@ export async function api(path, options = {}) {
   return payload;
 }
 
-export function safeNextPath(value) {
-  if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//") || value.includes("\\") || /[\u0000-\u0020\u007f]/.test(value)) return "/dashboard";
-  try {
-    const url = new URL(value, "https://boxsave.invalid");
-    if (url.origin !== "https://boxsave.invalid") return "/dashboard";
-    return `${url.pathname}${url.search}${url.hash}`;
-  } catch {
-    return "/dashboard";
-  }
-}
-
 export function signInDestination(user, requestedNext) {
-  if (user?.role === "super_admin") return "/admin";
   const nextPath = safeNextPath(requestedNext);
+  const nextUrl = new URL(nextPath, "https://boxsave.invalid");
+  const qrContinuation = safeQrContinuation(requestedNext);
+  if (qrContinuation) return qrContinuation;
+  if (user?.role === "super_admin") return "/admin";
   // Continue a customer's box or scan flow, while keeping login and admin
   // destinations out of customer redirects, including old bookmarked links.
-  const pathname = new URL(nextPath, "https://boxsave.invalid").pathname;
-  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/") || pathname.startsWith("/q/")) return nextPath;
+  const pathname = nextUrl.pathname;
+  if (pathname === "/dashboard" || pathname.startsWith("/dashboard/")) return nextPath;
   return "/dashboard";
 }
 

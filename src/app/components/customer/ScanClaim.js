@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "./api";
-import { CustomerFrame, CustomerIcon } from "./CustomerFrame";
+import { CustomerIcon, CustomerLogo } from "./CustomerFrame";
 
 function newEventId() {
   if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
@@ -72,18 +72,18 @@ export default function ScanClaim({ token }) {
   async function switchAccount() {
     try { await api("/api/auth/logout", { method: "POST", body: "{}" }); } catch {}
     const source = new URLSearchParams(window.location.search).get("source") === "camera" ? "?source=camera" : "";
-    router.replace(`/login?next=${encodeURIComponent(`/q/${token}${source}`)}`);
+    router.replace(`/login?next=${encodeURIComponent(`/q/${encodeURIComponent(token)}${source}`)}`);
   }
 
-  return <CustomerFrame compact><main className="scan-page">
-    <div className="scan-brand"><span className="customer-mark-symbol">S</span><span>save<span>on</span>boxes</span></div>
+  return <main className="scan-page">
+    <div className="scan-brand"><CustomerLogo /></div>
     <div className={`scan-state scan-state-${state.kind}`}>
       {state.kind === "working" ? <span className="customer-spinner" /> : <span className="scan-state-icon"><CustomerIcon name={state.kind === "claimed" ? "box" : "scan"} size={25} /></span>}
       <h1>{state.kind === "working" ? "Opening your box" : state.kind === "claimed" ? "This label has been used" : "We hit a small snag"}</h1>
       <p>{state.kind === "working" ? state.message : state.kind === "claimed" ? `${state.message} Sign in with the account that first scanned it, or contact us if you need help.` : state.message}</p>
-      {state.kind === "claimed" && <button className="customer-button customer-button-primary" onClick={switchAccount}>Try another account <span aria-hidden="true">→</span></button>}
-      {state.kind === "error" && <button className="customer-button customer-button-primary" onClick={() => window.location.reload()}>Try again <span aria-hidden="true">↻</span></button>}
+      {state.kind === "claimed" && <button className="customer-button customer-button-primary" onClick={switchAccount}>Try another account</button>}
+      {state.kind === "error" && <button className="customer-button customer-button-primary" onClick={() => window.location.reload()}>Try again</button>}
       {(state.kind === "claimed" || state.kind === "error") && <Link className="customer-text-link" href="/contact">Get help with this label</Link>}
     </div>
-  </main></CustomerFrame>;
+  </main>;
 }

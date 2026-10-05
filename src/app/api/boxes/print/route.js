@@ -20,8 +20,11 @@ export async function GET(request) {
     const boxesResult = await query(`${boxSummarySelect} WHERE ${clauses.join(" AND ")} ORDER BY r.name NULLS LAST, b.box_number`, values);
     const boxes = boxesResult.rows;
     if (boxes.length) {
-      const itemResult = await query(`SELECT id, box_id AS "boxId", name, quantity, notes, sort_order AS "sortOrder"
-        FROM boxsave.box_items WHERE box_id = ANY($1::uuid[]) ORDER BY sort_order, created_at`, [boxes.map((box) => box.id)]);
+      const itemResult = await query(`SELECT i.id, i.box_id AS "boxId", i.name, i.quantity, i.notes, i.sort_order AS "sortOrder",
+          (im.item_id IS NOT NULL) AS "hasImage",
+          CASE WHEN im.item_id IS NULL THEN NULL ELSE '/api/items/' || i.id::text || '/image' END AS "imageUrl"
+        FROM boxsave.box_items i LEFT JOIN boxsave.item_images im ON im.item_id = i.id
+        WHERE i.box_id = ANY($1::uuid[]) ORDER BY i.sort_order, i.created_at`, [boxes.map((box) => box.id)]);
       const byBox = new Map();
       for (const item of itemResult.rows) {
         const list = byBox.get(item.boxId) || [];

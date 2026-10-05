@@ -77,9 +77,10 @@ export async function allocateBoxNumber(client, ownerId) {
 export async function createBox(client, { ownerId, labelId = null, roomId = null, name = null }) {
   const id = newId();
   const boxNumber = await allocateBoxNumber(client, ownerId);
+  const displayName = name ?? `Box ${boxNumber}`;
   const { rows } = await client.query(`INSERT INTO boxsave.boxes(id, owner_id, label_id, box_number, room_id, name)
     VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, owner_id, label_id, box_number, name, room_id, status, notes, fragile,
-      open_early, archived_at, created_at, updated_at`, [id, ownerId, labelId, boxNumber, roomId, name]);
+      open_early, archived_at, created_at, updated_at`, [id, ownerId, labelId, boxNumber, roomId, displayName]);
   return rows[0];
 }
 

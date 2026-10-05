@@ -25,14 +25,13 @@ function BrandHero() {
 function RoomTiles({ selectedRoom, onSelect }) {
   return <section className="room-section" aria-labelledby="room-section-title">
     <div className="room-section-heading">
-      <div><span className="eyebrow-label">SHOP BY ROOM</span><h2 id="room-section-title">Pack room by room</h2></div>
+      <div><span className="eyebrow-label">Shop by room</span><h2 id="room-section-title">Pack room by room</h2></div>
       <p>Choose a room to see the boxes that fit.</p>
     </div>
     <div className="room-grid">
       {rooms.filter((room) => room.id !== "nursery").map((room) => <button key={room.id} className={`room-card${selectedRoom === room.id ? " is-selected" : ""}`} onClick={() => onSelect(room.id)} aria-pressed={selectedRoom === room.id} aria-controls="room-products">
         <span className="room-card-image"><img src={`/boxes/${encodeURIComponent(room.image)}`} alt="" loading="lazy" /></span>
         <span className="room-card-title">{room.tile}</span>
-        <span className="room-card-arrow" aria-hidden="true">→</span>
       </button>)}
     </div>
   </section>;
@@ -53,16 +52,16 @@ export default function HomePage() {
     <section className="catalogue room-results" id="room-products" aria-label="Boxes for the selected room" data-room={activeRoom || "all"}>
       <div className="room-results-toolbar">
         <p role="status" aria-live="polite">{selectedRoom ? selectedRoom.title : "All moving boxes"} <span>· {visibleProductCount} products</span></p>
-        {activeRoom && <button onClick={() => setActiveRoom(null)}>View all boxes <span aria-hidden="true">→</span></button>}
+        {activeRoom && <button onClick={() => setActiveRoom(null)}>View all boxes</button>}
       </div>
       {visibleSections.map((section) => <ProductSection key={`${activeRoom || "all"}-${section.id}`} id={`room-product-${section.id}`} title={section.title} products={section.products} carousel />)}
     </section>
     <section className="kit-section" id="kits">
-      <div className="catalogue-intro kit-intro"><div><span className="eyebrow-label">BOX-ONLY BUNDLES</span><h2>Moving kits, made simple</h2></div><p>Standard box quantities for each home size. Add specialty boxes only for the things you own.</p></div>
+      <div className="catalogue-intro kit-intro"><div><span className="eyebrow-label">Box-only bundles</span><h2>Moving kits, made simple</h2></div><p>Standard box quantities for each home size. Add specialty boxes only for the things you own.</p></div>
       <div className="catalogue kit-catalogue"><ProductSection id="kit-row" title="Moving Kits:" icon="box" products={kits} carousel /></div>
     </section>
     <section className="catalogue supplies-section" id="extras">
-      <div className="catalogue-intro"><div><span className="eyebrow-label">PACKING SUPPLIES</span><h2>Tape, tools &amp; protection</h2></div><p>Everything you need to seal, label and protect your belongings through moving day.</p></div>
+      <div className="catalogue-intro"><div><span className="eyebrow-label">Packing supplies</span><h2>Tape, tools &amp; protection</h2></div><p>Everything you need to seal, label and protect your belongings through moving day.</p></div>
       <ProductSection id="supply-row" title="Packing Supplies & Extras:" products={supplies.filter((product) => !product.isSupplierCatalog)} carousel />
     </section>
   </main>;

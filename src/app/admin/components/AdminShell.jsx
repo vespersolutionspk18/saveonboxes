@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Activity, Boxes, CircleHelp, Command, LayoutDashboard, LogOut, Menu, PackagePlus, ShieldCheck, Users, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Activity, CircleHelp, Command, LayoutDashboard, LogOut, Menu, PackagePlus, ShieldCheck, Users, X } from "lucide-react";
 import styles from "./AdminShell.module.css";
 import { adminRequest } from "../admin-api.js";
 
@@ -23,6 +24,9 @@ export default function AdminShell({ children }) {
   const [operator, setOperator] = useState(null);
   const [authState, setAuthState] = useState("checking");
   const [signingOut, setSigningOut] = useState(false);
+  const menuButtonRef = useRef(null);
+  const drawerRef = useRef(null);
+  const drawerCloseRef = useRef(null);
   const active = navigation.find((item) => item.href === pathname) || navigation.find((item) => item.href !== "/admin" && pathname.startsWith(item.href)) || navigation[0];
 
   useEffect(() => {
@@ -33,9 +37,37 @@ export default function AdminShell({ children }) {
     return () => { alive = false; };
   }, []);
 
+  useEffect(() => {
+    if (!open) return undefined;
+    const priorOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    drawerCloseRef.current?.focus();
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") { event.preventDefault(); setOpen(false); return; }
+      if (event.key !== "Tab") return;
+      const focusable = drawerRef.current?.querySelectorAll('a[href], button:not([disabled])') || [];
+      const items = Array.from(focusable).filter((item) => item.getClientRects().length > 0);
+      if (!items.length) { event.preventDefault(); return; }
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && (document.activeElement === first || !drawerRef.current?.contains(document.activeElement))) {
+        event.preventDefault(); last.focus();
+      } else if (!event.shiftKey && (document.activeElement === last || !drawerRef.current?.contains(document.activeElement))) {
+        event.preventDefault(); first.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = priorOverflow;
+      window.removeEventListener("keydown", onKeyDown);
+      menuButtonRef.current?.focus({ preventScroll: true });
+    };
+  }, [open]);
+
   async function signOut() {
     setSigningOut(true);
     try { await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin", cache: "no-store" }); }
+    catch { /* Return to sign-in even when the network is unavailable. */ }
     finally { router.replace("/login"); router.refresh(); }
   }
 
@@ -46,12 +78,18 @@ export default function AdminShell({ children }) {
   </div>;
 
   return <div className={`${styles.shell} admin-shell`}>
-    <aside className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""}`} aria-label="Administration navigation">
-      <Link href="/admin" className={styles.brand} onClick={() => setOpen(false)}>
-        <span className={styles.brandIcon}><Boxes size={18} strokeWidth={2.2} /></span>
-        <span><strong>SaveOnBoxes</strong><small>Operations</small></span>
-      </Link>
-      <div className={styles.navLabel}>WORKSPACE</div>
+    <aside ref={drawerRef} id="admin-navigation" className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""}`} aria-label="Administration navigation" role={open ? "dialog" : undefined} aria-modal={open || undefined}>
+      <div className={styles.brandRow}>
+        <Link href="/admin" className={styles.brand} onClick={() => setOpen(false)}>
+          <span className={styles.brandLogoCrop}><Image src="/assets/Logo.png" width={2481} height={3508} alt="Save On Boxes" className={styles.brandLogoCanvas} priority /></span>
+        </Link>
+        <button ref={drawerCloseRef} type="button" className={styles.drawerClose} onClick={() => setOpen(false)} aria-label="Close navigation"><X size={19} /></button>
+      </div>
+      <div className={styles.drawerIdentity}>
+        <span className={styles.drawerAvatar}><Command size={15} /></span>
+        <span className={styles.drawerIdentityText}><strong>{operator?.email || "Administrator"}</strong><small>Super admin</small></span>
+      </div>
+      <div className={styles.navLabel}>Workspace</div>
       <nav className={styles.nav}>
         {navigation.map(({ label, href, icon: Icon }) => {
           const selected = active.href === href;
@@ -67,17 +105,17 @@ export default function AdminShell({ children }) {
 
     <div className={styles.mainColumn}>
       <header className={styles.topbar}>
-        <button className={styles.mobileMenu} aria-label={open ? "Close navigation" : "Open navigation"} onClick={() => setOpen((value) => !value)}>
+        <button ref={menuButtonRef} className={styles.mobileMenu} aria-label="Open navigation" aria-expanded={open} aria-controls="admin-navigation" onClick={() => setOpen((value) => !value)}>
           {open ? <X size={19} /> : <Menu size={19} />}
         </button>
         <div className={styles.crumb}><span>Operations</span><span className={styles.crumbSlash}>/</span><strong>{active.label}</strong></div>
         <div className={styles.topActions}>
-          <span className={styles.securePill}><ShieldCheck size={14} /> SUPER ADMIN</span>
+          <span className={styles.securePill}><ShieldCheck size={14} /> Super admin</span>
           <div className={styles.operator} title={operator?.email || "Super administrator"}><span className={styles.avatar}><Command size={15} /></span><span className={styles.operatorEmail}>{operator?.email || "Administrator"}</span></div>
           <button className={styles.signOut} disabled={signingOut} onClick={signOut} title="Sign out"><LogOut size={14} /><span>{signingOut ? "Signing out" : "Sign out"}</span></button>
         </div>
       </header>
-      <main className={styles.content}>{children}</main>
+      <main className={`${styles.content} admin-content`}>{children}</main>
     </div>
   </div>;
 }

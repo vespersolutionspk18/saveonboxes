@@ -30,7 +30,11 @@ export async function GET(request) {
     if (search) {
       searchPattern = `%${search.replace(/[\\%_]/g, "\\$&")}%`;
       const needle = add(searchPattern);
-      clauses.push(`(b.name ILIKE ${needle} ESCAPE E'\\\\' OR b.notes ILIKE ${needle} ESCAPE E'\\\\' OR EXISTS (
+      const boxNumberInput = search.match(/^(?:box(?:\s+no\.?)?\s+)?(\d+)$/i)?.[1];
+      const parsedBoxNumber = boxNumberInput ? Number(boxNumberInput) : null;
+      const boxNumber = Number.isSafeInteger(parsedBoxNumber) && parsedBoxNumber <= 2_147_483_647 ? parsedBoxNumber : null;
+      const boxNumberParameter = add(boxNumber);
+      clauses.push(`(b.name ILIKE ${needle} ESCAPE E'\\\\' OR b.notes ILIKE ${needle} ESCAPE E'\\\\' OR (${boxNumberParameter}::int IS NOT NULL AND b.box_number = ${boxNumberParameter}) OR EXISTS (
         SELECT 1 FROM boxsave.box_items si WHERE si.box_id = b.id AND (si.name ILIKE ${needle} ESCAPE E'\\\\' OR si.notes ILIKE ${needle} ESCAPE E'\\\\')
       ))`);
     }

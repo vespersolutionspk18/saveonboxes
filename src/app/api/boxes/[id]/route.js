@@ -2,6 +2,7 @@ import { z } from "zod";
 import { requireUser } from "@/lib/auth.js";
 import { query } from "@/lib/db.js";
 import { getBoxDetail } from "@/lib/box-queries.js";
+import { invalidOwnedRoomId } from "@/lib/box-room-validation.js";
 import { checkSameOrigin, errorResponse, fail, json, readJson } from "@/lib/http.js";
 
 export const runtime = "nodejs";
@@ -10,6 +11,7 @@ export const dynamic = "force-dynamic";
 const schema = z.object({
   name: z.string().trim().max(120).nullable().optional(),
   roomId: z.string().uuid().nullable().optional(),
+  originRoomId: z.string().uuid().nullable().optional(),
   status: z.enum(["packing", "packed", "unpacked"]).optional(),
   notes: z.string().max(5000).nullable().optional(),
   fragile: z.boolean().optional(),
@@ -37,11 +39,9 @@ export async function PATCH(request, context) {
     const { id } = await context.params;
     const body = schema.parse(await readJson(request, 16 * 1024));
     if (Object.keys(body).length === 0) return fail("Provide at least one box field to update", 400, "empty_update");
-    if (body.roomId) {
-      const room = await query("SELECT 1 FROM boxsave.rooms WHERE id = $1 AND owner_id = $2", [body.roomId, user.id]);
-      if (!room.rowCount) return fail("Choose a room from your account", 400, "invalid_room");
-    }
-    const fields = { name: "name", roomId: "room_id", status: "status", notes: "notes", fragile: "fragile", openEarly: "open_early" };
+    const invalidRoomId = await invalidOwnedRoomId(query, user.id, [body.roomId, body.originRoomId]);
+    if (invalidRoomId) return fail("Choose rooms from your account", 400, "invalid_room");
+    const fields = { name: "name", roomId: "room_id", originRoomId: "origin_room_id", status: "status", notes: "notes", fragile: "fragile", openEarly: "open_early" };
     const updates = [];
     const values = [user.id, id];
     for (const [key, column] of Object.entries(fields)) {

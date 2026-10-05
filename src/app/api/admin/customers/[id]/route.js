@@ -18,10 +18,15 @@ export async function GET(request, context) {
       query("SELECT (SELECT count(*)::int FROM boxsave.boxes WHERE owner_id = $1) AS boxes, " +
         "(SELECT count(*)::int FROM boxsave.boxes WHERE owner_id = $1 AND label_id IS NOT NULL) AS labels, " +
         "(SELECT count(*)::int FROM boxsave.scan_events WHERE actor_user_id = $1) AS \"scanEvents\"", [id]),
-      query("SELECT b.id, b.box_number AS \"boxNumber\", b.name, b.status, b.created_at AS \"createdAt\", " +
-        "r.name AS \"roomName\", count(i.id)::int AS \"itemCount\" FROM boxsave.boxes b " +
-        "LEFT JOIN boxsave.rooms r ON r.id = b.room_id LEFT JOIN boxsave.box_items i ON i.box_id = b.id " +
-        "WHERE b.owner_id = $1 GROUP BY b.id, r.name ORDER BY b.box_number DESC LIMIT 100", [id]),
+      query("SELECT b.id, b.box_number AS \"boxNumber\", COALESCE(NULLIF(b.name,''),'Box '||b.box_number::text) AS name, " +
+        "b.status, b.created_at AS \"createdAt\", r.name AS \"roomName\", ro.name AS \"originRoomName\", " +
+        "count(i.id)::int AS \"itemCount\", " +
+        "COALESCE(jsonb_agg(jsonb_build_object('id',i.id,'name',i.name,'quantity',i.quantity,'notes',i.notes, " +
+        "'sortOrder',i.sort_order,'hasImage',im.item_id IS NOT NULL) ORDER BY i.sort_order,i.created_at) " +
+        "FILTER (WHERE i.id IS NOT NULL),'[]'::jsonb) AS items FROM boxsave.boxes b " +
+        "LEFT JOIN boxsave.rooms r ON r.id = b.room_id LEFT JOIN boxsave.rooms ro ON ro.id = b.origin_room_id " +
+        "LEFT JOIN boxsave.box_items i ON i.box_id = b.id LEFT JOIN boxsave.item_images im ON im.item_id = i.id " +
+        "WHERE b.owner_id = $1 GROUP BY b.id, r.name, ro.name ORDER BY b.box_number DESC LIMIT 100", [id]),
       query("SELECT l.id, l.serial, l.created_at AS \"createdAt\", l.disabled_at AS \"disabledAt\", " +
         "lb.id AS \"batchId\", lb.name AS \"batchName\", b.id AS \"boxId\", b.box_number AS \"boxNumber\" " +
         "FROM boxsave.boxes b JOIN boxsave.labels l ON l.id = b.label_id " +

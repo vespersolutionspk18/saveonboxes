@@ -1,0 +1,19 @@
+{
+  "phase": "After database connection recovery fixes",
+  "executedAt": "2026-10-04T23:21:31.489Z",
+  "baseUrl": "http://localhost:3000",
+  "samples": [
+    {
+      "httpStatus": 200,
+      "elapsedMs": 4990
+    },
+    {
+      "httpStatus": 200,
+      "elapsedMs": 2617
+    },
+    {
+      "httpStatus": 200,
+      "elapsedMs": 3226
+    }
+  ]
+}

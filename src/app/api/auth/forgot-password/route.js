@@ -7,10 +7,11 @@ import { checkSameOrigin, clientAddress, errorResponse, fail, json, readJson } f
 import { normalizeEmail } from "@/lib/identity.js";
 import { appOriginReady } from "@/lib/admin-helpers.js";
 import { getRequestOrigin, resolveAppOrigin } from "@/lib/app-origin.js";
+import { safeRecoveryContinuation } from "@/lib/auth-navigation.js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const schema = z.object({ email: z.string().email().max(254) });
+const schema = z.object({ email: z.string().email().max(254), next: z.string().max(512).optional() });
 
 export async function POST(request) {
   const originFailure = checkSameOrigin(request);
@@ -33,6 +34,8 @@ export async function POST(request) {
       const origin = resolveAppOrigin({ configuredOrigin: process.env.APP_ORIGIN, requestOrigin });
       const resetUrl = new URL("/reset-password", origin);
       resetUrl.searchParams.set("token", token);
+      const continuation = safeRecoveryContinuation(body.next);
+      if (continuation) resetUrl.searchParams.set("next", continuation);
       try {
         await sendPasswordReset(rows[0].email, resetUrl.toString());
       } catch {

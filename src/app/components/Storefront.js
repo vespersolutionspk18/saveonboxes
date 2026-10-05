@@ -15,6 +15,7 @@ const storeSearchIndex = [...kits, ...boxProducts, ...supplies].map((product) =>
 export const productImage = (product) => product.image.startsWith("/") ? product.image : `/boxes/${encodeURIComponent(product.image)}`;
 export const productTitle = (product) => product.packQty ? `${product.packQty} × ${product.name}` : product.name;
 export const formatPrice = (price) => price == null ? "Price coming soon" : `USD $${price.toFixed(2)}`;
+const sentenceCase = (value) => String(value).toLowerCase().replace(/^\p{L}/u, (letter) => letter.toUpperCase());
 
 export function Icon({ name, size = 20 }) {
   const props = { width: size, height: size, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true };
@@ -52,7 +53,7 @@ export function ProductCard({ product }) {
   return <article className="product-card" data-product-id={product.id}>
     <div className="product-image-wrap">
       <button className="product-image-button" onClick={() => onQuick(product)} aria-label={`Quick view ${productTitle(product)}`}><img src={productImage(product)} alt={productTitle(product)} loading="lazy" /></button>
-      {product.badge && <div className={`product-badge${isKit ? " product-badge-kit" : " product-badge-quantity"}`}>{isKit ? `${product.badge} · ${product.boxCount} BOXES` : product.badge}</div>}
+      {product.badge && <div className={`product-badge${isKit ? " product-badge-kit" : " product-badge-quantity"}`}>{isKit ? `${sentenceCase(product.badge)} · ${product.boxCount} boxes` : sentenceCase(product.badge)}</div>}
       <div className="product-actions">
         <button aria-label={`Quick view ${productTitle(product)}`} title="Quick view" onClick={() => onQuick(product)}><Icon name="eye" size={18} /></button>
         <button aria-label={`${wished ? "Remove from" : "Add to"} wishlist: ${productTitle(product)}`} title="Add to Wishlist" onClick={() => onWish(product.id)} className={wished ? "is-wished" : ""}><Icon name="heart" size={17} /></button>

@@ -20,10 +20,10 @@ export async function POST(request) {
     const email = normalizeEmail(body.email);
     const ip = clientAddress(request);
     stage = "apply login rate limits";
-    const [ipLimit, emailLimit] = await Promise.all([
-      consumeRateLimit("login-ip", ip, 25, 15 * 60 * 1000),
-      consumeRateLimit("login-email", email, 8, 15 * 60 * 1000),
-    ]);
+    // Keep the two small upserts on one pooled connection instead of opening
+    // parallel cold connections to the Neon pooler during sign-in.
+    const ipLimit = await consumeRateLimit("login-ip", ip, 25, 15 * 60 * 1000);
+    const emailLimit = await consumeRateLimit("login-email", email, 8, 15 * 60 * 1000);
     if (!ipLimit.allowed || !emailLimit.allowed) return fail("Too many sign-in attempts. Try again later.", 429, "rate_limited");
     stage = "find account";
     const { rows } = await query("SELECT id, email, phone, role, password_hash FROM boxsave.users WHERE email = $1 AND disabled_at IS NULL LIMIT 1", [email]);

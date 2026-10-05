@@ -1,0 +1,399 @@
+{
+  "testedWidths": [
+    320,
+    390,
+    430,
+    768,
+    1280
+  ],
+  "status": "passed",
+  "checks": [
+    {
+      "screen": "dashboard",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "page": "dashboard-search",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320,
+      "screen": "dashboard"
+    },
+    {
+      "page": "dashboard-search",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430,
+      "screen": "dashboard"
+    },
+    {
+      "page": "dashboard-search",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 768,
+      "smallButtons": [],
+      "width": 768,
+      "screen": "dashboard"
+    },
+    {
+      "page": "dashboard-search",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 1280,
+      "smallButtons": [],
+      "width": 1280,
+      "screen": "dashboard"
+    },
+    {
+      "screen": "claimed-box",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "master-list",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "login",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "login",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "login",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430
+    },
+    {
+      "screen": "login",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 768,
+      "smallButtons": [],
+      "width": 768
+    },
+    {
+      "screen": "login",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 1280,
+      "smallButtons": [],
+      "width": 1280
+    },
+    {
+      "screen": "register",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "register",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "register",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430
+    },
+    {
+      "screen": "register",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 768,
+      "smallButtons": [],
+      "width": 768
+    },
+    {
+      "screen": "register",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 1280,
+      "smallButtons": [],
+      "width": 1280
+    },
+    {
+      "screen": "recovery",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "admin-overview",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "admin-overview",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "admin-overview",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430
+    },
+    {
+      "screen": "admin-overview",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 768,
+      "smallButtons": [],
+      "width": 768
+    },
+    {
+      "screen": "admin-overview",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 1280,
+      "smallButtons": [],
+      "width": 1280
+    },
+    {
+      "screen": "admin-reports",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "admin-reports",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "admin-customers",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "admin-customers",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "admin-support",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "admin-support",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "admin-audit",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "admin-audit",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "storefront-home",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "storefront-home",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "storefront-home",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430
+    },
+    {
+      "screen": "storefront-home",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 768,
+      "smallButtons": [],
+      "width": 768,
+      "smallButtonsCount": 0
+    },
+    {
+      "screen": "storefront-home",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 1280,
+      "smallButtons": [],
+      "width": 1280,
+      "smallButtonsCount": 0
+    },
+    {
+      "screen": "storefront-kits",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "cart",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "storefront-contact",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430
+    },
+    {
+      "screen": "admin-qr",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "box-detail",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 320,
+      "smallButtons": [],
+      "width": 320
+    },
+    {
+      "screen": "box-detail",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 390,
+      "smallButtons": [],
+      "width": 390
+    },
+    {
+      "screen": "box-detail",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 430,
+      "smallButtons": [],
+      "width": 430
+    },
+    {
+      "screen": "box-detail",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 768,
+      "smallButtons": [],
+      "width": 768
+    },
+    {
+      "screen": "box-detail",
+      "arrows": [],
+      "fontLoaded": true,
+      "scrollWidth": 1280,
+      "smallButtons": [],
+      "width": 1280
+    }
+  ],
+  "initialFindingsFixed": [
+    "Single-column mobile authentication",
+    "44px admin search and storefront controls"
+  ],
+  "behavior": {
+    "customerQrLoginResumed": true,
+    "adminQrLoginResumed": true,
+    "finalBuildCustomerQrLoginResumed": true,
+    "inlineOriginStayedOnBox": true,
+    "inlineDestinationStayedOnBox": true,
+    "editableNameAndBothSaves": true,
+    "optionalRooms": true,
+    "singleItemCommaPreserved": true,
+    "photoCreateAndReplaceLoaded": true,
+    "concurrentMetadataAndPhotoPreservedInventory": true,
+    "masterListOriginVisible": true,
+    "scannerEscapeClosed": true,
+    "adminDrawerEscapeRestoredFocus": true,
+    "a4PrintCssAndPlainContentVerified": true
+  },
+  "scope": "Browser viewport and local API checks; print CSS/content verified, native print preview unavailable in IAB"
+}

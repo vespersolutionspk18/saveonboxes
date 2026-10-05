@@ -11,7 +11,7 @@ export function PageIntro({ eyebrow, title, description, image, breadcrumb }) {
 }
 
 export function HelpCTA({ title = "A little help goes a long way.", description = "Tell us what you’re packing. We’ll help you choose boxes, quantities and the right protection." }) {
-  return <section className="page-help-cta"><div><span className="eyebrow-label">LET’S GET YOU PACKED</span><h2>{title}</h2><p>{description}</p></div><div className="page-help-links"><Link className="orange-button" href="/contact">Get in touch <span aria-hidden="true">→</span></Link><Link className="text-link" href="/boxes">Browse boxes</Link></div></section>;
+  return <section className="page-help-cta"><div><span className="eyebrow-label">Let’s get you packed</span><h2>{title}</h2><p>{description}</p></div><div className="page-help-links"><Link className="orange-button" href="/contact">Get in touch</Link><Link className="text-link" href="/boxes">Browse boxes</Link></div></section>;
 }
 
 export function Accordion({ items }) {

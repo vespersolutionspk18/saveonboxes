@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { api, signInDestination } from "./api";
-import { CustomerIcon } from "./CustomerFrame";
+import { CustomerIcon, CustomerLogo } from "./CustomerFrame";
 import { Button } from "../../../components/ui/button.jsx";
 import { Input } from "../../../components/ui/input.jsx";
 
@@ -37,11 +37,10 @@ export default function AuthScreen({ mode }) {
   }
 
   return <main className="auth-page">
-    <div className="auth-art" aria-hidden="true"><div className="auth-art-circle" /><div className="auth-art-copy"><span>ONE LESS THING</span><strong>Move in<br />with a plan.</strong><p>Your boxes know where they belong.</p><div className="auth-art-boxes"><i /><i /><i /></div></div></div>
+    <div className="auth-art" aria-hidden="true"><div className="auth-art-circle" /><div className="auth-art-copy"><strong>Move in<br />with a plan.</strong><p>Your boxes know where they belong.</p><div className="auth-art-boxes"><i /><i /><i /></div></div></div>
     <section className="auth-panel">
-      <Link href="/" className="customer-mark auth-mark"><span className="customer-mark-symbol">S</span><span>save<span>on</span>boxes</span></Link>
+      <Link href="/" className="customer-mark auth-mark" aria-label="Save On Boxes home"><CustomerLogo /></Link>
       <div className="auth-content">
-        <div className="customer-eyebrow">YOUR MOVING SPACE</div>
         <h1>{registering ? "Make room for a smoother move." : "Welcome back."}</h1>
         <p className="auth-lede">{registering ? "One simple account for every box, room and little thing inside." : "Your boxes and their contents are right where you left them."}</p>
         {!registering && resetNotice && <div className="recovery-sent login-reset-notice" role="status"><span className="added-check"><CustomerIcon name="check" size={15} /></span><div><strong>Password updated.</strong><p>Log in with your new password.</p></div></div>}
@@ -51,11 +50,10 @@ export default function AuthScreen({ mode }) {
           <label>Password<Input className="auth-input" autoComplete={registering ? "new-password" : "current-password"} type="password" value={values.password} onChange={(e) => setValues({ ...values, password: e.target.value })} placeholder={registering ? "At least 12 characters" : "Your password"} minLength={registering ? 12 : undefined} required /></label>
           {!registering && <Link className="forgot-password-link" href={`/forgot-password${linkQuery}`}>Forgot password?</Link>}
           {error && <p className="customer-alert" role="alert">{error}</p>}
-          <Button className="customer-button customer-button-primary auth-submit" type="submit" disabled={busy}>{busy ? "Please wait…" : registering ? "Create my account" : "Log in"}<span aria-hidden="true">→</span></Button>
+          <Button className="customer-button customer-button-primary auth-submit" type="submit" disabled={busy}>{busy ? "Please wait…" : registering ? "Create my account" : "Log in"}</Button>
         </form>
         <p className="auth-switch">{registering ? "Already have an account?" : "New to Save On Boxes?"} <Link href={`${registering ? "/login" : "/register"}${linkQuery}`}>{registering ? "Log in" : "Create an account"}</Link></p>
       </div>
-      <p className="auth-privacy">Your moving list stays private to your account.</p>
     </section>
   </main>;
 }

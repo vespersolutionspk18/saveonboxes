@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "executedAt": "2026-10-04T23:21:31.489Z",
+  "baseUrl": "http://localhost:3000",
+  "status": "passed",
+  "passed": 26,
+  "failed": 0,
+  "failure": null,
+  "checks": [
+    {
+      "name": "fixture files contain the expected box and room IDs",
+      "status": "pass"
+    },
+    {
+      "name": "super-admin QA credentials are configured",
+      "status": "pass"
+    },
+    {
+      "name": "owner fixture login",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "other customer fixture login",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "super-admin fixture login",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "owner can read fixture box 3",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "fixture box 3 has the expected tea-bag item",
+      "status": "pass"
+    },
+    {
+      "name": "fixture item starts without an image",
+      "status": "pass"
+    },
+    {
+      "name": "fixture item has no pre-existing image",
+      "status": "pass",
+      "httpStatus": 404
+    },
+    {
+      "name": "other customer can create a temporary room",
+      "status": "pass",
+      "httpStatus": 201
+    },
+    {
+      "name": "origin and destination may both be cleared",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "owner can set an editable name and both owned rooms",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "another customer's destination room is rejected without changes",
+      "status": "pass",
+      "httpStatus": 400
+    },
+    {
+      "name": "another customer's origin room is rejected without changes",
+      "status": "pass",
+      "httpStatus": 400
+    },
+    {
+      "name": "customer cannot read admin customer list or detail",
+      "status": "pass",
+      "listStatus": 403,
+      "detailStatus": 403
+    },
+    {
+      "name": "owner JPEG photo upload succeeds",
+      "status": "pass",
+      "httpStatus": 201
+    },
+    {
+      "name": "owner receives normalized private WebP",
+      "status": "pass",
+      "httpStatus": 200,
+      "format": "webp",
+      "width": 500,
+      "height": 625,
+      "privateNoStore": true
+    },
+    {
+      "name": "super-admin can read the private item photo",
+      "status": "pass",
+      "httpStatus": 200
+    },
+    {
+      "name": "well-formed unsupported SVG is rejected without overwriting the photo",
+      "status": "pass",
+      "httpStatus": 415,
+      "existingPhotoUnchanged": true
+    },
+    {
+      "name": "oversized multipart photo is rejected without overwriting",
+      "status": "pass",
+      "httpStatus": 413,
+      "existingPhotoUnchanged": true
+    },
+    {
+      "name": "other customer cannot read, upload or delete the photo",
+      "status": "pass",
+      "readStatus": 404,
+      "uploadStatus": 404,
+      "deleteStatus": 404
+    },
+    {
+      "name": "anonymous image read, upload and delete are rejected",
+      "status": "pass",
+      "readStatus": 401,
+      "uploadStatus": 401,
+      "deleteStatus": 401
+    },
+    {
+      "name": "owner can delete the photo and item metadata clears",
+      "status": "pass",
+      "httpStatus": 200,
+      "hasImage": false
+    },
+    {
+      "name": "cleanup: photoRemoved",
+      "status": "pass"
+    },
+    {
+      "name": "cleanup: boxFieldsRestored",
+      "status": "pass"
+    },
+    {
+      "name": "cleanup: temporaryRoomRemoved",
+      "status": "pass"
+    }
+  ],
+  "cleanup": {
+    "photoRemoved": true,
+    "boxFieldsRestored": true,
+    "temporaryRoomRemoved": true
+  },
+  "apiAuthLoginSamples": [
+    {
+      "httpStatus": 200,
+      "elapsedMs": 4990
+    },
+    {
+      "httpStatus": 200,
+      "elapsedMs": 2617
+    },
+    {
+      "httpStatus": 200,
+      "elapsedMs": 3226
+    }
+  ]
+}

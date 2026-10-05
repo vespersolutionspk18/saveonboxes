@@ -26,20 +26,24 @@ export async function POST(request, context) {
     const result = await withTransaction(async (client) => {
       const labelResult = await client.query("SELECT l.id, l.serial, l.batch_id, l.disabled_at, " +
         "b.id AS box_id, b.owner_id AS owner_id, b.box_number AS box_number, b.room_id AS room_id, " +
-        "r.name AS room_name, r.color AS room_color, " +
+        "b.origin_room_id AS origin_room_id, b.name AS box_name, r.name AS room_name, r.color AS room_color, " +
+        "ro.name AS origin_room_name, ro.color AS origin_room_color, " +
         "(SELECT count(*)::int FROM boxsave.box_items i WHERE i.box_id = b.id) AS item_count, u.email AS owner_email " +
         "FROM boxsave.labels l LEFT JOIN boxsave.boxes b ON b.label_id = l.id " +
-        "LEFT JOIN boxsave.rooms r ON r.id = b.room_id LEFT JOIN boxsave.users u ON u.id = b.owner_id " +
+        "LEFT JOIN boxsave.rooms r ON r.id = b.room_id LEFT JOIN boxsave.rooms ro ON ro.id = b.origin_room_id " +
+        "LEFT JOIN boxsave.users u ON u.id = b.owner_id " +
         "WHERE l.id = $1 FOR UPDATE OF l", [labelId]);
       const label = labelResult.rows[0];
       if (!label) return { missingLabel: true };
       const before = { serial: label.serial, disabled: Boolean(label.disabled_at), ownerId: label.owner_id,
         ownerEmail: label.owner_email, boxId: label.box_id, boxNumber: label.box_number,
-        roomId: label.room_id, roomName: label.room_name, itemCount: label.item_count };
+        roomId: label.room_id, roomName: label.room_name, originRoomId: label.origin_room_id,
+        originRoomName: label.origin_room_name, itemCount: label.item_count };
       let boxId = label.box_id;
       let ownerId = label.owner_id;
       let boxNumber = label.box_number;
       let roomId = label.room_id;
+      let originRoomId = label.origin_room_id;
       let disabledAt = label.disabled_at;
       let operation;
 
@@ -56,21 +60,23 @@ export async function POST(request, context) {
           operation = "label_assigned";
         } else if (ownerId !== target.id) {
           const nextNumber = await allocateBoxNumber(client, target.id);
-          let newRoomId = null;
-          if (label.room_name) {
-            const existingRoom = await client.query("SELECT id FROM boxsave.rooms WHERE owner_id = $1 AND lower(name) = lower($2) LIMIT 1", [target.id, label.room_name]);
-            if (existingRoom.rowCount) newRoomId = existingRoom.rows[0].id;
-            else {
-              const room = await client.query("INSERT INTO boxsave.rooms(id, owner_id, name, color) VALUES ($1, $2, $3, $4) RETURNING id",
-                [randomUUID(), target.id, label.room_name, label.room_color]);
-              newRoomId = room.rows[0].id;
-            }
-          }
-          await client.query("UPDATE boxsave.boxes SET owner_id = $2, box_number = $3, room_id = $4, updated_at = now() WHERE id = $1",
-            [boxId, target.id, nextNumber, newRoomId]);
+          const mapRoom = async (roomName, roomColor) => {
+            if (!roomName) return null;
+            const existingRoom = await client.query("SELECT id FROM boxsave.rooms WHERE owner_id = $1 AND lower(name) = lower($2) LIMIT 1", [target.id, roomName]);
+            if (existingRoom.rowCount) return existingRoom.rows[0].id;
+            const room = await client.query("INSERT INTO boxsave.rooms(id, owner_id, name, color) VALUES ($1, $2, $3, $4) RETURNING id",
+              [randomUUID(), target.id, roomName, roomColor]);
+            return room.rows[0].id;
+          };
+          const newRoomId = await mapRoom(label.room_name, label.room_color);
+          const newOriginRoomId = await mapRoom(label.origin_room_name, label.origin_room_color);
+          const displayName = label.box_name === `Box ${label.box_number}` ? `Box ${nextNumber}` : label.box_name;
+          await client.query("UPDATE boxsave.boxes SET owner_id = $2, box_number = $3, name = $4, room_id = $5, origin_room_id = $6, updated_at = now() WHERE id = $1",
+            [boxId, target.id, nextNumber, displayName, newRoomId, newOriginRoomId]);
           ownerId = target.id;
           boxNumber = nextNumber;
           roomId = newRoomId;
+          originRoomId = newOriginRoomId;
           operation = "label_owner_corrected";
         } else {
           operation = "label_assignment_confirmed";
@@ -85,7 +91,7 @@ export async function POST(request, context) {
         }
         operation = "label_" + body.action + "d";
       }
-      const after = { serial: label.serial, disabled: Boolean(disabledAt), ownerId, boxId, boxNumber, roomId,
+      const after = { serial: label.serial, disabled: Boolean(disabledAt), ownerId, boxId, boxNumber, roomId, originRoomId,
         itemCount: label.item_count || 0 };
       await writeAdminAudit(client, { actorId: admin.id, action: operation, targetType: "label",
         targetId: label.id, reason: body.reason, before, after });
@@ -96,8 +102,10 @@ export async function POST(request, context) {
     if (result.missingLabel) return fail("Label not found", 404, "label_not_found");
     if (result.invalidCustomer) return fail("Choose an active customer account", 400, "invalid_customer");
     const label = await query("SELECT l.id, l.serial, l.batch_id AS \"batchId\", l.disabled_at AS \"disabledAt\", " +
-      "b.id AS \"boxId\", b.owner_id AS \"ownerId\", b.box_number AS \"boxNumber\", b.room_id AS \"roomId\" " +
-      "FROM boxsave.labels l LEFT JOIN boxsave.boxes b ON b.label_id = l.id WHERE l.id = $1", [result.labelId]);
+      "b.id AS \"boxId\", b.owner_id AS \"ownerId\", b.box_number AS \"boxNumber\", " +
+      "b.room_id AS \"roomId\", r.name AS \"roomName\", b.origin_room_id AS \"originRoomId\", ro.name AS \"originRoomName\" " +
+      "FROM boxsave.labels l LEFT JOIN boxsave.boxes b ON b.label_id = l.id " +
+      "LEFT JOIN boxsave.rooms r ON r.id = b.room_id LEFT JOIN boxsave.rooms ro ON ro.id = b.origin_room_id WHERE l.id = $1", [result.labelId]);
     return json({ label: label.rows[0], boxId: result.boxId, ownerId: result.ownerId, auditEventId: result.auditEventId });
   } catch (error) {
     if (error?.name === "ZodError") return fail("Choose an action, provide a support reason, and select a customer when assigning", 400, "invalid_correction");

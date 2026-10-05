@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Suspense } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Activity, AlertTriangle, ArrowRight, Boxes, CheckCircle2, CircleAlert, CircleUserRound, Clock3, LoaderCircle, Mail, Phone, Search, ShieldCheck, UserRoundCog, X } from "lucide-react";
+import { Activity, AlertTriangle, Boxes, CheckCircle2, CircleAlert, CircleUserRound, Clock3, LoaderCircle, Mail, Phone, Search, ShieldCheck, UserRoundCog, X } from "lucide-react";
 import { Badge } from "../../../components/ui/badge.jsx";
 import { Button } from "../../../components/ui/button.jsx";
 import { Card } from "../../../components/ui/card.jsx";
@@ -111,7 +112,7 @@ function SupportContent() {
   }
 
   return <div className={`${styles.page} ${supportStyles.page}`}>
-    <div className={styles.pageHeading}><div><div className={styles.kicker}><span className={styles.liveDot} /> CUSTOMER CARE</div><h1>Customers &amp; support</h1><p>Look up an account or label, inspect activity, and make audited corrections.</p></div><Badge variant="warning"><ShieldCheck size={12} /> Admin actions are logged</Badge></div>
+    <div className={styles.pageHeading}><div><h1>Support desk</h1><p>Look up an account or label, inspect activity, and make audited corrections.</p></div><Badge variant="warning"><ShieldCheck size={12} /> Admin actions are logged</Badge></div>
     {error && <div className={styles.errorBanner} role="alert"><CircleAlert size={16} /><span>{error}</span>{error.toLowerCase().includes("access") && <Link href="/login">Sign in</Link>}</div>}
     {notice && <div className={supportStyles.notice} role="status"><CheckCircle2 size={15} /><span>{notice}</span><button type="button" onClick={() => setNotice("")} aria-label="Dismiss"><X size={14} /></button></div>}
 
@@ -123,11 +124,11 @@ function SupportContent() {
             <Input value={labelQuery} onChange={(event) => setLabelQuery(event.target.value)} placeholder="Serial, email or phone" autoComplete="off" />
             <Button type="submit" size="sm" disabled={searching}>{searching ? <LoaderCircle size={14} className="animate-spin" /> : <Search size={14} />} Find</Button>
           </form>
-          <div className={supportStyles.resultsGroup}><div className={supportStyles.resultsLabel}>LABELS <span>{labelResults.length}</span></div>
+          <div className={supportStyles.resultsGroup}><div className={supportStyles.resultsLabel}>Labels <span>{labelResults.length}</span></div>
             {labelResults.map((label) => <button key={label.id} type="button" className={`${supportStyles.resultRow} ${selectedLabel?.id === label.id ? supportStyles.resultSelected : ""}`} onClick={() => openLabel(label.id)}><span className={supportStyles.resultGlyph}><Boxes size={14} /></span><span className={supportStyles.resultText}><strong>{label.serial}</strong><small>{label.owner?.email || "Unclaimed label"}</small></span><Badge variant={statusVariant(label.status)}>{label.status}</Badge></button>)}
             {labelResults.length === 0 && <div className={supportStyles.resultEmpty}>Search to find matching labels.</div>}
           </div>
-          <div className={supportStyles.resultsGroup}><div className={supportStyles.resultsLabel}>CUSTOMERS <span>{customerResults.length}</span></div>
+          <div className={supportStyles.resultsGroup}><div className={supportStyles.resultsLabel}>Customers <span>{customerResults.length}</span></div>
             {customerResults.map((customer) => <button key={customer.id} type="button" className={`${supportStyles.resultRow} ${selectedCustomer?.id === customer.id ? supportStyles.resultSelected : ""}`} onClick={() => openCustomer(customer.id)}><span className={`${supportStyles.resultGlyph} ${supportStyles.customerGlyph}`}><CircleUserRound size={14} /></span><span className={supportStyles.resultText}><strong>{customer.email}</strong><small>{customer.phone || "No phone"} · {fmtNumber(customer.boxesCount)} boxes</small></span><Badge variant={statusVariant(customer.status)}>{customer.status || "Active"}</Badge></button>)}
             {customerResults.length === 0 && <div className={supportStyles.resultEmpty}>Customer matches appear here.</div>}
           </div>
@@ -139,7 +140,11 @@ function SupportContent() {
           <div className={supportStyles.customerMetrics}><span><strong>{fmtNumber(selectedCustomer.counts?.boxes ?? selectedCustomer.boxesCount ?? selectedCustomer.boxes?.length)}</strong><small>Boxes</small></span><span><strong>{fmtNumber(selectedCustomer.counts?.labels ?? selectedCustomer.labelsCount)}</strong><small>Labels</small></span><span><strong>{fmtNumber(selectedCustomer.counts?.scanEvents)}</strong><small>Scans</small></span></div>
           <div className={supportStyles.accountAccess}><div className={supportStyles.accountAccessTop}><div><strong>Account access</strong><small>Disabling revokes active sessions. Customer records remain.</small></div><Badge variant={selectedCustomer.status?.toLowerCase() === "disabled" ? "warning" : "success"}>{selectedCustomer.status || "active"}</Badge></div><Textarea maxLength={1000} minLength={10} value={accountReason} onChange={(event) => setAccountReason(event.target.value)} placeholder="Reason required for account access change" /><Button type="button" size="sm" variant={selectedCustomer.status?.toLowerCase() === "disabled" ? "secondary" : "destructive"} disabled={savingAccount} onClick={changeCustomerAccess}>{savingAccount ? <><LoaderCircle size={13} className="animate-spin" /> Saving</> : selectedCustomer.status?.toLowerCase() === "disabled" ? "Enable account" : "Disable account"}</Button></div>
           <div className={supportStyles.customerSubhead}>Recent boxes</div>
-          <div className={supportStyles.customerBoxes}>{(selectedCustomer.boxes || []).slice(0, 6).map((box) => <div className={supportStyles.customerBox} key={box.id}><span>Box {box.boxNumber}</span><small>{box.roomName || box.room?.name || "Room not set"}</small><Badge variant={statusVariant(box.status)}>{box.status || "Packing"}</Badge></div>)}{!selectedCustomer.boxes?.length && <span className={supportStyles.resultEmpty}>No box details available.</span>}</div>
+          <div className={supportStyles.customerBoxes}>{(selectedCustomer.boxes || []).slice(0, 6).map((box) => <article className={supportStyles.customerBox} key={box.id}>
+            <div className={supportStyles.customerBoxTop}><div><strong>{box.name || `Box ${box.boxNumber}`}</strong><small>Box {box.boxNumber}</small></div><Badge variant={statusVariant(box.status)}>{box.status || "Packing"}</Badge></div>
+            <div className={supportStyles.roomPair}><span><small>Origin</small><strong>{box.originRoomName || "Not set"}</strong></span><span><small>Destination</small><strong>{box.roomName || box.room?.name || "Not set"}</strong></span></div>
+            <small className={supportStyles.contentsCount}>{fmtNumber(box.items?.length)} inventory records</small>
+          </article>)}{!selectedCustomer.boxes?.length && <span className={supportStyles.resultEmpty}>No box details available.</span>}</div>
         </Card>}
       </div>
 
@@ -147,12 +152,24 @@ function SupportContent() {
         <Card className={supportStyles.labelDetail}>
           <div className={supportStyles.cardHeading}><div className={`${supportStyles.headingIcon} ${supportStyles.labelGlyph}`}><Boxes size={15} /></div><div><h2>Label record</h2><p>Ownership, claim activity and scan history</p></div>{selectedLabel && <Badge variant={statusVariant(selectedLabel.status)}>{selectedLabel.status}</Badge>}</div>
           {loadingLabel ? <div className={supportStyles.detailLoading}><LoaderCircle size={17} className="animate-spin" /> Loading label history…</div> : selectedLabel ? <>
-            <div className={supportStyles.labelSummary}><div><span>PRINTED SERIAL</span><strong>{selectedLabel.serial}</strong></div><div><span>BATCH</span><strong>{selectedLabel.batchName || String(selectedLabel.batchId || "—").slice(0, 8)}</strong></div><div><span>BOX NUMBER</span><strong>{selectedLabel.box?.boxNumber ? `Box ${selectedLabel.box.boxNumber}` : "—"}</strong></div><div><span>SCAN COUNT</span><strong>{fmtNumber(selectedLabel.scans)}</strong></div></div>
-            <div className={supportStyles.ownerBlock}><span className={supportStyles.ownerIcon}><CircleUserRound size={16} /></span><div><small>CURRENT ACCOUNT</small><strong>{selectedLabel.owner?.email || "Unclaimed"}</strong><span>{selectedLabel.owner?.phone || (selectedLabel.owner ? "Phone unavailable" : "No account connected")}</span></div><span className={supportStyles.claimedAt}>{selectedLabel.claimedAt ? `Claimed ${fmtDate(selectedLabel.claimedAt)}` : "Not claimed"}</span></div>
-            <div className={supportStyles.eventGrid}><div><small>FIRST SCAN</small><strong>{fmtDateTime(selectedLabel.firstScannedAt)}</strong></div><div><small>LAST SCAN</small><strong>{fmtDateTime(selectedLabel.lastScannedAt)}</strong></div><div><small>LABEL CREATED</small><strong>{fmtDateTime(selectedLabel.createdAt)}</strong></div></div>
-            <div className={supportStyles.sectionLabel}><Activity size={13} /> SCAN EVENTS</div>
+            <div className={supportStyles.labelSummary}><div><span>Printed serial</span><strong>{selectedLabel.serial}</strong></div><div><span>Batch</span><strong>{selectedLabel.batchName || String(selectedLabel.batchId || "—").slice(0, 8)}</strong></div><div><span>Box number</span><strong>{selectedLabel.box?.boxNumber ? `Box ${selectedLabel.box.boxNumber}` : "—"}</strong></div><div><span>Scan count</span><strong>{fmtNumber(selectedLabel.scans)}</strong></div></div>
+            {selectedLabel.box && <section className={supportStyles.boxContents} aria-label="Box details and inventory">
+              <div className={supportStyles.boxContentsHeading}><div><h3>{selectedLabel.box.name || `Box ${selectedLabel.box.boxNumber}`}</h3><p>Rooms and inventory</p></div></div>
+              <div className={supportStyles.roomPair}><span><small>Origin</small><strong>{selectedLabel.box.originRoomName || "Not set"}</strong></span><span><small>Destination</small><strong>{selectedLabel.box.roomName || "Not set"}</strong></span></div>
+              <div className={supportStyles.inventoryList}>
+                {(selectedLabel.items || []).map((item) => <div className={supportStyles.inventoryItem} key={item.id}>
+                  {item.hasImage && <Image className={supportStyles.itemPhoto} src={`/api/items/${encodeURIComponent(item.id)}/image`} width={48} height={48} alt={`Photo of ${item.name}`} unoptimized loading="lazy" onError={(event) => { event.currentTarget.hidden = true; }} />}
+                  <span className={supportStyles.inventoryText}><strong>{item.name}</strong>{item.notes && <small>{item.notes}</small>}</span>
+                  <span className={supportStyles.itemQuantity}>× {fmtNumber(item.quantity)}</span>
+                </div>)}
+                {!selectedLabel.items?.length && <div className={supportStyles.noEvents}>No inventory items recorded for this box.</div>}
+              </div>
+            </section>}
+            <div className={supportStyles.ownerBlock}><span className={supportStyles.ownerIcon}><CircleUserRound size={16} /></span><div><small>Current account</small><strong>{selectedLabel.owner?.email || "Unclaimed"}</strong><span>{selectedLabel.owner?.phone || (selectedLabel.owner ? "Phone unavailable" : "No account connected")}</span></div><span className={supportStyles.claimedAt}>{selectedLabel.claimedAt ? `Claimed ${fmtDate(selectedLabel.claimedAt)}` : "Not claimed"}</span></div>
+            <div className={supportStyles.eventGrid}><div><small>First scan</small><strong>{fmtDateTime(selectedLabel.firstScannedAt)}</strong></div><div><small>Last scan</small><strong>{fmtDateTime(selectedLabel.lastScannedAt)}</strong></div><div><small>Label created</small><strong>{fmtDateTime(selectedLabel.createdAt)}</strong></div></div>
+            <div className={supportStyles.sectionLabel}><Activity size={13} /> Scan events</div>
             <div className={supportStyles.timeline}>{events.slice(0, 12).map((event, index) => <div className={supportStyles.timelineItem} key={event.id || index}><span className={supportStyles.timelineDot} /><div><strong>{event.outcome || event.eventKind || event.type || "Scan recorded"}</strong><small>{event.actor?.email || event.accountEmail || event.email || event.source || "Customer scan"}</small></div><time>{fmtDateTime(event.createdAt || event.at)}</time></div>)}{!events.length && <div className={supportStyles.noEvents}>No scan events recorded.</div>}</div>
-            <div className={supportStyles.sectionLabel}><ShieldCheck size={13} /> ADMIN HISTORY</div>
+            <div className={supportStyles.sectionLabel}><ShieldCheck size={13} /> Admin history</div>
             <div className={supportStyles.auditList}>{audit.slice(0, 6).map((entry, index) => <div className={supportStyles.auditItem} key={entry.id || index}><span><strong>{entry.action || entry.type || "Admin change"}</strong><small>{entry.reason || "No reason provided"} · {entry.actor?.email || entry.actorEmail || entry.adminEmail || "Administrator"}</small></span><time>{fmtDateTime(entry.createdAt || entry.at)}</time></div>)}{!audit.length && <div className={supportStyles.noEvents}>No admin corrections recorded.</div>}</div>
           </> : <div className={supportStyles.emptyDetail}><Boxes size={22} /><strong>Select a label</strong><span>Choose a result to inspect its ownership, scans and support history.</span></div>}
         </Card>
@@ -164,13 +181,13 @@ function SupportContent() {
             {action === "assign" && <label className={supportStyles.formField}><span>Assign to</span><Select value={targetUser} onValueChange={setTargetUser}><SelectTrigger><SelectValue placeholder="Find customer first" /></SelectTrigger><SelectContent>{customerResults.map((customer) => <SelectItem key={customer.id} value={customer.id}>{customer.email}</SelectItem>)}</SelectContent></Select></label>}
             {action === "assign" && selectedCustomer && <div className={supportStyles.targetHint}>Selected customer: <strong>{selectedCustomer.email}</strong></div>}
             <label className={supportStyles.formField}><span>Reason <em>required · at least 10 characters</em></span><Textarea maxLength={1000} value={reason} onChange={(event) => setReason(event.target.value)} placeholder="What happened and why is this correction needed?" required minLength={10} /></label>
-            <div className={supportStyles.correctionFoot}><span><AlertTriangle size={13} /> A claimed QR stays attached to its one box. Owner corrections preserve its record and inventory.</span><Button type="submit" size="sm" disabled={saving || !selectedLabel}>{saving ? <><LoaderCircle size={13} className="animate-spin" /> Saving</> : <>Apply correction <ArrowRight size={13} /></>}</Button></div>
+            <div className={supportStyles.correctionFoot}><span><AlertTriangle size={13} /> A claimed QR stays attached to its one box. Owner corrections preserve its record and inventory.</span><Button type="submit" size="sm" disabled={saving || !selectedLabel}>{saving ? <><LoaderCircle size={13} className="animate-spin" /> Saving</> : "Apply correction"}</Button></div>
             {!selectedLabel && <small className={supportStyles.requiresLabel}>Select a label before applying an action.</small>}
           </form>
         </Card>
       </div>
     </div>
-    <div className={supportStyles.auditHint}><Clock3 size={13} /><span>Corrections record who changed a label, the previous state, the new state, and the required reason.</span><Link href="/admin/audit">Open full audit log <ArrowRight size={12} /></Link></div>
+    <div className={supportStyles.auditHint}><Clock3 size={13} /><span>Corrections record who changed a label, the previous state, the new state, and the required reason.</span><Link href="/admin/audit">Open full audit log</Link></div>
   </div>;
 }
 

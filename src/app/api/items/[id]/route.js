@@ -32,7 +32,9 @@ export async function PATCH(request, context) {
       RETURNING i.id, i.box_id AS "boxId", i.name, i.quantity, i.notes, i.sort_order AS "sortOrder", i.updated_at AS "updatedAt"`, values);
     if (!result.rowCount) return fail("Inventory item not found", 404, "item_not_found");
     await query("UPDATE boxsave.boxes SET updated_at = now() WHERE id = $1", [result.rows[0].boxId]);
-    return json({ item: result.rows[0] });
+    const image = await query("SELECT EXISTS (SELECT 1 FROM boxsave.item_images WHERE item_id = $1) AS present", [id]);
+    const hasImage = image.rows[0].present;
+    return json({ item: { ...result.rows[0], hasImage, imageUrl: hasImage ? `/api/items/${encodeURIComponent(id)}/image` : null } });
   } catch (error) {
     if (error?.name === "ZodError") return fail("Inventory details are invalid", 400, "invalid_item");
     return errorResponse(error);

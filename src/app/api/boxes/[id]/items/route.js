@@ -22,7 +22,7 @@ export async function POST(request, context) {
       VALUES ($1, $2, $3, $4, $5) RETURNING id, name, quantity, notes, sort_order AS "sortOrder", created_at AS "createdAt", updated_at AS "updatedAt"`,
     [randomUUID(), boxId, body.name, body.quantity, body.notes?.trim() || null]);
     await query("UPDATE boxsave.boxes SET updated_at = now() WHERE id = $1", [boxId]);
-    return json({ item: result.rows[0] }, { status: 201 });
+    return json({ item: { ...result.rows[0], hasImage: false, imageUrl: null } }, { status: 201 });
   } catch (error) {
     if (error?.name === "ZodError") return fail("Enter an item name and valid quantity", 400, "invalid_item");
     return errorResponse(error);

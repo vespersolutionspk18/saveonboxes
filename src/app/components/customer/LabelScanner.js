@@ -7,7 +7,7 @@ function tokenFromValue(value) {
   try {
     const url = new URL(value, window.location.origin);
     const host = url.hostname.toLowerCase();
-    const approvedHost = host === window.location.hostname.toLowerCase() || host === "saveonboxes.com" || host.endsWith(".saveonboxes.com");
+    const approvedHost = host === window.location.hostname.toLowerCase() || host === "saveonboxes.com" || host.endsWith(".saveonboxes.com") || host === "saveonboxes.vercel.app";
     if (!approvedHost || !/^\/q\/[A-Za-z0-9_-]{24,64}\/?$/.test(url.pathname)) return null;
     return url.pathname.split("/")[2];
   } catch { return null; }
