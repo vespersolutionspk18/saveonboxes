@@ -36,7 +36,8 @@ export async function GET(request) {
       const boxNumberParameter = add(boxNumber);
       clauses.push(`(b.name ILIKE ${needle} ESCAPE E'\\\\' OR b.notes ILIKE ${needle} ESCAPE E'\\\\' OR (${boxNumberParameter}::int IS NOT NULL AND b.box_number = ${boxNumberParameter}) OR EXISTS (
         SELECT 1 FROM boxsave.box_items si WHERE si.box_id = b.id AND (si.name ILIKE ${needle} ESCAPE E'\\\\' OR si.notes ILIKE ${needle} ESCAPE E'\\\\')
-      ))`);
+      ) OR EXISTS (SELECT 1 FROM boxsave.labels sl WHERE sl.id = b.label_id AND (sl.short_serial ILIKE ${needle} ESCAPE E'\\\\' OR sl.serial ILIKE ${needle} ESCAPE E'\\\\'))
+      )`);
     }
     const where = clauses.join(" AND ");
     const rows = await query(`${boxSummarySelect} WHERE ${where} ORDER BY b.box_number DESC LIMIT ${add(pageSize)} OFFSET ${add(offset)}`, values);

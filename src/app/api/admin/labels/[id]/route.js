@@ -10,11 +10,11 @@ export async function GET(request, context) {
   if (admin instanceof Response) return admin;
   try {
     const { id } = await context.params;
-    const result = await query("SELECT l.id, l.serial, l.batch_id AS \"batchId\", lb.name AS \"batchName\", " +
+    const result = await query("SELECT l.id, l.short_serial AS serial, l.serial AS \"legacySerial\", l.batch_id AS \"batchId\", lb.name AS \"batchName\", " +
       labelStatusSql + " AS status, l.created_at AS \"createdAt\", l.disabled_at AS \"disabledAt\", " +
       "b.created_at AS \"claimedAt\", CASE WHEN u.id IS NULL THEN NULL ELSE jsonb_build_object('id',u.id,'email',u.email) END AS owner, " +
       "CASE WHEN b.id IS NULL THEN NULL ELSE jsonb_build_object('id',b.id,'boxNumber',b.box_number, " +
-      "'name',COALESCE(NULLIF(b.name,''),'Box '||b.box_number::text),'status',b.status,'roomId',b.room_id,'roomName',r.name, " +
+      "'name',COALESCE(NULLIF(btrim(b.name),''),l.short_serial,'Box '||b.box_number::text),'defaultName',COALESCE(l.short_serial,'Box '||b.box_number::text),'labelSerial',l.short_serial,'status',b.status,'roomId',b.room_id,'roomName',r.name, " +
       "'originRoomId',b.origin_room_id,'originRoomName',ro.name) END AS box, " +
       "count(e.id) FILTER (WHERE e.event_kind IN ('url_open','camera_scan'))::int AS scans, " +
       "min(e.created_at) FILTER (WHERE e.event_kind IN ('url_open','camera_scan')) AS \"firstScannedAt\", " +

@@ -6,6 +6,7 @@ import { encryptToken, tokenHash } from "@/lib/label-tokens.js";
 import { newToken } from "@/lib/security.js";
 import { checkSameOrigin, errorResponse, fail, json, readJson } from "@/lib/http.js";
 import { getRequestOrigin } from "@/lib/app-origin.js";
+import { encodeShortSerial, reserveShortSerialRange } from "@/lib/short-serials.js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -80,12 +81,17 @@ export async function POST(request) {
     }
     const layout = body.layout;
     const result = await withTransaction(async (client) => {
+      const reservation = await reserveShortSerialRange(client, body.quantity);
+      if (!reservation) return { serialExhausted: true };
+      for (let index = 0; index < labels.length; index += 1) {
+        labels[index].shortSerial = encodeShortSerial(reservation.start + index);
+      }
       await client.query("INSERT INTO boxsave.label_batches(id, name, quantity, layout, created_by) VALUES ($1, $2, $3, $4::jsonb, $5)",
         [batchId, name, body.quantity, JSON.stringify(layout), admin.id]);
-      await client.query("INSERT INTO boxsave.labels(id, batch_id, serial, token_hash, token_ciphertext) " +
-        "SELECT * FROM unnest($1::uuid[], $2::uuid[], $3::text[], $4::text[], $5::text[])", [
+      await client.query("INSERT INTO boxsave.labels(id, batch_id, serial, token_hash, token_ciphertext, short_serial) " +
+        "SELECT * FROM unnest($1::uuid[], $2::uuid[], $3::text[], $4::text[], $5::text[], $6::text[])", [
         labels.map((label) => label.id), Array(body.quantity).fill(batchId), labels.map((label) => label.serial),
-        labels.map((label) => label.hash), labels.map((label) => label.cipher),
+        labels.map((label) => label.hash), labels.map((label) => label.cipher), labels.map((label) => label.shortSerial),
       ]);
       await writeAdminAudit(client, { actorId: admin.id, action: "label_batch_generated", targetType: "label_batch", targetId: batchId,
         reason: "Generated " + body.quantity + " labels", after: { id: batchId, name, quantity: body.quantity, layout } });
@@ -95,10 +101,12 @@ export async function POST(request) {
         "FROM boxsave.labels l LEFT JOIN boxsave.boxes b ON b.label_id = l.id WHERE l.batch_id = $1", [batchId]);
       return stats.rows[0];
     });
+    if (result.serialExhausted) return fail("All four-character sticker serials have been issued. No labels were created.", 409, "short_serial_exhausted");
     const batch = { id: batchId, name, quantity: body.quantity, claimedCount: result.claimedCount,
       disabledCount: result.disabledCount, availableCount: result.availableCount,
       scanCount: 0, createdAt: now.toISOString(), status: "generated", layout };
-    return json({ batch, labelsCreated: labels.length }, { status: 201 });
+    return json({ batch, labelsCreated: labels.length,
+      firstSerial: labels[0]?.shortSerial || null, lastSerial: labels.at(-1)?.shortSerial || null }, { status: 201 });
   } catch (error) {
     if (error?.name === "ZodError") return fail("Choose a quantity from 1 to 5,000 and a valid print layout", 400, "invalid_batch");
     if (error?.message === "QR token encryption key is not configured") return fail("QR export encryption is not configured", 503, "qr_secret_unavailable");

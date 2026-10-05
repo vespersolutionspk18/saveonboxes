@@ -1,23 +1,24 @@
-import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
+import { PDFDocument, StandardFonts } from "pdf-lib";
 import QRCode from "qrcode";
 import JSZip from "jszip";
 import { requireAdmin, decryptToken, tokenEncryptionReady, appOriginReady, labelUrl, qrSvg } from "@/lib/admin-helpers.js";
+import { drawStickerPdfPage, stickerGeometry } from "@/app/admin/sticker-artwork.js";
 import { query } from "@/lib/db.js";
 import { errorResponse, fail } from "@/lib/http.js";
 import { getRequestOrigin } from "@/lib/app-origin.js";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-const mmToPt = (mm) => mm * 72 / 25.4;
 const csvCell = (value) => '"' + String(value ?? "").replaceAll('"', '""') + '"';
 
 async function renderPdf(labels, layout, requestOrigin) {
-  const cardWidthMm = Number(layout.cardWidthMm || 85.6);
-  const cardHeightMm = Number(layout.cardHeightMm || 54);
-  const width = mmToPt(cardWidthMm);
-  const height = mmToPt(cardHeightMm);
+  const geometry = stickerGeometry(layout);
+  const width = geometry.widthMm * 72 / 25.4;
+  const height = geometry.heightMm * 72 / 25.4;
   const doc = await PDFDocument.create();
-  doc.setTitle("BoxSave label batch");
+  const firstSerial = labels[0]?.serial;
+  const lastSerial = labels[labels.length - 1]?.serial;
+  doc.setTitle(firstSerial ? `BoxSave QR labels ${firstSerial}-${lastSerial}` : "BoxSave QR labels");
   doc.setSubject("Scratch to reveal QR box labels");
   const regular = await doc.embedFont(StandardFonts.Helvetica);
   const bold = await doc.embedFont(StandardFonts.HelveticaBold);
@@ -25,17 +26,7 @@ async function renderPdf(labels, layout, requestOrigin) {
     const page = doc.addPage([width, height]);
     const qrPng = await QRCode.toBuffer(labelUrl(label.token, requestOrigin), { type: "png", width: 768, margin: 4, errorCorrectionLevel: "Q" });
     const image = await doc.embedPng(qrPng);
-    const qr = mmToPt(Math.min(24, cardHeightMm - 18, cardWidthMm * 0.33));
-    const x = mmToPt(6);
-    const y = (height - qr) / 2 + mmToPt(2);
-    page.drawImage(image, { x, y, width: qr, height: qr });
-    page.drawText("SCRATCH TO REVEAL", { x: mmToPt(7), y: mmToPt(3.4), size: 6.5, font: regular, color: rgb(0.25, 0.25, 0.25) });
-    const textX = x + qr + mmToPt(5);
-    if (layout.includeSerial !== false) page.drawText(label.serial, { x: textX, y: height - mmToPt(16), size: 8, font: bold, color: rgb(0.08, 0.08, 0.08) });
-    if (layout.includeWriteFields !== false) {
-      page.drawText("BOX NO. __________________", { x: textX, y: height - mmToPt(27), size: 7, font: regular, color: rgb(0.18, 0.18, 0.18) });
-      page.drawText("ROOM ____________________", { x: textX, y: height - mmToPt(37), size: 7, font: regular, color: rgb(0.18, 0.18, 0.18) });
-    }
+    drawStickerPdfPage(page, { image, serial: label.serial, layout, fonts: { regular, bold } });
   }
   return Buffer.from(await doc.save());
 }
@@ -72,27 +63,31 @@ export async function GET(request, context) {
     if (requestedLimit > 500) return fail("Each export is limited to 500 labels; request the next offset for the following part", 413, "export_part_too_large");
     const limit = Math.max(1, requestedLimit);
     if (offset >= total) return fail("Export offset is outside this batch", 400, "invalid_export_range");
-    const data = await query("SELECT serial, token_ciphertext AS cipher FROM boxsave.labels WHERE batch_id = $1 ORDER BY serial LIMIT $2 OFFSET $3", [id, limit, offset]);
+    const data = await query("SELECT short_serial AS serial, serial AS legacy_serial, token_ciphertext AS cipher FROM boxsave.labels WHERE batch_id = $1 ORDER BY serial LIMIT $2 OFFSET $3", [id, limit, offset]);
     const layout = batch.layout || {};
-    const labels = data.rows.map((row) => ({ serial: row.serial, token: decryptToken(row.cipher) }));
-    const stem = "boxsave-batch-" + id;
+    const labels = data.rows.map((row) => ({ serial: row.serial, legacySerial: row.legacy_serial, token: decryptToken(row.cipher) }));
+    if (!labels.length) return fail("No labels were found in this batch export range", 404, "batch_labels_not_found");
+    const serialRange = labels.length === 1 ? labels[0].serial : `${labels[0].serial}-${labels[labels.length - 1].serial}`;
+    const stem = `boxsave-batch-${id}-${serialRange}`;
     const range = { offset, count: labels.length, total };
     const part = "-" + String(offset + 1).padStart(6, "0") + "-" + String(offset + labels.length).padStart(6, "0");
     if (format === "pdf") return attachment(await renderPdf(labels, layout, requestOrigin), "application/pdf", stem + part + ".pdf", range);
 
     const zip = new JSZip();
     const svgFolder = zip.folder("svg");
-    const rows = ["serial,batchId,status,cardWidthMm,cardHeightMm,artworkFile"];
+    const rows = ["serial,legacySerial,batchId,status,cardWidthMm,cardHeightMm,artworkFile"];
     for (const label of labels) {
       const svg = await qrSvg(label.token, label.serial, layout, requestOrigin);
       svgFolder.file(label.serial + ".svg", svg);
-      rows.push([label.serial, id, "issued", layout.cardWidthMm || 85.6, layout.cardHeightMm || 54,
+      rows.push([label.serial, label.legacySerial, id, "issued", layout.cardWidthMm || 85.6, layout.cardHeightMm || 54,
         "svg/" + label.serial + ".svg"].map(csvCell).join(","));
     }
     zip.file("manifest.csv", rows.join("\n") + "\n");
     zip.file("layout.json", JSON.stringify({ batchId: id, name: batch.name, offset, count: labels.length, total,
-      cardWidthMm: layout.cardWidthMm || 85.6, cardHeightMm: layout.cardHeightMm || 54 }, null, 2));
-    if (format === "zip") zip.folder("pdf").file("batch" + part + ".pdf", await renderPdf(labels, layout, requestOrigin));
+      firstSerial: labels[0].serial, lastSerial: labels[labels.length - 1].serial,
+      cardWidthMm: layout.cardWidthMm || 85.6, cardHeightMm: layout.cardHeightMm || 54,
+      serialPrinted: true, includeWriteFields: layout.includeWriteFields !== false }, null, 2));
+    if (format === "zip") zip.folder("pdf").file(`batch-${serialRange}${part}.pdf`, await renderPdf(labels, layout, requestOrigin));
     const bytes = await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE", compressionOptions: { level: 6 } });
     return attachment(bytes, "application/zip", stem + part + (format === "svg" ? "-svg" : "") + ".zip", range);
   } catch (error) {

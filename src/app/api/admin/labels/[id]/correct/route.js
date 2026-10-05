@@ -24,7 +24,7 @@ export async function POST(request, context) {
     const labelId = params.id;
     const body = schema.parse(await readJson(request, 8 * 1024));
     const result = await withTransaction(async (client) => {
-      const labelResult = await client.query("SELECT l.id, l.serial, l.batch_id, l.disabled_at, " +
+      const labelResult = await client.query("SELECT l.id, l.short_serial, l.serial, l.batch_id, l.disabled_at, " +
         "b.id AS box_id, b.owner_id AS owner_id, b.box_number AS box_number, b.room_id AS room_id, " +
         "b.origin_room_id AS origin_room_id, b.name AS box_name, r.name AS room_name, r.color AS room_color, " +
         "ro.name AS origin_room_name, ro.color AS origin_room_color, " +
@@ -35,7 +35,7 @@ export async function POST(request, context) {
         "WHERE l.id = $1 FOR UPDATE OF l", [labelId]);
       const label = labelResult.rows[0];
       if (!label) return { missingLabel: true };
-      const before = { serial: label.serial, disabled: Boolean(label.disabled_at), ownerId: label.owner_id,
+      const before = { serial: label.short_serial, legacySerial: label.serial, disabled: Boolean(label.disabled_at), ownerId: label.owner_id,
         ownerEmail: label.owner_email, boxId: label.box_id, boxNumber: label.box_number,
         roomId: label.room_id, roomName: label.room_name, originRoomId: label.origin_room_id,
         originRoomName: label.origin_room_name, itemCount: label.item_count };
@@ -70,7 +70,8 @@ export async function POST(request, context) {
           };
           const newRoomId = await mapRoom(label.room_name, label.room_color);
           const newOriginRoomId = await mapRoom(label.origin_room_name, label.origin_room_color);
-          const displayName = label.box_name === `Box ${label.box_number}` ? `Box ${nextNumber}` : label.box_name;
+          const hasDefaultName = !label.box_name?.trim() || label.box_name === label.short_serial || label.box_name === `Box ${label.box_number}`;
+          const displayName = hasDefaultName ? label.short_serial : label.box_name;
           await client.query("UPDATE boxsave.boxes SET owner_id = $2, box_number = $3, name = $4, room_id = $5, origin_room_id = $6, updated_at = now() WHERE id = $1",
             [boxId, target.id, nextNumber, displayName, newRoomId, newOriginRoomId]);
           ownerId = target.id;
@@ -91,7 +92,7 @@ export async function POST(request, context) {
         }
         operation = "label_" + body.action + "d";
       }
-      const after = { serial: label.serial, disabled: Boolean(disabledAt), ownerId, boxId, boxNumber, roomId, originRoomId,
+      const after = { serial: label.short_serial, legacySerial: label.serial, disabled: Boolean(disabledAt), ownerId, boxId, boxNumber, roomId, originRoomId,
         itemCount: label.item_count || 0 };
       await writeAdminAudit(client, { actorId: admin.id, action: operation, targetType: "label",
         targetId: label.id, reason: body.reason, before, after });
@@ -101,7 +102,7 @@ export async function POST(request, context) {
     });
     if (result.missingLabel) return fail("Label not found", 404, "label_not_found");
     if (result.invalidCustomer) return fail("Choose an active customer account", 400, "invalid_customer");
-    const label = await query("SELECT l.id, l.serial, l.batch_id AS \"batchId\", l.disabled_at AS \"disabledAt\", " +
+    const label = await query("SELECT l.id, l.short_serial AS serial, l.serial AS \"legacySerial\", l.batch_id AS \"batchId\", l.disabled_at AS \"disabledAt\", " +
       "b.id AS \"boxId\", b.owner_id AS \"ownerId\", b.box_number AS \"boxNumber\", " +
       "b.room_id AS \"roomId\", r.name AS \"roomName\", b.origin_room_id AS \"originRoomId\", ro.name AS \"originRoomName\" " +
       "FROM boxsave.labels l LEFT JOIN boxsave.boxes b ON b.label_id = l.id " +

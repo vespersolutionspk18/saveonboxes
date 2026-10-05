@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, boxNumber } from "./api";
+import { api, boxDisplayName, boxStickerSerial } from "./api";
 import { CustomerFrame, CustomerIcon, EmptyState, LoadingState, PageHeading } from "./CustomerFrame";
 import { Input } from "../../../components/ui/input.jsx";
 import { Badge } from "../../../components/ui/badge.jsx";
@@ -114,7 +114,7 @@ export default function Dashboard() {
       <PageHeading title="My boxes" description="Find what you packed and know where it belongs." action={<button className="customer-button customer-button-primary" type="button" onClick={() => setScannerOpen(true)}><CustomerIcon name="scan" size={18} /> Scan label</button>} />
 
       <section className="customer-toolbar" aria-label="Find and filter boxes">
-        <label className="customer-search"><CustomerIcon name="search" size={19} /><Input className="customer-search-input" value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search every box and item" aria-label="Search boxes and contents" /></label>
+        <label className="customer-search"><CustomerIcon name="search" size={19} /><Input className="customer-search-input" value={searchText} onChange={(e) => setSearchText(e.target.value)} placeholder="Search items, name or label serial" aria-label="Search items, box name or label serial" /></label>
         <div className="customer-filters">
           <label className="filter-select"><span className="sr-only">Filter by room</span><select value={roomId} onChange={(e) => setRoomId(e.target.value)}><option value="">All rooms</option>{rooms.map((room) => <option key={room.id} value={room.id}>{room.name}</option>)}</select></label>
           <label className="filter-select"><span className="sr-only">Filter by stage</span><select value={status} onChange={(e) => setStatus(e.target.value)}><option value="">All stages</option><option value="packing">Packing</option><option value="packed">Packed</option><option value="unpacked">Unpacked</option></select></label>
@@ -138,8 +138,7 @@ export default function Dashboard() {
       {error && <div className="customer-alert" role="alert">{error} <button onClick={load}>Try again</button></div>}
       {loading ? <LoadingState /> : boxes.length === 0 ? <EmptyState title={anyFilter ? "Nothing found yet" : "Your first box is one scan away"} description={anyFilter ? "Try another word or clear a filter." : "Scratch the cover from a Save On Boxes label, then scan its QR code while signed in. We’ll add the box for you."} action={anyFilter ? <button className="customer-button customer-button-quiet" onClick={() => { setSearchText(""); setQuery(""); setRoomId(""); setStatus(""); }}>Clear search</button> : <button className="customer-button customer-button-primary" onClick={() => setScannerOpen(true)}>Scan a label</button>} /> : <div className="box-list">
         {boxes.map((box) => <Link className="box-row" key={box.id} href={`/dashboard/boxes/${encodeURIComponent(box.id)}`}>
-          <span className="box-row-number">{boxNumber(box)}</span>
-          <span className="box-row-main">{box.name && box.name !== boxNumber(box) && <strong>{box.name}</strong>}<span className="box-row-destination">{box.room?.name || "Room not set"}</span>
+          <span className="box-row-main"><strong className="box-row-name">{boxDisplayName(box)}</strong>{boxStickerSerial(box) && <span className="box-row-serial">Label serial {boxStickerSerial(box)}</span>}<span className="box-row-destination">{box.room?.name || "Room not set"}</span>
             {query && box.matchingItems?.length > 0 ? <span className="box-match">Found: {box.matchingItems.slice(0, 3).map((item) => `${item.name}${item.quantity > 1 ? ` ×${item.quantity}` : ""}`).join(" · ")}</span> : <span className="box-row-count">{box.itemCount || 0} {box.itemCount === 1 ? "item" : "items"}</span>}
           </span>
           <Badge variant={box.status === "packed" ? "success" : box.status === "unpacked" ? "muted" : "warning"} className={`status-pill status-${box.status || "packing"}`}>{statusLabels[box.status] || "Packing"}</Badge>

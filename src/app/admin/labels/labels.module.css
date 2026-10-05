@@ -22,7 +22,9 @@
 .previewScratch { display: flex; flex: 1; align-items: center; justify-content: center; gap: 6px; margin: 5px 0; border-radius: 5px; background: radial-gradient(#B9C8D4 1px, transparent 1px) 0 0 / 6px 6px, #E7EEF5; color: #17324B; }
 .previewScratch > span { max-width: 54px; font-size: 7px; font-weight: 800; line-height: 1.25; letter-spacing: -.015em; }
 .previewQr { display: grid; width: 36px; height: 36px; flex: 0 0 auto; place-items: center; background: #17324B; color: #FFFFFF; font-size: 8px; font-weight: 700; }
-.previewMeta { display: flex; justify-content: space-between; gap: 6px; color: #586C7C; font-size: 7px; letter-spacing: 0; }
+.previewMeta { display: flex; align-items: center; justify-content: space-between; gap: 6px; color: #586C7C; font-size: 7px; letter-spacing: 0; }
+.previewMeta strong { color: #17324B; font-size: 14px; font-weight: 850; letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.previewMeta span { font-size: 7px; }
 .layoutText { display: grid; min-width: 0; gap: 4px; color: #586C7C; font-size: 13px; line-height: 1.4; }
 .layoutText strong { margin-bottom: 2px; color: #17324B; font-size: 15px; }
 .layoutText small { margin-top: 3px; color: #586C7C; font-size: 12px; line-height: 1.4; }
@@ -77,8 +79,8 @@
 .exportRange { color: #586C7C; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .exportLink { display: inline-flex; min-width: 66px; min-height: 44px; align-items: center; justify-content: center; gap: 6px; padding: 0 10px; border-radius: 9px; background: #FFFFFF; color: #17324B; font-size: 13px; font-weight: 700; transition: background .14s ease, color .14s ease; }
 .exportLink:hover { background: #E7EEF5; color: #17324B; }
-.exportPrimary { background: #17324B; color: #FFFFFF; }
-.exportPrimary:hover { background: #274963; color: #FFFFFF; }
+.exports .exportPrimary { background: #17324B; color: #FFFFFF; }
+.exports .exportPrimary:hover { background: #274963; color: #FFFFFF; }
 .emptyBatch { display: grid; min-height: 110px; grid-column: 1 / -1; place-content: center; justify-items: center; gap: 7px; color: #586C7C; text-align: center; }
 .emptyBatch strong { color: #17324B; font-size: 15px; }
 .emptyBatch span { font-size: 13px; }
@@ -110,7 +112,7 @@
 .labelTable :global([data-slot="badge"]) { padding: 5px 9px; font-size: 12px; }
 .serial { color: #17324B; font-size: 13px; font-weight: 750; font-variant-numeric: tabular-nums; }
 .serial:hover { color: #A9430A; }
-.boxSub { display: block; margin-top: 3px; color: #586C7C; font-size: 12px; }
+.legacySerial { display: block; margin-top: 3px; color: #586C7C; font-size: 12px; }
 .dim { color: #586C7C; }
 .numberCell { text-align: right !important; }
 .rowAction { display: inline-flex; min-width: 56px; min-height: 44px; align-items: center; justify-content: center; padding: 0 8px; border-radius: 8px; color: #17324B; font-size: 13px; font-weight: 700; }
@@ -167,6 +169,8 @@
   .previewCard { width: 40%; }
   .previewQr { width: 30px; height: 30px; }
   .previewScratch > span { max-width: 42px; }
+  .previewMeta strong { font-size: 11px; letter-spacing: .06em; }
+  .previewMeta span { font-size: 6px; }
   .layoutText { gap: 3px; font-size: 12px; }
   .layoutText strong { font-size: 14px; }
   .layoutText small { font-size: 12px; }

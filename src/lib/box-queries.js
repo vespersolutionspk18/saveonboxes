@@ -1,12 +1,14 @@
 export async function getBoxDetail(client, ownerId, boxId, includeArchived = false) {
   const { rows } = await client.query(`
-    SELECT b.id, b.box_number AS "boxNumber", COALESCE(NULLIF(b.name, ''), 'Box ' || b.box_number::text) AS name,
+    SELECT b.id, b.box_number AS "boxNumber", CASE WHEN NULLIF(btrim(b.name), '') IS NULL OR b.name = 'Box ' || b.box_number::text
+        THEN COALESCE(l.short_serial, 'Box ' || b.box_number::text) ELSE b.name END AS name,
+      COALESCE(l.short_serial, 'Box ' || b.box_number::text) AS "defaultName", l.short_serial AS "labelSerial",
       b.room_id AS "roomId", b.origin_room_id AS "originRoomId",
       CASE WHEN r.id IS NULL THEN NULL ELSE jsonb_build_object('id', r.id, 'name', r.name, 'color', r.color) END AS room,
       CASE WHEN ro.id IS NULL THEN NULL ELSE jsonb_build_object('id', ro.id, 'name', ro.name, 'color', ro.color) END AS "originRoom",
       b.status, b.notes, b.fragile, b.open_early AS "openEarly", b.archived_at AS "archivedAt",
       b.created_at AS "createdAt", b.updated_at AS "updatedAt"
-    FROM boxsave.boxes b LEFT JOIN boxsave.rooms r ON r.id = b.room_id
+    FROM boxsave.boxes b LEFT JOIN boxsave.labels l ON l.id = b.label_id LEFT JOIN boxsave.rooms r ON r.id = b.room_id
     LEFT JOIN boxsave.rooms ro ON ro.id = b.origin_room_id
     WHERE b.owner_id = $1 AND b.id = $2 ${includeArchived ? "" : "AND b.archived_at IS NULL"} LIMIT 1`, [ownerId, boxId]);
   if (!rows[0]) return null;
@@ -19,13 +21,15 @@ export async function getBoxDetail(client, ownerId, boxId, includeArchived = fal
 }
 
 export const boxSummarySelect = `
-  SELECT b.id, b.box_number AS "boxNumber", COALESCE(NULLIF(b.name, ''), 'Box ' || b.box_number::text) AS name,
+  SELECT b.id, b.box_number AS "boxNumber", CASE WHEN NULLIF(btrim(b.name), '') IS NULL OR b.name = 'Box ' || b.box_number::text
+      THEN COALESCE(l.short_serial, 'Box ' || b.box_number::text) ELSE b.name END AS name,
+    COALESCE(l.short_serial, 'Box ' || b.box_number::text) AS "defaultName", l.short_serial AS "labelSerial",
     b.room_id AS "roomId", b.origin_room_id AS "originRoomId",
     CASE WHEN r.id IS NULL THEN NULL ELSE jsonb_build_object('id', r.id, 'name', r.name, 'color', r.color) END AS room,
     CASE WHEN ro.id IS NULL THEN NULL ELSE jsonb_build_object('id', ro.id, 'name', ro.name, 'color', ro.color) END AS "originRoom",
     b.status, b.notes, b.fragile, b.open_early AS "openEarly", b.archived_at AS "archivedAt",
     b.created_at AS "createdAt", b.updated_at AS "updatedAt",
     item_count.count AS "itemCount"
-  FROM boxsave.boxes b LEFT JOIN boxsave.rooms r ON r.id = b.room_id
+  FROM boxsave.boxes b LEFT JOIN boxsave.labels l ON l.id = b.label_id LEFT JOIN boxsave.rooms r ON r.id = b.room_id
   LEFT JOIN boxsave.rooms ro ON ro.id = b.origin_room_id
   LEFT JOIN LATERAL (SELECT count(*)::int AS count FROM boxsave.box_items i WHERE i.box_id = b.id) item_count ON true`;

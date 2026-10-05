@@ -71,6 +71,7 @@
 .labelSummary > div { display: grid; min-width: 0; gap: 5px; padding: 10px; border-radius: 9px; background: #F1F6FA; }
 .labelSummary span { overflow-wrap: anywhere; color: #586C7C; font-size: 12px; font-weight: 650; }
 .labelSummary strong { overflow-wrap: anywhere; color: #17324B; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.labelSummary small { color: #586C7C; font-size: 11px; line-height: 1.25; overflow-wrap: anywhere; }
 .boxContents { display: grid; min-width: 0; gap: 10px; margin-top: 12px; padding: 12px; border-radius: 11px; background: #F1F6FA; }
 .boxContentsHeading h3 { margin: 0; overflow-wrap: anywhere; color: #17324B; font-size: 16px; font-weight: 700; letter-spacing: -.025em; }
 .boxContentsHeading p { margin: 3px 0 0; color: #586C7C; font-size: 12px; }

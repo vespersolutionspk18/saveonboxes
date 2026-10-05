@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, boxNumber } from "./api";
+import { api, boxDisplayName, boxStickerSerial } from "./api";
 import { CustomerFrame, CustomerIcon, LoadingState, PageHeading } from "./CustomerFrame";
 import { Badge } from "../../../components/ui/badge.jsx";
 
@@ -45,13 +45,17 @@ export default function MasterList() {
         <div className="master-list-meta"><span>{boxes.length} {boxes.length === 1 ? "box" : "boxes"}</span><span>{boxes.reduce((n, box) => n + (box.items?.length || 0), 0)} inventory lines</span><span>Printed {new Date().toLocaleDateString()}</span></div>
         {grouped.map(([room, entries]) => <section className="master-room" key={room}>
             <h2><span className="master-room-dot" />{room}<span className="master-room-count">{entries.length}</span></h2>
-          <div className="master-boxes">{entries.map((box) => <article className="master-box" key={box.id}>
-            <div className="master-box-heading"><strong>{boxNumber(box)}</strong>{box.name && box.name !== boxNumber(box) && <span>{box.name}</span>}<Badge variant={box.status === "packed" ? "success" : box.status === "unpacked" ? "muted" : "warning"} className={`status-pill status-${box.status || "packing"}`}>{statusLabels[box.status] || "Packing"}</Badge></div>
-            {(box.originRoom?.name || rooms.find((room) => room.id === box.originRoomId)?.name) && <p className="master-box-origin">From {box.originRoom?.name || rooms.find((room) => room.id === box.originRoomId)?.name}</p>}
-            {(box.fragile || box.openEarly) && <p className="master-flags">{[box.fragile && "Handle with care", box.openEarly && "Open first"].filter(Boolean).join(" · ")}</p>}
-            {box.items?.length ? <ul>{box.items.map((item) => <li key={item.id || `${box.id}-${item.name}`}><span>{item.name}</span><span>× {item.quantity || 1}</span></li>)}</ul> : <p className="master-empty-inventory">No inventory added</p>}
-            {box.notes && <p className="master-notes">{box.notes}</p>}
-          </article>)}</div>
+          <div className="master-boxes">{entries.map((box) => {
+            const stickerSerial = boxStickerSerial(box);
+            const originRoomName = box.originRoom?.name || rooms.find((room) => room.id === box.originRoomId)?.name;
+            return <article className="master-box" key={box.id}>
+              <div className="master-box-heading"><strong>{boxDisplayName(box)}</strong>{stickerSerial && <span className="master-box-serial">Label serial {stickerSerial}</span>}<Badge variant={box.status === "packed" ? "success" : box.status === "unpacked" ? "muted" : "warning"} className={`status-pill status-${box.status || "packing"}`}>{statusLabels[box.status] || "Packing"}</Badge></div>
+              {originRoomName && <p className="master-box-origin">From {originRoomName}</p>}
+              {(box.fragile || box.openEarly) && <p className="master-flags">{[box.fragile && "Handle with care", box.openEarly && "Open first"].filter(Boolean).join(" · ")}</p>}
+              {box.items?.length ? <ul>{box.items.map((item) => <li key={item.id || `${box.id}-${item.name}`}><span>{item.name}</span><span>× {item.quantity || 1}</span></li>)}</ul> : <p className="master-empty-inventory">No inventory added</p>}
+              {box.notes && <p className="master-notes">{box.notes}</p>}
+            </article>;
+          })}</div>
         </section>)}
       </>}
     </main>

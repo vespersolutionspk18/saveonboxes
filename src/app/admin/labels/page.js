@@ -94,9 +94,10 @@ function LabelProductionContent() {
     if (!Number.isInteger(amount) || amount < 1 || amount > LIMIT) { setError(`Choose a whole number from 1 to ${LIMIT.toLocaleString()}.`); return; }
     setCreating(true); setError(""); setNotice(null);
     try {
-      const result = await adminRequest("/api/admin/batches", { method: "POST", body: JSON.stringify({ quantity: amount, name: batchName.trim() || undefined, layout: { cardWidthMm: 85.6, cardHeightMm: 54, cardsPerPage: 1, includeSerial: true, includeWriteFields: true } }) });
+      const result = await adminRequest("/api/admin/batches", { method: "POST", body: JSON.stringify({ quantity: amount, name: batchName.trim() || undefined, layout: { cardWidthMm: 85.6, cardHeightMm: 54, cardsPerPage: 1, includeWriteFields: true } }) });
       const created = result.batch;
-      setBatchName(""); setPage(1); setBatchPage(1); setNotice({ count: Number(result.labelsCreated) || amount, batch: created });
+      const serials = [...new Set([result.firstSerial, result.lastSerial].filter(Boolean))];
+      setBatchName(""); setPage(1); setBatchPage(1); setNotice({ count: Number(result.labelsCreated) || amount, batch: created, serials });
       setRefreshKey((key) => key + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (reason) { setError(reason.message); }
@@ -110,7 +111,7 @@ function LabelProductionContent() {
     </div>
 
     {error && <div className={styles.errorBanner} role="alert"><CircleAlert size={16} /><span>{error}</span>{(error.toLowerCase().includes("access") || error.toLowerCase().includes("sign in")) && <Link href="/login">Sign in</Link>}</div>}
-    {notice && <div className={pageStyles.successNotice} role="status"><span className={pageStyles.successIcon}><Check size={15} /></span><div><strong>{notice.count === 1 ? "1 unique label created and saved" : `${fmtNumber(notice.count)} unique labels created and saved`}</strong><small>{notice.batch?.name || `Batch ${String(notice.batch?.id || "").slice(0, 8)}`} is ready. Exports contain the saved label identifiers.</small></div><button type="button" onClick={() => setNotice(null)} aria-label="Dismiss"><X size={15} /></button></div>}
+    {notice && <div className={pageStyles.successNotice} role="status"><span className={pageStyles.successIcon}><Check size={15} /></span><div><strong>{notice.count === 1 ? "1 unique label created and saved" : `${fmtNumber(notice.count)} unique labels created and saved`}</strong><small>{notice.batch?.name || `Batch ${String(notice.batch?.id || "").slice(0, 8)}`} is ready. {notice.serials?.length ? `Printed serials: ${notice.serials.join(" · ")}${notice.count > notice.serials.length ? " · …" : ""}.` : "Open the registry to view its printed serials."}</small></div><button type="button" onClick={() => setNotice(null)} aria-label="Dismiss"><X size={15} /></button></div>}
 
     <div className={pageStyles.productionGrid}>
       <Card className={pageStyles.generatorCard}>
@@ -119,8 +120,8 @@ function LabelProductionContent() {
           <label className={pageStyles.quantityField}><span>How many labels?</span><div className={pageStyles.quantityInput}><Input type="number" min="1" max={LIMIT} step="1" required value={quantity} onChange={(event) => setQuantity(event.target.value)} aria-label="Number of labels to generate" /><span>labels</span></div><small>1–{LIMIT.toLocaleString()} per batch. Generate another batch at any time.</small></label>
           <label className={pageStyles.batchNameField}><span>Batch name <em>optional</em></span><Input maxLength={80} placeholder="e.g. October retail run" value={batchName} onChange={(event) => setBatchName(event.target.value)} /></label>
           <div className={pageStyles.layoutPreview}>
-            <div className={pageStyles.previewCard} aria-hidden="true"><div className={pageStyles.previewLogo}>SaveOnBoxes</div><div className={pageStyles.previewScratch}><div className={pageStyles.previewQr}>QR</div><span>Scratch to reveal</span></div><div className={pageStyles.previewMeta}><span>BX-008241</span><span>Box no. ____</span></div></div>
-            <div className={pageStyles.layoutText}><strong>Gift-card format</strong><span>85.6 × 54 mm · one label per PDF page</span><span>Serial and write-in box number included</span><span>Scratch-off QR area needs printer proofing</span><small>Preview artwork is decorative and cannot be scanned.</small></div>
+            <div className={pageStyles.previewCard} aria-hidden="true"><div className={pageStyles.previewLogo}>SaveOnBoxes</div><div className={pageStyles.previewScratch}><div className={pageStyles.previewQr}>QR</div><span>Scratch to reveal</span></div><div className={pageStyles.previewMeta}><strong>A7K2</strong><span>Name · Room</span></div></div>
+            <div className={pageStyles.layoutText}><strong>Gift-card format</strong><span>85.6 × 54 mm · one label per PDF page</span><span>Four-character serial on every sticker</span><span>Optional name and room write-in fields</span><small>Preview artwork is decorative and cannot be scanned.</small></div>
           </div>
           <Button type="submit" className={pageStyles.generateButton} disabled={creating}>
             {creating ? <><LoaderCircle className="animate-spin" size={15} /> Saving labels…</> : <><PackagePlus size={15} /> Generate &amp; save labels</>}
@@ -173,7 +174,7 @@ function LabelProductionContent() {
         <Table className={pageStyles.labelTable}>
           <TableHeader><TableRow><TableHead>Label serial</TableHead><TableHead>Batch</TableHead><TableHead>State</TableHead><TableHead>Account</TableHead><TableHead className={pageStyles.numberCell}>Scans</TableHead><TableHead>First scan</TableHead><TableHead>Last scan</TableHead><TableHead>Actions</TableHead></TableRow></TableHeader>
           <TableBody>{loading ? Array.from({ length: 5 }, (_, i) => <TableRow key={i}><TableCell colSpan={8}><div className={pageStyles.loadingRow}>Loading label records…</div></TableCell></TableRow>) : labels.map((label) => <TableRow key={label.id}>
-            <TableCell><Link className={pageStyles.serial} href={`/admin/support?label=${encodeURIComponent(label.id)}`}>{label.serial}</Link><small className={pageStyles.boxSub}>{label.box?.boxNumber ? `Box ${label.box.boxNumber}` : "Unassigned"}</small></TableCell>
+            <TableCell><Link className={pageStyles.serial} href={`/admin/support?label=${encodeURIComponent(label.id)}`}>{label.serial}</Link>{label.legacySerial && label.legacySerial !== label.serial && <small className={pageStyles.legacySerial}>Earlier serial {label.legacySerial}</small>}</TableCell>
             <TableCell>{label.batchName || String(label.batchId || "—").slice(0, 8)}</TableCell><TableCell><Badge variant={statusVariant(label.status)}>{label.status}</Badge></TableCell><TableCell>{label.owner?.email || <span className={pageStyles.dim}>—</span>}</TableCell><TableCell className={pageStyles.numberCell}>{fmtNumber(label.scans)}</TableCell><TableCell>{fmtDate(label.firstScannedAt)}</TableCell><TableCell>{fmtDate(label.lastScannedAt)}</TableCell><TableCell><Link className={pageStyles.rowAction} href={`/admin/support?label=${encodeURIComponent(label.id)}`}>Open</Link></TableCell>
           </TableRow>)}</TableBody>
         </Table>

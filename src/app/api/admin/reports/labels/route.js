@@ -53,18 +53,18 @@ function parseFilters(params) {
   const search = (params.get("query") || "").trim().slice(0, 120);
   if (search) {
     const pattern = add("%" + search.replace(/[\\%_]/g, "\\$&") + "%");
-    clauses.push("(l.serial ILIKE " + pattern + " ESCAPE E'\\\\' OR lb.name ILIKE " + pattern +
+    clauses.push("(l.short_serial ILIKE " + pattern + " ESCAPE E'\\\\' OR l.serial ILIKE " + pattern + " ESCAPE E'\\\\' OR lb.name ILIKE " + pattern +
       " ESCAPE E'\\\\' OR u.email ILIKE " + pattern + " ESCAPE E'\\\\' OR b.box_number::text = " + add(search) + ")");
   }
   return { where: clauses.length ? "WHERE " + clauses.join(" AND ") : "", values, scanDateSql };
 }
 
 function selectedSql(scanDateSql) {
-  return "SELECT l.id, l.serial, l.batch_id AS \"batchId\", lb.name AS \"batchName\", " +
+  return "SELECT l.id, l.short_serial AS serial, l.serial AS \"legacySerial\", l.batch_id AS \"batchId\", lb.name AS \"batchName\", " +
   labelStatusSql + " AS status, l.created_at AS \"createdAt\", l.disabled_at AS \"disabledAt\", " +
   "b.created_at AS \"claimedAt\", " +
   "CASE WHEN u.id IS NULL THEN NULL ELSE jsonb_build_object('id',u.id,'email',u.email) END AS owner, " +
-  "CASE WHEN b.id IS NULL THEN NULL ELSE jsonb_build_object('id',b.id,'boxNumber',b.box_number,'name',b.name) END AS box, " +
+  "CASE WHEN b.id IS NULL THEN NULL ELSE jsonb_build_object('id',b.id,'boxNumber',b.box_number,'name',COALESCE(NULLIF(btrim(b.name),''),l.short_serial,'Box '||b.box_number::text),'defaultName',COALESCE(l.short_serial,'Box '||b.box_number::text),'labelSerial',l.short_serial) END AS box, " +
   "coalesce(ev.scans,0)::int AS scans, ev.first_scanned_at AS \"firstScannedAt\", ev.last_scanned_at AS \"lastScannedAt\" " +
   baseSql(scanDateSql);
 }
@@ -84,10 +84,10 @@ export async function GET(request) {
     if (format === "csv") {
       if (total > 50000) return fail("Narrow the filters to export at most 50,000 labels at a time", 413, "report_too_large");
       const rows = await query(selectedSql(filters.scanDateSql) + filters.where + " ORDER BY l.created_at DESC, l.serial LIMIT 50000", filters.values);
-      const headers = ["serial", "status", "batchId", "batchName", "ownerEmail", "boxNumber", "scans", "firstScannedAt", "lastScannedAt", "claimedAt", "createdAt"];
+      const headers = ["serial", "legacySerial", "status", "batchId", "batchName", "ownerEmail", "boxNumber", "scans", "firstScannedAt", "lastScannedAt", "claimedAt", "createdAt"];
       const lines = [headers.join(",")];
       for (const row of rows.rows) lines.push([
-        row.serial, row.status, row.batchId, row.batchName, row.owner?.email, row.box?.boxNumber,
+        row.serial, row.legacySerial, row.status, row.batchId, row.batchName, row.owner?.email, row.box?.boxNumber,
         row.scans, row.firstScannedAt, row.lastScannedAt, row.claimedAt, row.createdAt,
       ].map(csvCell).join(","));
       return new Response(lines.join("\r\n") + "\r\n", { status: 200, headers: {

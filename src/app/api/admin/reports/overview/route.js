@@ -20,7 +20,7 @@ export async function GET(request) {
       "(SELECT count(*)::int FROM boxsave.scan_events WHERE event_kind IN ('url_open','camera_scan') AND created_at >= date_trunc('day', now())) AS \"scansToday\", " +
       "(SELECT count(*)::int FROM boxsave.scan_events WHERE outcome = 'claim_created' AND created_at >= date_trunc('day', now())) AS \"claimsToday\"");
     const recent = await query("SELECT e.id, e.event_kind AS \"eventKind\", e.source, e.outcome, e.created_at AS \"createdAt\", " +
-      "l.id AS \"labelId\", l.serial, u.id AS \"userId\", u.email, b.id AS \"boxId\", b.box_number AS \"boxNumber\" " +
+      "l.id AS \"labelId\", l.short_serial AS serial, l.serial AS \"legacySerial\", u.id AS \"userId\", u.email, b.id AS \"boxId\", b.box_number AS \"boxNumber\" " +
       "FROM boxsave.scan_events e LEFT JOIN boxsave.labels l ON l.id = e.label_id " +
       "LEFT JOIN boxsave.users u ON u.id = e.actor_user_id LEFT JOIN boxsave.boxes b ON b.label_id = l.id " +
       "ORDER BY e.created_at DESC LIMIT 25");
