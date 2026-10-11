@@ -1,15 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { api, boxDisplayName, boxStickerSerial } from "./api";
+import { api } from "./api";
 import { CustomerFrame, CustomerIcon, EmptyState, LoadingState, PageHeading } from "./CustomerFrame";
 import { Input } from "../../../components/ui/input.jsx";
-import { Badge } from "../../../components/ui/badge.jsx";
 import LabelScanner from "./LabelScanner";
-
-const statusLabels = { packing: "Packing", packed: "Packed", unpacked: "Unpacked" };
+import BoxCard from "./BoxCard";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -26,10 +23,9 @@ export default function Dashboard() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [addingRoom, setAddingRoom] = useState(false);
-  const [roomName, setRoomName] = useState("");
-  const [roomError, setRoomError] = useState("");
   const [scannerOpen, setScannerOpen] = useState(false);
+  const [openBoxId, setOpenBoxId] = useState("");
+  const [addedBoxId, setAddedBoxId] = useState("");
   const requestGeneration = useRef(0);
 
   const load = useCallback(async () => {
@@ -68,14 +64,16 @@ export default function Dashboard() {
   }, [router]);
 
   useEffect(() => { if (user) load(); }, [user, load]);
+
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    if (params.get("addRoom") === "1") setAddingRoom(true);
-    if (params.get("scan") === "1") {
-      setScannerOpen(true);
-      router.replace("/dashboard", { scroll: false });
-    }
+    const boxParam = params.get("box") || "";
+    if (params.get("scan") === "1") setScannerOpen(true);
+    if (boxParam) setOpenBoxId(boxParam);
+    if (params.get("added") === "1") setAddedBoxId(boxParam);
+    if (params.get("scan") === "1" || boxParam) router.replace("/dashboard", { scroll: false });
   }, [router]);
+
   useEffect(() => {
     const timer = window.setTimeout(() => setQuery(searchText), 220);
     return () => window.clearTimeout(timer);
@@ -99,13 +97,10 @@ export default function Dashboard() {
     finally { if (generation === requestGeneration.current) setLoadingMore(false); }
   };
 
-  async function createRoom(event) {
-    event.preventDefault(); setRoomError("");
-    try {
-      const { room } = await api("/api/rooms", { method: "POST", body: JSON.stringify({ name: roomName.trim() }) });
-      if (room) setRooms((old) => [...old, room]);
-      setRoomName(""); setAddingRoom(false);
-    } catch (e) { setRoomError(e.message || "Room could not be added."); }
+  function addRoomToState(room) {
+    setRooms((current) => current.some((entry) => entry.id === room.id)
+      ? current
+      : [...current, room].sort((a, b) => a.name.localeCompare(b.name)));
   }
 
   const anyFilter = Boolean(query || roomId || status);
@@ -118,7 +113,6 @@ export default function Dashboard() {
         <div className="customer-filters">
           <label className="filter-select"><span className="sr-only">Filter by room</span><select value={roomId} onChange={(e) => setRoomId(e.target.value)}><option value="">All rooms</option>{rooms.map((room) => <option key={room.id} value={room.id}>{room.name}</option>)}</select></label>
           <label className="filter-select"><span className="sr-only">Filter by stage</span><select value={status} onChange={(e) => setStatus(e.target.value)}><option value="">All stages</option><option value="packing">Packing</option><option value="packed">Packed</option><option value="unpacked">Unpacked</option></select></label>
-          <button className="icon-text-button" onClick={() => setAddingRoom((value) => !value)}><CustomerIcon name="plus" size={18} /> Add room</button>
         </div>
       </section>
 
@@ -128,24 +122,15 @@ export default function Dashboard() {
         <div className="overview-stat"><strong>{loading ? "—" : summary.items}</strong><span>{summary.items === 1 ? "item listed" : "items listed"}</span></div>
       </section>
 
-      {addingRoom && <form className="add-room-form" onSubmit={createRoom}>
-        <label htmlFor="new-room">Give your room a name</label><Input className="customer-field-input" id="new-room" autoFocus value={roomName} onChange={(e) => setRoomName(e.target.value)} placeholder="Kitchen, bedroom, garage…" maxLength={60} required />
-        <button className="customer-button customer-button-primary" disabled={!roomName.trim()}>Add room</button><button className="customer-button customer-button-quiet" type="button" onClick={() => { setAddingRoom(false); setRoomError(""); }}>Cancel</button>
-        {roomError && <span className="customer-inline-error" role="alert">{roomError}</span>}
-      </form>}
-
       <div className="box-list-heading"><h2>{anyFilter ? "Search results" : "All boxes"}</h2><span className="box-result-count">{loading ? "Loading…" : `${total} ${total === 1 ? "box" : "boxes"}`}</span></div>
       {error && <div className="customer-alert" role="alert">{error} <button onClick={load}>Try again</button></div>}
-      {loading ? <LoadingState /> : boxes.length === 0 ? <EmptyState title={anyFilter ? "Nothing found yet" : "Your first box is one scan away"} description={anyFilter ? "Try another word or clear a filter." : "Scratch the cover from a Save On Boxes label, then scan its QR code while signed in. We’ll add the box for you."} action={anyFilter ? <button className="customer-button customer-button-quiet" onClick={() => { setSearchText(""); setQuery(""); setRoomId(""); setStatus(""); }}>Clear search</button> : <button className="customer-button customer-button-primary" onClick={() => setScannerOpen(true)}>Scan a label</button>} /> : <div className="box-list">
-        {boxes.map((box) => <Link className="box-row" key={box.id} href={`/dashboard/boxes/${encodeURIComponent(box.id)}`}>
-          <span className="box-row-main"><strong className="box-row-name">{boxDisplayName(box)}</strong>{boxStickerSerial(box) && <span className="box-row-serial">Label serial {boxStickerSerial(box)}</span>}<span className="box-row-destination">{box.room?.name || "Room not set"}</span>
-            {query && box.matchingItems?.length > 0 ? <span className="box-match">Found: {box.matchingItems.slice(0, 3).map((item) => `${item.name}${item.quantity > 1 ? ` ×${item.quantity}` : ""}`).join(" · ")}</span> : <span className="box-row-count">{box.itemCount || 0} {box.itemCount === 1 ? "item" : "items"}</span>}
-          </span>
-          <Badge variant={box.status === "packed" ? "success" : box.status === "unpacked" ? "muted" : "warning"} className={`status-pill status-${box.status || "packing"}`}>{statusLabels[box.status] || "Packing"}</Badge>
-        </Link>)}
+      {loading ? <LoadingState /> : boxes.length === 0 ? <EmptyState title={anyFilter ? "Nothing found yet" : "Your first box is one scan away"} description={anyFilter ? "Try another word or clear a filter." : "Scratch the cover from a Save On Boxes label, then scan its QR code while signed in. We’ll add the box for you."} action={anyFilter ? <button className="customer-button customer-button-quiet" onClick={() => { setSearchText(""); setQuery(""); setRoomId(""); setStatus(""); }}>Clear search</button> : <button className="customer-button customer-button-primary" onClick={() => setScannerOpen(true)}>Scan a label</button>} /> : <div className="bx-list">
+        {boxes.map((box) => <BoxCard key={box.id} box={box} rooms={rooms} expanded={openBoxId === box.id} justAdded={addedBoxId === box.id}
+          onToggle={() => setOpenBoxId((current) => current === box.id ? "" : box.id)}
+          onRoomCreated={addRoomToState} />)}
       </div>}
       {!loading && boxes.length > 0 && boxes.length < total && <div className="load-more-row"><button className="customer-button customer-button-quiet" onClick={loadMore} disabled={loadingMore}>{loadingMore ? "Loading more…" : `Load more boxes (${total - boxes.length} left)`}</button></div>}
-      <p className="customer-hint">Your room is where each box should go when you unpack.</p>
+      <p className="customer-hint">Open a box to change its rooms, contents and notes. Everything saves as you go.</p>
       {scannerOpen && <LabelScanner onClose={() => setScannerOpen(false)} onToken={(token) => { setScannerOpen(false); router.push(`/q/${encodeURIComponent(token)}?source=camera`); }} />}
     </main>
   </CustomerFrame>;

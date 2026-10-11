@@ -54,7 +54,7 @@ export default function ScanClaim({ token }) {
         const box = result.box;
         if (!box?.id) throw new Error("This label was scanned, but its box could not be opened. Please try again.");
         try { sessionStorage.removeItem("sob-pending-scan"); sessionStorage.removeItem(eventKey); } catch {}
-        router.replace(`/dashboard/boxes/${encodeURIComponent(box.id)}${result.created ? "?added=1" : ""}`);
+        router.replace(`/dashboard?box=${encodeURIComponent(box.id)}${result.created ? "&added=1" : ""}`);
       } catch (error) {
         if (!active) return;
         if (error.status === 401) {

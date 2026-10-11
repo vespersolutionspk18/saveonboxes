@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { api, boxDisplayName, boxStickerSerial } from "./api";
-import { CustomerFrame, CustomerIcon, LoadingState, PageHeading } from "./CustomerFrame";
+import { CustomerFrame, CustomerIcon, CustomerLogo, LoadingState, PageHeading } from "./CustomerFrame";
 import { Badge } from "../../../components/ui/badge.jsx";
 
 const statusLabels = { packing: "Packing", packed: "Packed", unpacked: "Unpacked" };
@@ -42,6 +42,7 @@ export default function MasterList() {
       <PageHeading title="Master list" description="Every box, its destination and everything packed inside." action={<button className="customer-button customer-button-primary no-print" onClick={() => window.print()}>Print this list</button>} />
       {error && <div className="customer-alert no-print" role="alert">{error}<button onClick={() => window.location.reload()}>Try again</button></div>}
       {loading ? <LoadingState label="Putting your list together…" /> : boxes.length === 0 ? <div className="customer-empty"><span className="customer-empty-icon"><CustomerIcon name="box" /></span><h2>No boxes yet</h2><p>When you scan your first label, your master list will appear here.</p><Link className="customer-button customer-button-primary no-print" href="/dashboard">Go to my boxes</Link></div> : <>
+        <div className="master-print-brand"><a className="master-print-logo" href="https://saveonboxes.com" aria-label="SaveOnBoxes"><CustomerLogo /></a><a className="master-print-website" href="https://saveonboxes.com">saveonboxes.com</a></div>
         <div className="master-list-meta"><span>{boxes.length} {boxes.length === 1 ? "box" : "boxes"}</span><span>{boxes.reduce((n, box) => n + (box.items?.length || 0), 0)} inventory lines</span><span>Printed {new Date().toLocaleDateString()}</span></div>
         {grouped.map(([room, entries]) => <section className="master-room" key={room}>
             <h2><span className="master-room-dot" />{room}<span className="master-room-count">{entries.length}</span></h2>
