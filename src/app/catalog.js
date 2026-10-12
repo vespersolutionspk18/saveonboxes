@@ -10,6 +10,27 @@ export const rooms = [
   { id: "nursery", title: "Kids / Nursery", tile: "Nursery", image: "bicycle crib box.webp" },
 ];
 
+// Homepage "Moving Boxes and Supplies" category grid.
+// The first three cards are featured (wider, with a dark label bar); the rest
+// flow four to a row underneath.
+export const movingCategories = [
+  { id: "moving-boxes", label: "Moving Boxes", image: "moving-boxes.webp", href: "/category/moving-boxes", featured: true },
+  { id: "moving-kits", label: "Moving Kits", image: "moving-kits.webp", href: "/category/moving-kits", featured: true },
+  { id: "packing-supplies", label: "Packing Supplies", image: "packing-supplies.webp", href: "/category/packing-supplies", featured: true },
+  { id: "artwork-mirror", label: "Artwork/Mirror", image: "artwork-mirror.webp", href: "/category/artwork-mirror" },
+  { id: "golf", label: "Golf", image: "golf.webp", href: "/category/golf" },
+  { id: "wardrobe", label: "Wardrobe", image: "wardrobe.webp", href: "/category/wardrobe" },
+  { id: "lamp", label: "Lamp", image: "lamp.webp", href: "/category/lamp" },
+  { id: "moving-blankets", label: "Moving Blankets, Pads and Supplies", image: "moving-blankets.webp", href: "/category/moving-blankets" },
+  { id: "tv-boxes", label: "TV Boxes", image: "tv-boxes.webp", href: "/category/tv-boxes" },
+  { id: "dish-and-glass", label: "Dish and Glass", image: "dish-and-glass.webp", href: "/category/dish-and-glass" },
+  { id: "storage-file", label: "Storage File", image: "storage-file.webp", href: "/category/storage-file" },
+  { id: "bike", label: "Bike", image: "bike.webp", href: "/category/bike" },
+  { id: "mattress", label: "Mattress", image: "mattress.webp", href: "/category/mattress" },
+  { id: "bulk-cargo-containers", label: "Bulk Cargo Containers", image: "bulk-cargo-containers.webp", href: "/category/bulk-cargo-containers" },
+  { id: "round-trip-totes", label: "Round Trip Totes", image: "round-trip-totes.webp", href: "/category/round-trip-totes" },
+];
+
 const baseBoxes = [
   { id: "small", name: "Small Box", image: "small.webp", price: 3, type: "standard", purpose: "Books & Heavy Items", detail: "16 × 12 × 12 in · 1.5 cu. ft.", rooms: ["bedroom", "kitchen", "home-office", "nursery", "garage", "whole-home"] },
   { id: "snap-open-small", name: "Snap-Open Small 1.5", image: "snap open auto small 1.5.webp", price: 3.5, type: "standard", purpose: "Quick-assembly small packing", detail: "1.5 cu. ft.", rooms: ["home-office", "whole-home"] },

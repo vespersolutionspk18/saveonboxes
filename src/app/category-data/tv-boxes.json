@@ -1,0 +1,58 @@
+{
+  "slug": "tv-boxes",
+  "title": "Flat-Panel TV Boxes",
+  "source": "https://www.uline.com/BL_7908/Flat-Panel-TV-Boxes",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "22 x 6 x 16\" FOL Flat-Panel TV Boxes",
+      "image": "01-22-x-6-x-16-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-16333",
+      "sku": "S-16333"
+    },
+    {
+      "name": "28 x 6 x 20\" FOL Flat-Panel TV Boxes",
+      "image": "02-28-x-6-x-20-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-16336",
+      "sku": "S-16336"
+    },
+    {
+      "name": "38 x 8 x 26\" FOL Flat-Panel TV Boxes",
+      "image": "03-38-x-8-x-26-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-15214",
+      "sku": "S-15214"
+    }
+  ],
+  "items": [
+    {
+      "name": "46 x 8 x 30\" FOL Flat-Panel TV Boxes",
+      "image": "04-46-x-8-x-30-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-13976",
+      "sku": "S-13976"
+    },
+    {
+      "name": "56 x 8 x 36\" FOL Flat-Panel TV Boxes",
+      "image": "05-56-x-8-x-36-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-13977",
+      "sku": "S-13977"
+    },
+    {
+      "name": "64 x 8 x 40\" FOL Flat-Panel TV Boxes",
+      "image": "06-64-x-8-x-40-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-15215",
+      "sku": "S-15215"
+    },
+    {
+      "name": "70 x 8 x 42\" FOL Flat-Panel TV Boxes",
+      "image": "07-70-x-8-x-42-fol-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-19761",
+      "sku": "S-19761"
+    },
+    {
+      "name": "82 x 8 x 50\" 2-piece Telescopic Flat-Panel TV Boxes",
+      "image": "08-82-x-8-x-50-2-piece-telescopic-flat-panel-tv-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-23318",
+      "sku": "S-23318"
+    }
+  ]
+}

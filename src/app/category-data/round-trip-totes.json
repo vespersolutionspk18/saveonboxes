@@ -1,0 +1,70 @@
+{
+  "slug": "round-trip-totes",
+  "title": "Round Trip Totes",
+  "source": "https://www.uline.com/BL_312/Round-Trip-Totes",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "Round Trip Totes - 10.1 x 7.8 x 6.5\"",
+      "image": "01-round-trip-totes-10-1-x-7-8-x-6-5.webp",
+      "href": "https://www.uline.com/Product/Detail/S-19665",
+      "sku": "S-19665"
+    },
+    {
+      "name": "Round Trip Totes - 13.8 x 8.9 x 8.8\"",
+      "image": "02-round-trip-totes-13-8-x-8-9-x-8-8.webp",
+      "href": "https://www.uline.com/Product/Detail/S-12676",
+      "sku": "S-12676"
+    },
+    {
+      "name": "Round Trip Totes - 17.7 x 10.1 x 6\"",
+      "image": "03-round-trip-totes-17-7-x-10-1-x-6.webp",
+      "href": "https://www.uline.com/Product/Detail/S-13499",
+      "sku": "S-13499"
+    }
+  ],
+  "items": [
+    {
+      "name": "Round Trip Totes - 19.9 x 14.2 x 8.4\"",
+      "image": "04-round-trip-totes-19-9-x-14-2-x-8-4.webp",
+      "href": "https://www.uline.com/Product/Detail/S-20588",
+      "sku": "S-20588"
+    },
+    {
+      "name": "Round Trip Totes - 19.8 x 13.8 x 11.3\"",
+      "image": "05-round-trip-totes-19-8-x-13-8-x-11-3.webp",
+      "href": "https://www.uline.com/Product/Detail/S-25644",
+      "sku": "S-25644"
+    },
+    {
+      "name": "Round Trip Totes - 19.8 x 13.8 x 15.8\"",
+      "image": "06-round-trip-totes-19-8-x-13-8-x-15-8.webp",
+      "href": "https://www.uline.com/Product/Detail/S-14363",
+      "sku": "S-14363"
+    },
+    {
+      "name": "Round Trip Totes - 25.2 x 15.5 x 11\"",
+      "image": "07-round-trip-totes-25-2-x-15-5-x-11.webp",
+      "href": "https://www.uline.com/Product/Detail/S-9745",
+      "sku": "S-9745"
+    },
+    {
+      "name": "Round Trip Totes - 22.5 x 18 x 11.5\"",
+      "image": "08-round-trip-totes-22-5-x-18-x-11-5.webp",
+      "href": "https://www.uline.com/Product/Detail/S-9746",
+      "sku": "S-9746"
+    },
+    {
+      "name": "Round Trip Totes - 26 x 19 x 14\"",
+      "image": "09-round-trip-totes-26-x-19-x-14.webp",
+      "href": "https://www.uline.com/Product/Detail/S-20589",
+      "sku": "S-20589"
+    },
+    {
+      "name": "Round Trip Totes - 28.7 x 20.8 x 18.8\"",
+      "image": "10-round-trip-totes-28-7-x-20-8-x-18-8.webp",
+      "href": "https://www.uline.com/Product/Detail/S-12677",
+      "sku": "S-12677"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "slug": "lamp",
+  "title": "Lamp Boxes",
+  "source": "https://www.uline.com/BL_7905/Lamp-Boxes",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "12 x 12 x 40\" Tall Corrugated Boxes",
+      "image": "01-12-x-12-x-40-tall-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4618",
+      "sku": "S-4618"
+    },
+    {
+      "name": "12 x 12 x 48\" Tall Corrugated Boxes",
+      "image": "02-12-x-12-x-48-tall-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4525",
+      "sku": "S-4525"
+    },
+    {
+      "name": "15 x 15 x 30\" Corrugated Boxes",
+      "image": "03-15-x-15-x-30-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4412",
+      "sku": "S-4412"
+    }
+  ],
+  "items": [
+    {
+      "name": "20 x 20 x 36\" Corrugated Boxes",
+      "image": "04-20-x-20-x-36-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4569",
+      "sku": "S-4569"
+    }
+  ]
+}

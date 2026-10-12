@@ -1,0 +1,76 @@
+{
+  "slug": "bulk-cargo-containers",
+  "title": "Bulk Cargo",
+  "source": "https://www.uline.com/Grp_351/Bulk-Cargo",
+  "mode": "group",
+  "featured": [
+    {
+      "name": "Bulk Cargo Containers",
+      "image": "01-bulk-cargo-containers.webp",
+      "href": "/BL_412/Bulk-Cargo-Containers",
+      "sku": null
+    },
+    {
+      "name": "1,100 Lb. Triple Wall Boxes",
+      "image": "02-1-100-lb-triple-wall-boxes.webp",
+      "href": "/BL_423/1100-Lb-Triple-Wall-Boxes",
+      "sku": null
+    },
+    {
+      "name": "1,300 Lb. Triple Wall Boxes",
+      "image": "03-1-300-lb-triple-wall-boxes.webp",
+      "href": "/BL_431/1300-Lb-Triple-Wall-Boxes",
+      "sku": null
+    }
+  ],
+  "items": [
+    {
+      "name": "Reusable Bulk Containers",
+      "image": "04-reusable-bulk-containers.webp",
+      "href": "/BL_32/Reusable-Bulk-Containers",
+      "sku": null
+    },
+    {
+      "name": "Telescopic Bulk Cargo",
+      "image": "05-telescopic-bulk-cargo.webp",
+      "href": "/BL_437/Telescopic-Bulk-Cargo",
+      "sku": null
+    },
+    {
+      "name": "Uline Easy Loader",
+      "image": "06-uline-easy-loader.webp",
+      "href": "/BL_426/Uline-Easy-Loader",
+      "sku": null
+    },
+    {
+      "name": "Octagon Bulk Bins",
+      "image": "07-octagon-bulk-bins.webp",
+      "href": "/BL_432/Octagon-Bulk-Bins",
+      "sku": null
+    },
+    {
+      "name": "Bulk Containers",
+      "image": "08-bulk-containers.webp",
+      "href": "/Grp_469/Bulk-Containers",
+      "sku": null
+    },
+    {
+      "name": "350 Lb. Double Wall Boxes",
+      "image": "09-350-lb-double-wall-boxes.webp",
+      "href": "/BL_430/350-Lb-Test-Double-Wall-Boxes",
+      "sku": null
+    },
+    {
+      "name": "1,100 Lb. Triple Wall Sleeve",
+      "image": "10-1-100-lb-triple-wall-sleeve.webp",
+      "href": "/BL_2147/1100-Lb-Triple-Wall-Sleeves",
+      "sku": null
+    },
+    {
+      "name": "Pallet Tray",
+      "image": "11-pallet-tray.webp",
+      "href": "/BL_2187/Pallet-Trays",
+      "sku": null
+    }
+  ]
+}

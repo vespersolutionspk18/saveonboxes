@@ -1,0 +1,70 @@
+{
+  "slug": "artwork-mirror",
+  "title": "Artwork/Mirror Boxes",
+  "source": "https://www.uline.com/BL_7901/Artwork-Mirror-Boxes",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "24 x 5 x 18\" 200 lb FOL Side Loading Corrugated Boxes",
+      "image": "01-24-x-5-x-18-200-lb-fol-side-loading-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4552",
+      "sku": "S-4552"
+    },
+    {
+      "name": "28 x 5 1/2 x 38\" 200 lb FOL Side Loading Corrugated Boxes",
+      "image": "02-28-x-5-1-2-x-38-200-lb-fol-side-loading-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4768",
+      "sku": "S-4768"
+    },
+    {
+      "name": "30 x 5 x 24\" 200 lb FOL Side Loading Corrugated Boxes",
+      "image": "03-30-x-5-x-24-200-lb-fol-side-loading-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4553",
+      "sku": "S-4553"
+    }
+  ],
+  "items": [
+    {
+      "name": "36 x 5 x 30\" 200 lb FOL Side Loading Corrugated Boxes",
+      "image": "04-36-x-5-x-30-200-lb-fol-side-loading-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4554",
+      "sku": "S-4554"
+    },
+    {
+      "name": "36 x 6 x 42\" 275 lb FOL Side Loading Corrugated Boxes",
+      "image": "05-36-x-6-x-42-275-lb-fol-side-loading-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4679",
+      "sku": "S-4679"
+    },
+    {
+      "name": "36 x 5 1/2 x 48\" 275 lb FOL Side Loading Corrugated Boxes",
+      "image": "06-36-x-5-1-2-x-48-275-lb-fol-side-loading-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4680",
+      "sku": "S-4680"
+    },
+    {
+      "name": "30 x 3 1/2 x 40\" 4-piece Mirror Corrugated Boxes",
+      "image": "07-30-x-3-1-2-x-40-4-piece-mirror-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4832",
+      "sku": "S-4832"
+    },
+    {
+      "name": "30 x 6 x 24 - 44\" 2-piece Telescopic Boxes",
+      "image": "08-30-x-6-x-24-44-2-piece-telescopic-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-12612",
+      "sku": "S-12612"
+    },
+    {
+      "name": "37 x 4 x 30 - 60\" 2-piece Telescopic Boxes",
+      "image": "09-37-x-4-x-30-60-2-piece-telescopic-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4778",
+      "sku": "S-4778"
+    },
+    {
+      "name": "48 x 6 x 38 - 72\" 275 lb 2-piece Telescopic Boxes",
+      "image": "10-48-x-6-x-38-72-275-lb-2-piece-telescopic-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-11251",
+      "sku": "S-11251"
+    }
+  ]
+}

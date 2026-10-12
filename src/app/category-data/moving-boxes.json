@@ -1,0 +1,172 @@
+{
+  "slug": "moving-boxes",
+  "title": "Moving Boxes",
+  "source": "https://www.uline.com/Grp_141/Moving-Boxes",
+  "mode": "group",
+  "featured": [
+    {
+      "name": "Packing Boxes",
+      "image": "01-packing-boxes.webp",
+      "href": "/BL_414/Packing-Storage-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Wardrobe Moving Boxes",
+      "image": "02-wardrobe-moving-boxes.webp",
+      "href": "/BL_7902/Wardrobe-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Flat-Panel TV Moving Boxes",
+      "image": "03-flat-panel-tv-moving-boxes.webp",
+      "href": "/BL_7908/Flat-Panel-TV-Boxes",
+      "sku": null
+    }
+  ],
+  "items": [
+    {
+      "name": "Moving Kits",
+      "image": "04-moving-kits.webp",
+      "href": "/BL_7907/Moving-Kits",
+      "sku": null
+    },
+    {
+      "name": "Deluxe Moving Boxes",
+      "image": "05-deluxe-moving-boxes.webp",
+      "href": "/BL_7904/Deluxe-Moving-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Speed Pack Box",
+      "image": "06-speed-pack-box.webp",
+      "href": "/Product/Detail/S-4967/Bulk-Cargo/40-x-30-x-30-1100-lb-Triple-Wall-Speed-Pack-Box-with-Lid",
+      "sku": null
+    },
+    {
+      "name": "Gondola Box",
+      "image": "07-gondola-box.webp",
+      "href": "/BL_76/Gondola-Box",
+      "sku": null
+    },
+    {
+      "name": "Artwork/Mirror Boxes",
+      "image": "08-artwork-mirror-boxes.webp",
+      "href": "/Product/AdvSearchResult?Ref=Pwrshp&Source=ALL&keywords=xyzmir",
+      "sku": null
+    },
+    {
+      "name": "Dish and Glass Pack Boxes",
+      "image": "09-dish-and-glass-pack-boxes.webp",
+      "href": "/BL_7903/Dish-and-Glass-Pack-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Boxes with Hand Holes",
+      "image": "10-boxes-with-hand-holes.webp",
+      "href": "/BL_7910/Boxes-with-Hand-Holes",
+      "sku": null
+    },
+    {
+      "name": "Storage File Boxes",
+      "image": "11-storage-file-boxes.webp",
+      "href": "/Grp_116/Storage-File-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Corrugated Totes",
+      "image": "12-corrugated-totes.webp",
+      "href": "/BL_309/Corrugated-Totes",
+      "sku": null
+    },
+    {
+      "name": "Suit Shippers",
+      "image": "13-suit-shippers.webp",
+      "href": "/BL_7911/Suit-Shippers",
+      "sku": null
+    },
+    {
+      "name": "Suitcase Box",
+      "image": "14-suitcase-box.webp",
+      "href": "/BL_434/Suitcase-Box",
+      "sku": null
+    },
+    {
+      "name": "Electronics Boxes",
+      "image": "15-electronics-boxes.webp",
+      "href": "/product/AdvSearchResult?Ref=Pwrshp&Source=ALL&keywords=xyzelectronic",
+      "sku": null
+    },
+    {
+      "name": "Mattress Boxes",
+      "image": "16-mattress-boxes.webp",
+      "href": "/BL_429/Mattress-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Golf Boxes",
+      "image": "17-golf-boxes.webp",
+      "href": "/Product/AdvSearchResult?Ref=Pwrshp&Source=ALL&keywords=xyzgol",
+      "sku": null
+    },
+    {
+      "name": "Rifle Boxes",
+      "image": "18-rifle-boxes.webp",
+      "href": "/BL_433/Rifle-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Tennis Racquet Box",
+      "image": "19-tennis-racquet-box.webp",
+      "href": "/BL_438/Tennis-Racquet-Box",
+      "sku": null
+    },
+    {
+      "name": "Bike Boxes",
+      "image": "20-bike-boxes.webp",
+      "href": "/product/AdvSearchResult?keywords=xyzbike",
+      "sku": null
+    },
+    {
+      "name": "Skateboard Boxes",
+      "image": "21-skateboard-boxes.webp",
+      "href": "/Product/Detail/S-14258/Corrugated-Boxes-200-Test/33-x-8-1-2-x-5-Long-Corrugated-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Guitar Boxes",
+      "image": "22-guitar-boxes.webp",
+      "href": "/BL_7906/Guitar-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Keyboard Boxes",
+      "image": "23-keyboard-boxes.webp",
+      "href": "/Product/Detail/S-14225/Corrugated-Boxes-200-Test/20-x-8-x-60-275-lb-FOL-Side-Loading-Corrugated-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Ski Boxes",
+      "image": "24-ski-boxes.webp",
+      "href": "/Product/Detail/S-12590/Corrugated-Boxes-200-Test/10-x-6-x-57-108-2-piece-Telescopic-Tall-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Snowboard Boxes",
+      "image": "25-snowboard-boxes.webp",
+      "href": "/Product/Detail/S-14223/Corrugated-Boxes-200-Test/14-x-4-x-68-275-lb-FOL-Side-Loading-Corrugated-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Lamp Boxes",
+      "image": "26-lamp-boxes.webp",
+      "href": "/BL_7905/Lamp-Boxes",
+      "sku": null
+    },
+    {
+      "name": "Surfboard Boxes",
+      "image": "27-surfboard-boxes.webp",
+      "href": "/Product/Detail/S-14259/Corrugated-Boxes-200-Test/24-x-8-x-57-108-275-lb-Double-Wall-2-piece-Telescopic-Tall-Boxes",
+      "sku": null
+    }
+  ]
+}

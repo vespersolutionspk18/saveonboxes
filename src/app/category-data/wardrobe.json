@@ -1,0 +1,34 @@
+{
+  "slug": "wardrobe",
+  "title": "Wardrobe Boxes",
+  "source": "https://www.uline.com/BL_7902/Wardrobe-Boxes",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "24 x 20 x 34\" 51 ECT Double Wall Wardrobe Box Kit",
+      "image": "01-24-x-20-x-34-51-ect-double-wall-wardrobe-box-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4777",
+      "sku": "S-4777"
+    },
+    {
+      "name": "24 x 20 x 46\" 51 ECT Double Wall Wardrobe Box Kit",
+      "image": "02-24-x-20-x-46-51-ect-double-wall-wardrobe-box-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4750",
+      "sku": "S-4750"
+    },
+    {
+      "name": "24 x 22 x 60\" 51 ECT Double Wall Wardrobe Box Kit",
+      "image": "03-24-x-22-x-60-51-ect-double-wall-wardrobe-box-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-18044",
+      "sku": "S-18044"
+    }
+  ],
+  "items": [
+    {
+      "name": "36 x 21 x 10\" Flat Wardrobe Boxes",
+      "image": "04-36-x-21-x-10-flat-wardrobe-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4965",
+      "sku": "S-4965"
+    }
+  ]
+}

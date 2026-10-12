@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { getHomeBoxSections, kits, rooms, supplies } from "./catalog";
+import Link from "next/link";
+import { getHomeBoxSections, kits, movingCategories, supplies } from "./catalog";
 import { Icon, ProductSection } from "./components/Storefront";
 
 function BrandHero() {
@@ -22,39 +22,29 @@ function BrandHero() {
   </section>;
 }
 
-function RoomTiles({ selectedRoom, onSelect }) {
-  return <section className="room-section" aria-labelledby="room-section-title">
-    <div className="room-section-heading">
-      <div><span className="eyebrow-label">Shop by room</span><h2 id="room-section-title">Pack room by room</h2></div>
-      <p>Choose a room to see the boxes that fit.</p>
-    </div>
-    <div className="room-grid">
-      {rooms.filter((room) => room.id !== "nursery").map((room) => <button key={room.id} className={`room-card${selectedRoom === room.id ? " is-selected" : ""}`} onClick={() => onSelect(room.id)} aria-pressed={selectedRoom === room.id} aria-controls="room-products">
-        <span className="room-card-image"><img src={`/boxes/${encodeURIComponent(room.image)}`} alt="" loading="lazy" /></span>
-        <span className="room-card-title">{room.tile}</span>
-      </button>)}
+function MovingBoxesAndSupplies() {
+  return <section className="category-section" aria-labelledby="category-section-title">
+    <div className="category-section-heading"><h2 id="category-section-title">Moving Boxes and Supplies</h2></div>
+    <div className="category-grid">
+      {movingCategories.map((category) => <Link key={category.id} href={category.href} className={`category-card${category.featured ? " is-featured" : ""}`}>
+        <span className="category-card-image"><img src={`/categories/${category.image}`} alt="" loading="lazy" /></span>
+        <span className="category-card-label">{category.label}</span>
+      </Link>)}
     </div>
   </section>;
 }
 
 export default function HomePage() {
-  const [activeRoom, setActiveRoom] = useState(null);
-  const selectedRoom = rooms.find((room) => room.id === activeRoom);
-  const visibleSections = getHomeBoxSections(activeRoom);
+  const visibleSections = getHomeBoxSections(null);
   const visibleProductCount = visibleSections.reduce((count, section) => count + section.products.length, 0);
-  const chooseRoom = (roomId) => {
-    setActiveRoom(roomId);
-    requestAnimationFrame(() => document.getElementById("room-products")?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  };
   return <main id="home">
     <BrandHero />
-    <RoomTiles selectedRoom={activeRoom} onSelect={chooseRoom} />
-    <section className="catalogue room-results" id="room-products" aria-label="Boxes for the selected room" data-room={activeRoom || "all"}>
+    <MovingBoxesAndSupplies />
+    <section className="catalogue room-results" id="room-products" aria-label="All moving boxes">
       <div className="room-results-toolbar">
-        <p role="status" aria-live="polite">{selectedRoom ? selectedRoom.title : "All moving boxes"} <span>· {visibleProductCount} products</span></p>
-        {activeRoom && <button onClick={() => setActiveRoom(null)}>View all boxes</button>}
+        <p>All moving boxes <span>· {visibleProductCount} products</span></p>
       </div>
-      {visibleSections.map((section) => <ProductSection key={`${activeRoom || "all"}-${section.id}`} id={`room-product-${section.id}`} title={section.title} products={section.products} carousel />)}
+      {visibleSections.map((section) => <ProductSection key={section.id} id={`room-product-${section.id}`} title={section.title} products={section.products} carousel />)}
     </section>
     <section className="kit-section" id="kits">
       <div className="catalogue-intro kit-intro"><div><span className="eyebrow-label">Box-only bundles</span><h2>Moving kits, made simple</h2></div><p>Standard box quantities for each home size. Add specialty boxes only for the things you own.</p></div>

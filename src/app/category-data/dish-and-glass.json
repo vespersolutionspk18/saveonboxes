@@ -1,0 +1,52 @@
+{
+  "slug": "dish-and-glass",
+  "title": "Dish and Glass Pack Boxes",
+  "source": "https://www.uline.com/BL_7903/Dish-and-Glass-Pack-Boxes",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "18 x 18 x 28\" 350 lb Double Wall Dish Corrugated Boxes",
+      "image": "01-18-x-18-x-28-350-lb-double-wall-dish-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4676",
+      "sku": "S-4676"
+    },
+    {
+      "name": "Dish Pack Partition Set",
+      "image": "02-dish-pack-partition-set.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4751",
+      "sku": "S-4751"
+    },
+    {
+      "name": "16 x 12 x 9\" 275 lb Glass Pack Kit",
+      "image": "03-16-x-12-x-9-275-lb-glass-pack-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-18940",
+      "sku": "S-18940"
+    }
+  ],
+  "items": [
+    {
+      "name": "17 1/2 x 13 x 9 1/4\" 275 lb Glass Pack Kit",
+      "image": "04-17-1-2-x-13-x-9-1-4-275-lb-glass-pack-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-18941",
+      "sku": "S-18941"
+    },
+    {
+      "name": "24 x 12 x 6\" 275 lb Glass Pack Kit",
+      "image": "05-24-x-12-x-6-275-lb-glass-pack-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-13273",
+      "sku": "S-13273"
+    },
+    {
+      "name": "24 x 12 x 12\" 275 lb Glass Pack Kit",
+      "image": "06-24-x-12-x-12-275-lb-glass-pack-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4972",
+      "sku": "S-4972"
+    },
+    {
+      "name": "26 x 14 x 12\" 275 lb Double Wall Dish Pack Kit",
+      "image": "07-26-x-14-x-12-275-lb-double-wall-dish-pack-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-12659",
+      "sku": "S-12659"
+    }
+  ]
+}

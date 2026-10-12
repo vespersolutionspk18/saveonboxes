@@ -1,0 +1,105 @@
+{
+  "slug": "packing-supplies",
+  "title": "Packing Supplies",
+  "source": "https://www.uline.com/Grp_PackingSupplies/",
+  "mode": "group",
+  "featured": [],
+  "items": [
+    {
+      "name": "Economy Bubble Rolls",
+      "image": "01-economy-bubble-rolls.webp",
+      "href": "/BL_470/Uline-Economy-Air-Bubble",
+      "sku": null
+    },
+    {
+      "name": "UPSable Bubble Rolls",
+      "image": "02-upsable-bubble-rolls.webp",
+      "href": "/BL_461/Uline-UPSable-Bubble-Rolls",
+      "sku": null
+    },
+    {
+      "name": "Uline Air",
+      "image": "03-uline-air.webp",
+      "href": "/BL_7750/Uline-Air",
+      "sku": null
+    },
+    {
+      "name": "Foam Dispenser Boxes",
+      "image": "04-foam-dispenser-boxes.webp",
+      "href": "/BL_856/Uline-Foam",
+      "sku": null
+    },
+    {
+      "name": "Kraft Paper Dispenser Box",
+      "image": "05-kraft-paper-dispenser-box.webp",
+      "href": "/BL_571/Kraft-Paper-Dispenser-Box",
+      "sku": null
+    },
+    {
+      "name": "Newsprint Sheets",
+      "image": "06-newsprint-sheets.webp",
+      "href": "/BL_1953/Newsprint-Sheets",
+      "sku": null
+    },
+    {
+      "name": "Corrugated Corner Protectors",
+      "image": "07-corrugated-corner-protectors.webp",
+      "href": "/BL_2160/Corrugated-Corner-Protectors",
+      "sku": null
+    },
+    {
+      "name": "Bubble Corner Guards",
+      "image": "08-bubble-corner-guards.webp",
+      "href": "/BL_2162/Bubble-Corner-Guards",
+      "sku": null
+    },
+    {
+      "name": "2-Roll Tape Starter Pack",
+      "image": "09-2-roll-tape-starter-pack.webp",
+      "href": "/BL_3094/2-Roll-Tape-Starter-Pack",
+      "sku": null
+    },
+    {
+      "name": "Carton Sealing Tape",
+      "image": "10-carton-sealing-tape.webp",
+      "href": "/BL_3059/Uline-Industrial-Tape",
+      "sku": null
+    },
+    {
+      "name": "Cast Stretch Wrap",
+      "image": "11-cast-stretch-wrap.webp",
+      "href": "/BL_2966/Uline-Cast-Stretch-Wrap",
+      "sku": null
+    },
+    {
+      "name": "Uline Econo-Wrapper",
+      "image": "12-uline-econo-wrapper.webp",
+      "href": "/BL_2965/Uline-Econo-Wrapper",
+      "sku": null
+    },
+    {
+      "name": "Uline Comfort Grip Knives",
+      "image": "13-uline-comfort-grip-knives.webp",
+      "href": "/BL_1170/Uline-Comfort-Grip-Knives",
+      "sku": null
+    },
+    {
+      "name": "Uline Pallet Markers",
+      "image": "14-uline-pallet-markers.webp",
+      "href": "/BL_1713/Uline-Pallet-Markers",
+      "sku": null
+    },
+    {
+      "name": "Fragile Shipping Labels",
+      "image": "15-fragile-shipping-labels.webp",
+      "href": "/BL_1212/Fragile-Shipping-Labels",
+      "sku": null
+    },
+    {
+      "name": "Moving Labels",
+      "image": "16-moving-labels.webp",
+      "href": "/BL_1246/Moving-Labels",
+      "sku": null
+    }
+  ]
+}

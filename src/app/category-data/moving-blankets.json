@@ -1,0 +1,106 @@
+{
+  "slug": "moving-blankets",
+  "title": "Moving Blankets, Pads and Supplies",
+  "source": "https://www.uline.com/Grp_146/Moving-Blankets-Pads-and-Supplies",
+  "mode": "group",
+  "featured": [
+    {
+      "name": "Economy Moving Blanket",
+      "image": "01-economy-moving-blanket.webp",
+      "href": "/Product/Detail/S-9878/Moving-Blankets-Pads-and-Supplies/Moving-Blankets-Economy",
+      "sku": null
+    },
+    {
+      "name": "Standard Moving Blanket",
+      "image": "02-standard-moving-blanket.webp",
+      "href": "/Product/Detail/S-6082/Moving-Blankets-Pads-and-Supplies/Moving-Blankets-Standard",
+      "sku": null
+    },
+    {
+      "name": "Deluxe Moving Blanket",
+      "image": "03-deluxe-moving-blanket.webp",
+      "href": "/Product/Detail/S-6083/Moving-Blankets-Pads-and-Supplies/Moving-Blankets-Deluxe",
+      "sku": null
+    }
+  ],
+  "items": [
+    {
+      "name": "Camouflage Moving Blanket",
+      "image": "04-camouflage-moving-blanket.webp",
+      "href": "/Product/Detail/S-16332/Moving-Blankets-Pads-and-Supplies/Moving-Blankets-Camouflage",
+      "sku": null
+    },
+    {
+      "name": "Door Jamb Protector",
+      "image": "05-door-jamb-protector.webp",
+      "href": "/BL_566/Door-Jamb-Protector",
+      "sku": null
+    },
+    {
+      "name": "Hand Truck Cover",
+      "image": "06-hand-truck-cover.webp",
+      "href": "/BL_645/Hand-Truck-Cover",
+      "sku": null
+    },
+    {
+      "name": "Uline Standard Aluminum Hand Trucks",
+      "image": "07-uline-standard-aluminum-hand-trucks.webp",
+      "href": "/BL_1801/Uline-Standard-Aluminum-Hand-Trucks",
+      "sku": null
+    },
+    {
+      "name": "Hardwood Dollies",
+      "image": "08-hardwood-dollies.webp",
+      "href": "/BL_1809/Hardwood-Dollies",
+      "sku": null
+    },
+    {
+      "name": "U-Channel Foam Edge Protectors",
+      "image": "09-u-channel-foam-edge-protectors.webp",
+      "href": "/BL_2425/U-Channel-Foam-Edge-Protectors",
+      "sku": null
+    },
+    {
+      "name": "Ram Board®",
+      "image": "10-ram-board.webp",
+      "href": "/BL_1607/Ram-Board",
+      "sku": null
+    },
+    {
+      "name": "Ram Board Plus®",
+      "image": "11-ram-board-plus.webp",
+      "href": "/BL_2644/Ram-Board-Plus",
+      "sku": null
+    },
+    {
+      "name": "Uline Carpet Protection",
+      "image": "12-uline-carpet-protection.webp",
+      "href": "/BL_5052/Uline-Carpet-Protection-Tape",
+      "sku": null
+    },
+    {
+      "name": "Paper Moving Pads",
+      "image": "13-paper-moving-pads.webp",
+      "href": "/BL_7913/Paper-Moving-Pads",
+      "sku": null
+    },
+    {
+      "name": "Furniture Slides",
+      "image": "14-furniture-slides.webp",
+      "href": "/BL_7909/Furniture-Slides",
+      "sku": null
+    },
+    {
+      "name": "Shoulder Dolly",
+      "image": "15-shoulder-dolly.webp",
+      "href": "/BL_1334/Shoulder-Dolly",
+      "sku": null
+    },
+    {
+      "name": "Lifting Straps",
+      "image": "16-lifting-straps.webp",
+      "href": "/BL_7912/Forearm-Lifting-Straps",
+      "sku": null
+    }
+  ]
+}

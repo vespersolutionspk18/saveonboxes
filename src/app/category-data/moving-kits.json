@@ -1,0 +1,94 @@
+{
+  "slug": "moving-kits",
+  "title": "Moving Kits",
+  "source": "https://www.uline.com/BL_7907/Moving-Kits",
+  "mode": "products",
+  "featured": [
+    {
+      "name": "Apartment Moving Kit - 1 to 2 bedrooms",
+      "image": "01-apartment-moving-kit-1-to-2-bedrooms.webp",
+      "href": "https://www.uline.com/Product/Detail/S-8081",
+      "sku": "S-8081"
+    },
+    {
+      "name": "Small Home Moving Kit - 2 to 4 bedrooms",
+      "image": "02-small-home-moving-kit-2-to-4-bedrooms.webp",
+      "href": "https://www.uline.com/Product/Detail/S-8082",
+      "sku": "S-8082"
+    },
+    {
+      "name": "Deluxe Home Moving Kit - 5 to 8 bedrooms",
+      "image": "03-deluxe-home-moving-kit-5-to-8-bedrooms.webp",
+      "href": "https://www.uline.com/Product/Detail/S-8084",
+      "sku": "S-8084"
+    }
+  ],
+  "items": [
+    {
+      "name": "16 x 12 x 12\" Corrugated Boxes",
+      "image": "04-16-x-12-x-12-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4163",
+      "sku": "S-4163"
+    },
+    {
+      "name": "18 x 18 x 16\" Corrugated Boxes",
+      "image": "05-18-x-18-x-16-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4456",
+      "sku": "S-4456"
+    },
+    {
+      "name": "18 x 18 x 24\" Corrugated Boxes",
+      "image": "06-18-x-18-x-24-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4338",
+      "sku": "S-4338"
+    },
+    {
+      "name": "18 x 18 x 28\" 350 lb Double Wall Dish Corrugated Boxes",
+      "image": "07-18-x-18-x-28-350-lb-double-wall-dish-corrugated-boxes.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4676",
+      "sku": "S-4676"
+    },
+    {
+      "name": "24 x 20 x 46\" 51 ECT Double Wall Wardrobe Box Kit",
+      "image": "08-24-x-20-x-46-51-ect-double-wall-wardrobe-box-kit.webp",
+      "href": "https://www.uline.com/Product/Detail/S-4750",
+      "sku": "S-4750"
+    },
+    {
+      "name": "Newsprint Sheets - 24 x 36\"",
+      "image": "09-newsprint-sheets-24-x-36.webp",
+      "href": "https://www.uline.com/Product/Detail/S-638",
+      "sku": "S-638"
+    },
+    {
+      "name": "Uline Air Bubble Wrap Roll - 12\" x 175', 3/16\"",
+      "image": "10-uline-air-bubble-wrap-roll-12-x-175-3-16.webp",
+      "href": "https://www.uline.com/Product/Detail/S-1012",
+      "sku": "S-1012"
+    },
+    {
+      "name": "Goodwrappers® - Cast, 80 gauge, 20\" x 1,000'",
+      "image": "11-goodwrappers-cast-80-gauge-20-x-1-000.webp",
+      "href": "https://www.uline.com/Product/Detail/S-2167",
+      "sku": "S-2167"
+    },
+    {
+      "name": "Paper Moving Pads - 48 x 72\"",
+      "image": "12-paper-moving-pads-48-x-72.webp",
+      "href": "https://www.uline.com/Product/Detail/S-18244",
+      "sku": "S-18244"
+    },
+    {
+      "name": "Paper Moving Pads - 60 x 72\"",
+      "image": "13-paper-moving-pads-60-x-72.webp",
+      "href": "https://www.uline.com/Product/Detail/S-11304",
+      "sku": "S-11304"
+    },
+    {
+      "name": "Moving Labels - Home",
+      "image": "14-moving-labels-home.webp",
+      "href": "https://www.uline.com/Product/Detail/S-7334",
+      "sku": "S-7334"
+    }
+  ]
+}

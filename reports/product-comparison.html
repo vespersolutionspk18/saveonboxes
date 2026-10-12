@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Product comparison — Uline vs our catalogue</title>
+<style>
+  :root {
+    --ink: #14181d; --body: #2b3238; --muted: #6b7379; --line: #dfe3e6;
+    --bg: #fff; --soft: #f6f8f9; --accent: #b4291f; --ok: #1c6b3f; --warn: #9a6207;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 48px 28px 90px; background: var(--bg); color: var(--body);
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  h1 { margin: 0 0 6px; color: var(--ink); font-size: 30px; letter-spacing: -.02em; }
+  .sub { margin: 0 0 34px; color: var(--muted); font-size: 14px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 42px; }
+  .stat { padding: 16px 18px; border: 1px solid var(--line); border-radius: 8px; background: var(--soft); }
+  .stat b { display: block; color: var(--ink); font-size: 27px; line-height: 1.15; letter-spacing: -.02em; }
+  .stat span { color: var(--muted); font-size: 12.5px; }
+  .jump { display: flex; gap: 10px; margin: -22px 0 40px; }
+  .jump a {
+    display: flex; align-items: center; gap: 8px; padding: 9px 15px; border: 1px solid var(--line);
+    border-radius: 7px; color: var(--body); font-size: 13.5px; text-decoration: none;
+  }
+  .jump a:hover { border-color: var(--ink); }
+  .jump b { color: var(--ink); }
+  .jump span { padding: 1px 7px; border-radius: 999px; background: var(--soft); color: var(--muted); font-size: 11.5px; }
+  h2 { margin: 52px 0 4px; padding-top: 22px; border-top: 2px solid var(--ink); color: var(--ink); font-size: 21px; letter-spacing: -.01em; }
+  h2 .n { color: var(--muted); font-size: 15px; font-weight: 400; }
+  .lede { margin: 0 0 26px; color: var(--muted); font-size: 14px; max-width: 74ch; }
+  .typeblock { margin-bottom: 30px; }
+  h3 { display: flex; align-items: center; gap: 10px; margin: 0 0 8px; color: var(--ink); font-size: 15.5px; }
+  .pill { padding: 2px 9px; border-radius: 999px; background: var(--soft); border: 1px solid var(--line); color: var(--muted); font-size: 11.5px; font-weight: 500; }
+  .note { margin: 0 0 10px; padding: 9px 12px; border-left: 3px solid var(--warn); background: #fdf8ee; color: #6d5312; font-size: 13px; border-radius: 0 4px 4px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { padding: 7px 10px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; text-align: left; }
+  td { padding: 10px; border-bottom: 1px solid #eef1f3; vertical-align: top; }
+  .cmp td:first-child { width: 38%; }
+  .cmp td:nth-child(2) { width: 16%; }
+  .pn { display: block; color: var(--ink); font-weight: 550; }
+  .meta { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+  /* Long reference lists stay on one line per row. */
+  table.simple td { padding: 5px 10px; }
+  table.simple .pn, table.simple .meta { display: inline; margin: 0; font-size: 13px; }
+  table.simple .pn { font-weight: 500; }
+  table.simple td + td .meta, table.simple td.meta { color: var(--muted); }
+  table.simple td:first-child { width: 42%; }
+  .tag { display: inline-block; margin-top: 5px; padding: 1px 7px; border: 1px solid var(--line); border-radius: 3px; color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; }
+  .count { display: block; margin-top: 6px; color: var(--muted); font-size: 11.5px; }
+  .chip { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11.5px; font-weight: 600; }
+  .chip.ok { background: #e8f3ec; color: var(--ok); }
+  .chip.warn { background: #fdf3e2; color: var(--warn); }
+  ul.eq { margin: 0; padding: 0; list-style: none; }
+  ul.eq li { padding: 0 0 7px; }
+  ul.eq li:last-child { padding-bottom: 0; }
+  ul.eq.tight li { padding-bottom: 3px; }
+  .pn.sm { font-weight: 450; font-size: 12.5px; color: var(--body); }
+  li.more { color: var(--muted); font-size: 12px; font-style: italic; }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12.5px; }
+  @media (max-width: 780px) {
+    body { padding: 28px 16px 60px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .cmp td:first-child, .cmp td:nth-child(2) { width: auto; }
+    table { font-size: 12.5px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Uline vs our catalogue</h1>
+  <p class="sub">Product-by-product comparison of the 15 Uline moving-box categories against our New&nbsp;Haven and CDS supplier catalogue. Generated 2026-10-12.</p>
+
+  <div class="stats">
+    <div class="stat"><b>336</b><span>products we carry</span></div>
+    <div class="stat"><b>195</b><span>Uline entries compared</span></div>
+    <div class="stat"><b>108</b><span>Uline entries we match</span></div>
+    <div class="stat"><b>4</b><span>exact size matches</span></div>
+  </div>
+
+  <nav class="jump">
+    <a href="#sec1"><b>1</b> Both carry <span>108</span></a>
+    <a href="#sec2"><b>2</b> Ours only <span>68</span></a>
+    <a href="#sec3"><b>3</b> Uline only <span>87</span></a>
+  </nav>
+
+  <h2 id="sec1">1. We carry it, Uline carries it <span class="n">— 108 Uline entries</span></h2>
+  <p class="lede">Grouped by product type. "Same size" means a box of identical dimensions; "Same product" means we carry the product but not in that exact size; "Adjacent" means we have something in the same family that is not a direct equivalent.</p>
+  <section class="typeblock">
+    <h3>Round Trip Tote <span class="pill">Uline 13 &middot; ours 8</span></h3>
+    <p class="note">Our reusable containers are the E-Crate polypropylene file system, not stackable plastic moving totes. Same family, different product.</p>
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">10 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Round Trip Totes - 10.1 x 7.8 x 6.5&quot;</span></li><li><span class="pn sm">Round Trip Totes - 13.8 x 8.9 x 8.8&quot;</span></li><li><span class="pn sm">Round Trip Totes - 17.7 x 10.1 x 6&quot;</span></li><li><span class="pn sm">Round Trip Totes - 19.9 x 14.2 x 8.4&quot;</span></li><li><span class="pn sm">Round Trip Totes - 19.8 x 13.8 x 11.3&quot;</span></li><li><span class="pn sm">Round Trip Totes - 19.8 x 13.8 x 15.8&quot;</span></li>
+         <li class="more">+4 more</li></ul></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">8 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">E-Crate - Polypropylene File Storage Container</span>
+        <span class="meta">New Haven Moving Equipment &middot; 24.25 x 15.25 x 12.75&quot; &middot; NH280</span>
+      </li>
+      <li>
+        <span class="pn">E-Crate Kit</span>
+        <span class="meta">New Haven Moving Equipment &middot; 24.25 x 15.25 x 12.75&quot; &middot; NH288-4</span>
+      </li>
+      <li>
+        <span class="pn">Computer IT E-Crate</span>
+        <span class="meta">New Haven Moving Equipment &middot; 25 x 21 x 23&quot; &middot; NH290</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Flip-Top</span></li><li><span class="pn sm">Hang'N'Stor™</span></li><li><span class="pn sm">File Storage Keepbox™</span></li>
+         </ul></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">8 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Computer IT E-Crate</span>
+        <span class="meta">New Haven Moving Equipment &middot; 25 x 21 x 23&quot; &middot; NH290</span>
+      </li>
+      <li>
+        <span class="pn">E-Crate - Polypropylene File Storage Container</span>
+        <span class="meta">New Haven Moving Equipment &middot; 24.25 x 15.25 x 12.75&quot; &middot; NH280</span>
+      </li>
+      <li>
+        <span class="pn">Computer IT E-Crate Dolly</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH292S</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Bulk Container <span class="pill">Uline 10 &middot; ours 3</span></h3>
+    <p class="note">We carry one tapered bulk bin plus corrugated sheets; Uline's line is triple-wall boxes, gaylord pallet boxes and octagon bins.</p>
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">10 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Bulk Cargo Containers</span></li><li><span class="pn sm">1,100 Lb. Triple Wall Boxes</span></li><li><span class="pn sm">1,300 Lb. Triple Wall Boxes</span></li><li><span class="pn sm">Reusable Bulk Containers</span></li><li><span class="pn sm">Uline Easy Loader</span></li><li><span class="pn sm">Octagon Bulk Bins</span></li>
+         <li class="more">+4 more</li></ul></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">3 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">BULK BIN TAPERED 14 CUBIC FT 42X30X28 w/STEEL BASE, 4&quot; CSTR</span>
+        <span class="meta">New Haven Moving Equipment &middot; 42 x 30 x 28&quot; &middot; NH297-SB/YELLOW; NH297-SB/BLACK</span>
+      </li>
+      <li>
+        <span class="pn">GAYLORD PALLET BOX 48x40x36 HSC 51ECT</span>
+        <span class="meta">New Haven Moving Equipment &middot; 48 x 40 x 36&quot; &middot; NH700HSC48X40X36</span>
+      </li>
+      <li>
+        <span class="pn">48X96 TRIPLE WALL SHEET</span>
+        <span class="meta">CDS Moving Equipment &middot; .CS-4896TW</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>File Box <span class="pill">Uline 10 &middot; ours 5</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">10 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Storage File Boxes</span></li><li><span class="pn sm">Economy Storage File Boxes</span></li><li><span class="pn sm">Economy Storage File Boxes with Lid</span></li><li><span class="pn sm">Heavy Duty Storage File Boxes</span></li><li><span class="pn sm">Quick File Heavy Duty Boxes</span></li><li><span class="pn sm">Bankers Box®</span></li>
+         <li class="more">+4 more</li></ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">5 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">File Carton Top</span>
+        <span class="meta">New Haven Moving Equipment &middot; 15 x 12 x 10&quot; &middot; NH725-T</span>
+      </li>
+      <li>
+        <span class="pn">File Carton 15&quot;x12&quot;x10&quot; Bottom</span>
+        <span class="meta">New Haven Moving Equipment &middot; 15 x 12 x 10&quot; &middot; NH725-B</span>
+      </li>
+      <li>
+        <span class="pn">Tote - Legal 2.3 cu Auto-Bottom White</span>
+        <span class="meta">New Haven Moving Equipment &middot; 16.5 x 22 x 11&quot; &middot; NH726AB/S-W</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Tv Box <span class="pill">Uline 9 &middot; ours 9</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Flat-Panel TV Moving Boxes</span>
+         <span class="meta">Moving Boxes</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">FLAT SCREEN 2 PC TV CTN w/FOAM 37X6X43 EX78&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; 37 x 6 x 43&quot; &middot; NH734S78</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Carton 62x10x37</span>
+        <span class="meta">New Haven Moving Equipment &middot; 62 x 10 x 37&quot; &middot; NH734S2</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Cartons - Telescoping</span>
+        <span class="meta">New Haven Moving Equipment &middot; 41 x 6 x 35&quot; &middot; NH734-41635P; NH734-46645P</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">22 x 6 x 16&quot; FOL Flat-Panel TV Boxes</span></li><li><span class="pn sm">28 x 6 x 20&quot; FOL Flat-Panel TV Boxes</span></li><li><span class="pn sm">38 x 8 x 26&quot; FOL Flat-Panel TV Boxes</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">TV-BOX - LCD FLAT SCREEN BOX</span>
+        <span class="meta">CDS Moving Equipment &middot; 21.81 x 10.13 x 31.69&quot; &middot; .TV-BOX</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Cartons - Telescoping</span>
+        <span class="meta">New Haven Moving Equipment &middot; 41 x 6 x 35&quot; &middot; NH734-41635P; NH734-46645P</span>
+      </li>
+      <li>
+        <span class="pn">FLAT SCREEN 2 PC TV CTN w/FOAM 37X6X43 EX78&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; 37 x 6 x 43&quot; &middot; NH734S78</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">46 x 8 x 30&quot; FOL Flat-Panel TV Boxes</span>
+         <span class="meta">Flat-Panel TV Boxes &middot; 46 x 8 x 30&quot; &middot; S-13976</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">FLAT SCREEN 2 PC TV CTN w/FOAM 37X6X43 EX78&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; 37 x 6 x 43&quot; &middot; NH734S78</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Cartons - Telescoping</span>
+        <span class="meta">New Haven Moving Equipment &middot; 41 x 6 x 35&quot; &middot; NH734-41635P; NH734-46645P</span>
+      </li>
+      <li>
+        <span class="pn">48&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 48.75 x 10.5 x 38.38&quot; &middot; PLASMA-48</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">56 x 8 x 36&quot; FOL Flat-Panel TV Boxes</span>
+         <span class="meta">Flat-Panel TV Boxes &middot; 56 x 8 x 36&quot; &middot; S-13977</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">56&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 56 x 8.75 x 37.5&quot; &middot; PLASMA-56</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Carton 62x10x37</span>
+        <span class="meta">New Haven Moving Equipment &middot; 62 x 10 x 37&quot; &middot; NH734S2</span>
+      </li>
+      <li>
+        <span class="pn">48&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 48.75 x 10.5 x 38.38&quot; &middot; PLASMA-48</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">64 x 8 x 40&quot; FOL Flat-Panel TV Boxes</span>
+         <span class="meta">Flat-Panel TV Boxes &middot; 64 x 8 x 40&quot; &middot; S-15215</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">65&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 64 x 10 x 42&quot; &middot; PLASMA-65</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Carton 62x10x37</span>
+        <span class="meta">New Haven Moving Equipment &middot; 62 x 10 x 37&quot; &middot; NH734S2</span>
+      </li>
+      <li>
+        <span class="pn">56&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 56 x 8.75 x 37.5&quot; &middot; PLASMA-56</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">70 x 8 x 42&quot; FOL Flat-Panel TV Boxes</span>
+         <span class="meta">Flat-Panel TV Boxes &middot; 70 x 8 x 42&quot; &middot; S-19761</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">75&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 70 x 10 x 44&quot; &middot; PLASMA-75</span>
+      </li>
+      <li>
+        <span class="pn">65&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 64 x 10 x 42&quot; &middot; PLASMA-65</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV Carton 62x10x37</span>
+        <span class="meta">New Haven Moving Equipment &middot; 62 x 10 x 37&quot; &middot; NH734S2</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">82 x 8 x 50&quot; 2-piece Telescopic Flat-Panel TV Boxes</span>
+         <span class="meta">Flat-Panel TV Boxes &middot; 82 x 8 x 50&quot; &middot; S-23318</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">9 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">85&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 78 x 8 x 49&quot; &middot; PLASMA-85</span>
+      </li>
+      <li>
+        <span class="pn">75&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 70 x 10 x 44&quot; &middot; PLASMA-75</span>
+      </li>
+      <li>
+        <span class="pn">65&quot; PLASMA TV (BOX ONLY)</span>
+        <span class="meta">CDS Moving Equipment &middot; 64 x 10 x 42&quot; &middot; PLASMA-65</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Dishpack <span class="pill">Uline 8 &middot; ours 6</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">18 x 18 x 28&quot; 350 lb Double Wall Dish Corrugated Boxes</span>
+         <span class="meta">Dish and Glass Pack Boxes &middot; 18 x 18 x 28&quot; &middot; S-4676</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same size</span><span class="count">6 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">5.1 Dish Pack Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 18 x 28&quot; &middot; NH706</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Dish Pack Partition Set</span></li><li><span class="pn sm">Dish and Glass Pack Boxes</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">6 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">PAK-N-MOVE BOX CELL KIT for 5.2 DISH CTN</span>
+        <span class="meta">New Haven Moving Equipment &middot; PNM-CELLKIT-5.2</span>
+      </li>
+      <li>
+        <span class="pn">PAK-N-MOVE GLASS &amp; DISH SAVER KITS for 1.5 CTN</span>
+        <span class="meta">New Haven Moving Equipment &middot; PNM-GLASKIT-1.5; PNM-DISHKIT-1.5</span>
+      </li>
+      <li>
+        <span class="pn">5.1 Dish Pack Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 18 x 28&quot; &middot; NH706</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">4 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">16 x 12 x 9&quot; 275 lb Glass Pack Kit</span></li><li><span class="pn sm">17 1/2 x 13 x 9 1/4&quot; 275 lb Glass Pack Kit</span></li><li><span class="pn sm">24 x 12 x 6&quot; 275 lb Glass Pack Kit</span></li><li><span class="pn sm">24 x 12 x 12&quot; 275 lb Glass Pack Kit</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">6 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">EZ BOX - DISH - GLASS</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 12 x 11.25&quot; &middot; .EZ-B</span>
+      </li>
+      <li>
+        <span class="pn">MINI DISHPACK</span>
+        <span class="meta">CDS Moving Equipment &middot; 18 x 18 x 14&quot; &middot; .MD</span>
+      </li>
+      <li>
+        <span class="pn">5.0 DISHPACK-GENERIC</span>
+        <span class="meta">CDS Moving Equipment &middot; 18 x 18 x 27&quot; &middot; .50</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">26 x 14 x 12&quot; 275 lb Double Wall Dish Pack Kit</span>
+         <span class="meta">Dish and Glass Pack Boxes &middot; 26 x 14 x 12&quot; &middot; S-12659</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">6 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">EZ BOX - DISH - GLASS</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 12 x 11.25&quot; &middot; .EZ-B</span>
+      </li>
+      <li>
+        <span class="pn">5.0 DISHPACK-GENERIC</span>
+        <span class="meta">CDS Moving Equipment &middot; 18 x 18 x 27&quot; &middot; .50</span>
+      </li>
+      <li>
+        <span class="pn">5.1 Dish Pack Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 18 x 28&quot; &middot; NH706</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Generic Box <span class="pill">Uline 8 &middot; ours 24</span></h3>
+    <p class="note">Plain corrugated cartons on both sides — comparable by size only, no branded equivalent.</p>
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">15 x 15 x 30&quot; Corrugated Boxes</span></li><li><span class="pn sm">18 x 18 x 24&quot; Corrugated Boxes</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same size</span><span class="count">24 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">4.5 Large Carton - Tall or Long</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 18 x 24&quot; &middot; NH703T; NH703L</span>
+      </li>
+      <li>
+        <span class="pn">4.5 CU. LARGE GENERIC</span>
+        <span class="meta">CDS Moving Equipment &middot; 18 x 18 x 24&quot; &middot; .45</span>
+      </li>
+      <li>
+        <span class="pn">4.5 LAYDOWN GENERIC</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 18 x 18&quot; &middot; .45LD</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">20 x 20 x 36&quot; Corrugated Boxes</span>
+         <span class="meta">Lamp Boxes &middot; 20 x 20 x 36&quot; &middot; S-4569</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">24 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">HEAVY DUTY 24&quot; ONE PIECE WARDR</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 20 x 36&quot; &middot; .WD24-HD</span>
+      </li>
+      <li>
+        <span class="pn">TV - Micro Combo Box 24x24x20</span>
+        <span class="meta">New Haven Moving Equipment &middot; 24 x 24 x 20&quot; &middot; NH734-TV-242420DW</span>
+      </li>
+      <li>
+        <span class="pn">4.5 Large Carton - Tall or Long</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 18 x 24&quot; &middot; NH703T; NH703L</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Packing Boxes</span></li><li><span class="pn sm">Deluxe Moving Boxes</span></li><li><span class="pn sm">Bike Boxes</span></li>
+         </ul></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">24 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">PARTS BOX 12&quot;x12&quot;x12&quot; 1 CU WHITE</span>
+        <span class="meta">New Haven Moving Equipment &middot; 12 x 12 x 12&quot; &middot; NH700-12X12X12W</span>
+      </li>
+      <li>
+        <span class="pn">TV - Micro Combo Box 24x24x20</span>
+        <span class="meta">New Haven Moving Equipment &middot; 24 x 24 x 20&quot; &middot; NH734-TV-242420DW</span>
+      </li>
+      <li>
+        <span class="pn">1.5 SUPER CUBE 18-1/8x12-5/8x11</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH701SC</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">16 x 12 x 12&quot; Corrugated Boxes</span>
+         <span class="meta">Moving Kits &middot; 16 x 12 x 12&quot; &middot; S-4163</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same size</span><span class="count">24 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">1.5 Small Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 16 x 12 x 12&quot; &middot; NH701</span>
+      </li>
+      <li>
+        <span class="pn">1.5 Auto Bottom Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 16 x 12 x 12&quot; &middot; NH701AB; NH701AB-W</span>
+      </li>
+      <li>
+        <span class="pn">1.5 Push Down Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 16 x 12 x 12&quot; &middot; NH701PDW</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">18 x 18 x 16&quot; Corrugated Boxes</span>
+         <span class="meta">Moving Kits &middot; 18 x 18 x 16&quot; &middot; S-4456</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same size</span><span class="count">24 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">3.0 Medium Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 18 x 16&quot; &middot; NH702</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Mattress Box <span class="pill">Uline 5 &middot; ours 5</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">28 x 6 x 52&quot; FOL Crib Mattress Boxes</span></li><li><span class="pn sm">39 x 8 x 75&quot; Twin Size Mattress Boxes</span></li><li><span class="pn sm">54 x 8 x 75&quot; Full Size Mattress Boxes</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">5 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">KING QUEEN COMBO MATTRESS BOX</span>
+        <span class="meta">CDS Moving Equipment &middot; 84.06 x 7.19 x 35.5&quot; &middot; .KQS</span>
+      </li>
+      <li>
+        <span class="pn">Mattress Carrier</span>
+        <span class="meta">New Haven Moving Equipment &middot; 84 x 13 x 30&quot; &middot; NH475HD</span>
+      </li>
+      <li>
+        <span class="pn">KING / QUEEN PILLOW TOP MATTRESS BOX</span>
+        <span class="meta">CDS Moving Equipment &middot; 84.56 x 15 x 35.38&quot; &middot; .KQSPT</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">81 x 11 x 40-80&quot; Queen/King Size Mattress Boxes</span></li><li><span class="pn sm">Mattress Boxes</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">5 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Mattress Carrier</span>
+        <span class="meta">New Haven Moving Equipment &middot; 84 x 13 x 30&quot; &middot; NH475HD</span>
+      </li>
+      <li>
+        <span class="pn">Mattress Box Split Combo</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH714; NH714-PT14</span>
+      </li>
+      <li>
+        <span class="pn">Mattress Cartons - Twin, Full, Crib</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH710; NH711; NH715</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Wardrobe Box <span class="pill">Uline 5 &middot; ours 10</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Wardrobe Moving Boxes</span>
+         <span class="meta">Moving Boxes</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">10 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Wardrobe Cartons</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 21 x 46&quot; &middot; NH724; NH720; NH718; NH724S</span>
+      </li>
+      <li>
+        <span class="pn">Wardrobe Bars</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH724B; NH720B; NH718B</span>
+      </li>
+      <li>
+        <span class="pn">Wardrobe 'Lay Flat' Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 33 x 20 x 10&quot; &middot; NH716</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">24 x 20 x 46&quot; 51 ECT Double Wall Wardrobe Box Kit</span></li><li><span class="pn sm">24 x 22 x 60&quot; 51 ECT Double Wall Wardrobe Box Kit</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">10 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">24&quot; ONE PIECE WARDROBE</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 20 x 47.38&quot; &middot; .WD24</span>
+      </li>
+      <li>
+        <span class="pn">20&quot; ONE PIECE WARDROBE w/ HANDLES</span>
+        <span class="meta">CDS Moving Equipment &middot; 20 x 19.75 x 45.75&quot; &middot; .WD20</span>
+      </li>
+      <li>
+        <span class="pn">Wardrobe Cartons</span>
+        <span class="meta">New Haven Moving Equipment &middot; 18 x 21 x 46&quot; &middot; NH724; NH720; NH718; NH724S</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">24 x 20 x 34&quot; 51 ECT Double Wall Wardrobe Box Kit</span>
+         <span class="meta">Wardrobe Boxes &middot; 24 x 20 x 34&quot; &middot; S-4777</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">10 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">24&quot; WARDROBE SHORT</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 20 x 36&quot; &middot; .WD24S</span>
+      </li>
+      <li>
+        <span class="pn">20&quot; SHORTY WARDROBE BOX</span>
+        <span class="meta">CDS Moving Equipment &middot; 20 x 20 x 34&quot; &middot; .WD20S</span>
+      </li>
+      <li>
+        <span class="pn">24&quot; ONE PIECE WARDROBE</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 20 x 47.38&quot; &middot; .WD24</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">36 x 21 x 10&quot; Flat Wardrobe Boxes</span>
+         <span class="meta">Wardrobe Boxes &middot; 36 x 21 x 10&quot; &middot; S-4965</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">10 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Wardrobe 'Lay Flat' Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 33 x 20 x 10&quot; &middot; NH716</span>
+      </li>
+      <li>
+        <span class="pn">LAY DOWN WARDROBE</span>
+        <span class="meta">CDS Moving Equipment &middot; 39 x 19 x 9&quot; &middot; .LDWD</span>
+      </li>
+      <li>
+        <span class="pn">24&quot; WARDROBE SHORT</span>
+        <span class="meta">CDS Moving Equipment &middot; 24 x 20 x 36&quot; &middot; .WD24S</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Moving Blanket <span class="pill">Uline 4 &middot; ours 3</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">4 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Economy Moving Blanket</span></li><li><span class="pn sm">Standard Moving Blanket</span></li><li><span class="pn sm">Deluxe Moving Blanket</span></li><li><span class="pn sm">Camouflage Moving Blanket</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">3 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">TEXTILE HD MOVING BLANKET CUT SIZE 60X80 (BDL/25)</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC25-NH22HDTEXTILECS60X80</span>
+      </li>
+      <li>
+        <span class="pn">Textile HD Moving Blanket Cut Size 60&quot; X 80&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH22HDTEXTILECS60X80</span>
+      </li>
+      <li>
+        <span class="pn">Textile Moving Blanket Cut Size 54&quot; x 72&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH22TEXTILECS54X72</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Label <span class="pill">Uline 4 &middot; ours 6</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">4 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Moving Labels - Home</span></li><li><span class="pn sm">Uline Pallet Markers</span></li><li><span class="pn sm">Fragile Shipping Labels</span></li><li><span class="pn sm">Moving Labels</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">6 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Security Seal/Container Labels</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH611</span>
+      </li>
+      <li>
+        <span class="pn">Commercial Moving Labels (500 per Roll)</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH769</span>
+      </li>
+      <li>
+        <span class="pn">Commercial Moving Labels (1000 per Package) 3&quot; x 2&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH770</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Corner Protector <span class="pill">Uline 3 &middot; ours 2</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">U-Channel Foam Edge Protectors</span></li><li><span class="pn sm">Corrugated Corner Protectors</span></li><li><span class="pn sm">Bubble Corner Guards</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">2 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">5&quot; PLASTIC CORNER PROTECTOR</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC31-NH37001P</span>
+      </li>
+      <li>
+        <span class="pn">36&quot; PLASTIC CORNER PROTECTOR</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC31-NH37001P-36</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Paper Pad <span class="pill">Uline 3 &middot; ours 8</span></h3>
+    <p class="note">Our pads are pallet/furniture pads; Uline's are paper moving pads for wrapping.</p>
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Paper Moving Pads</span></li><li><span class="pn sm">Paper Moving Pads - 48 x 72&quot;</span></li><li><span class="pn sm">Paper Moving Pads - 60 x 72&quot;</span></li>
+         </ul></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">8 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Dreadnaught Professional Grade 72&quot; x 80&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH55BBCS7280EA; NH55BB4PAK; NH55BBCS7280</span>
+      </li>
+      <li>
+        <span class="pn">PAPER PADS - 3 PLY</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH731-48/72-3P; NH731-54/64-3P; NH731-60/72-3P</span>
+      </li>
+      <li>
+        <span class="pn">PAPER PADS - 2 PLY</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH731-54/64-2P; NH731-60/72-2P</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Bubble Wrap <span class="pill">Uline 3 &middot; ours 24</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Uline Air Bubble Wrap Roll - 12&quot; x 175', 3/16&quot;</span></li><li><span class="pn sm">Economy Bubble Rolls</span></li><li><span class="pn sm">UPSable Bubble Rolls</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">24 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">BUBBLE ROLL 3/16&quot; 24&quot;x750' PERF @ 12&quot; ANTI-STAT</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC31-NHBPS-750/24P12A</span>
+      </li>
+      <li>
+        <span class="pn">BUBBLE ROLL LG 1/2&quot;x24&quot;x250' ANTI-STATIC PERF</span>
+        <span class="meta">New Haven Moving Equipment &middot; 0.5 x 24 x 250&quot; &middot; WSC31-NHBPL-250/24-AP12</span>
+      </li>
+      <li>
+        <span class="pn">Monitor Sleeve - Bubble (Anti-static)</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH926B-2418A/EA; NH926B-2424A/EA; NH926B-3020A/EA</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Stretch Wrap <span class="pill">Uline 3 &middot; ours 13</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">3 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Goodwrappers® - Cast, 80 gauge, 20&quot; x 1,000'</span></li><li><span class="pn sm">Cast Stretch Wrap</span></li><li><span class="pn sm">Uline Econo-Wrapper</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">13 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">18&quot; Wide Stretchwrap (Black) 80 gauge</span>
+        <span class="meta">New Haven Moving Equipment &middot; SW1815-80BLACK/RL; SW1815-80BLACK/CS</span>
+      </li>
+      <li>
+        <span class="pn">5&quot; Wide Stretchwrap (Clear) 80 Gauge</span>
+        <span class="meta">New Haven Moving Equipment &middot; SW510-80/RLX; SW510-80/CSX</span>
+      </li>
+      <li>
+        <span class="pn">20&quot; Wide Stretchwrap (Clear) 80 Gauge</span>
+        <span class="meta">New Haven Moving Equipment &middot; SW2010-80/RL; SW2010-80/CS</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Mirror Box <span class="pill">Uline 2 &middot; ours 8</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">30 x 3 1/2 x 40&quot; 4-piece Mirror Corrugated Boxes</span>
+         <span class="meta">Artwork/Mirror Boxes &middot; 30 x 3.5 x 40&quot; &middot; S-4832</span>
+         <span class="tag">product</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">8 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">MIRROR CARTON</span>
+        <span class="meta">CDS Moving Equipment &middot; 37.31 x 4.31 x 26.88&quot; &middot; .M2</span>
+      </li>
+      <li>
+        <span class="pn">Flat Screen TV or Picture Mirror Pack - Variety of Sizes</span>
+        <span class="meta">New Haven Moving Equipment &middot; 38 x 8 x 26&quot; &middot; NH734S3; NH734S4; NH734S5; NH734S6; NH734S7; NH734S8; NH734S9; NH734S11; NH734S14</span>
+      </li>
+      <li>
+        <span class="pn">LARGE MIRROR CARTON</span>
+        <span class="meta">CDS Moving Equipment &middot; 48 x 4.38 x 32.75&quot; &middot; .M2UL</span>
+      </li></ul></td>
+    </tr><tr>
+      <td><span class="pn">Artwork/Mirror Boxes</span>
+         <span class="meta">Moving Boxes</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">8 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Mirror Carton - 2 Piece Telescoping</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH750-30X40-2; NH750-40X60-2; NH750-48X32-2</span>
+      </li>
+      <li>
+        <span class="pn">Mirror Carton - 1 Piece</span>
+        <span class="meta">New Haven Moving Equipment &middot; 24 x 4 x 26&quot; &middot; NH750-24X26-1</span>
+      </li>
+      <li>
+        <span class="pn">Mirror Carton - 4 Piece Adjustable</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH750-30X40-4; NH750-40X60-4</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Ram Board <span class="pill">Uline 2 &middot; ours 1</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Ram Board®</span></li><li><span class="pn sm">Ram Board Plus®</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">1 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Ram Board</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH788-RB38X100</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Newsprint <span class="pill">Uline 2 &middot; ours 5</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">Newsprint Sheets - 24 x 36&quot;</span></li><li><span class="pn sm">Newsprint Sheets</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">5 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">PAK-N-MOVE UNPRINTED NEWSPAPER 10 lbs.</span>
+        <span class="meta">New Haven Moving Equipment &middot; PNM-NEWSPAPER10</span>
+      </li>
+      <li>
+        <span class="pn">Unprinted Newsprint by the Bundle</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH742-10/BDL; NH742-25/BDL; NH742-30/BDL</span>
+      </li>
+      <li>
+        <span class="pn">30 LB BUNDLE NEWSPRINT 54/SK</span>
+        <span class="meta">CDS Moving Equipment &middot; .NR27</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Tape <span class="pill">Uline 2 &middot; ours 26</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">2 Uline entries</span>
+         <ul class="eq tight"><li><span class="pn sm">2-Roll Tape Starter Pack</span></li><li><span class="pn sm">Carton Sealing Tape</span></li>
+         </ul></td>
+      <td><span class="chip ok">Same product</span><span class="count">26 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Clear Tape - 55 and 110 yd.</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH748-CC55/RL; NH748-CC110/RL; NH748-CC55/CS; NH748-CC110/CS</span>
+      </li>
+      <li>
+        <span class="pn">TAPE-FRAGILE HANDLE WITH CARE 2&quot;X110YD /ROLL</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC23-NH748-FRAGILE110/RL</span>
+      </li>
+      <li>
+        <span class="pn">TAPE-FRAGILE HANDLE WITH CARE 2&quot;X110YD /ROLL</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC21-NH748-FRAGILE110/RL</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Door Jamb <span class="pill">Uline 1 &middot; ours 3</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Door Jamb Protector</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">3 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Door Jamb-3 Springs [Pad Not Included]</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH453-3</span>
+      </li>
+      <li>
+        <span class="pn">Door Jamb Protector Pad with 3 Springs</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH453</span>
+      </li>
+      <li>
+        <span class="pn">Door Jamb Spring with Webbing</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH453-1; NH453-3</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Hand Truck <span class="pill">Uline 1 &middot; ours 15</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Uline Standard Aluminum Hand Trucks</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">15 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Stevens Appliance Hand Trucks</span>
+        <span class="meta">New Haven Moving Equipment &middot; S-SRT; S-MRT</span>
+      </li>
+      <li>
+        <span class="pn">Escalera Motorized Stair Hand Truck</span>
+        <span class="meta">New Haven Moving Equipment &middot; MS1-66</span>
+      </li>
+      <li>
+        <span class="pn">Dutro Hand Trucks</span>
+        <span class="meta">New Haven Moving Equipment &middot; D1504; D1404</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Dolly <span class="pill">Uline 1 &middot; ours 57</span></h3>
+    <p class="note">Ours are carton dollies for moving; Uline's entry here is a hardwood furniture dolly.</p>
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Hardwood Dollies</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">57 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">DOLLY TOW HOOK</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC41-NHDTH-1</span>
+      </li>
+      <li>
+        <span class="pn">DOLLY TOW HOOK</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC33-NHDTH-1</span>
+      </li>
+      <li>
+        <span class="pn">DOLLY TOW HOOK</span>
+        <span class="meta">New Haven Moving Equipment &middot; WSC13-NHDTH-1</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Carpet Protection <span class="pill">Uline 1 &middot; ours 3</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Uline Carpet Protection</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">3 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Scuff Shield with Handhold - 29&quot; x 48&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH787</span>
+      </li>
+      <li>
+        <span class="pn">Carpet Shield</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH790-50; NH790-200</span>
+      </li>
+      <li>
+        <span class="pn">Corrugated Shipping Sleeve for 29&quot; x 48&quot; Scuff Shield</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH787-SLEEVE</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Furniture Slide <span class="pill">Uline 1 &middot; ours 2</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Furniture Slides</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">2 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Furniture Skate</span>
+        <span class="meta">New Haven Moving Equipment &middot; NHFS-1</span>
+      </li>
+      <li>
+        <span class="pn">Turn Plate</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH795</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Shoulder Dolly <span class="pill">Uline 1 &middot; ours 1</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Shoulder Dolly</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">1 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Shoulder Dolly</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH537</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Lifting Strap <span class="pill">Uline 1 &middot; ours 3</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Lifting Straps</span>
+         <span class="meta">Moving Blankets, Pads and Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">3 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Burlap Carrying Strap (4&quot; Wide)</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH534-18; NH534-15</span>
+      </li>
+      <li>
+        <span class="pn">Moving Harness Value Pack</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH536MHVP</span>
+      </li>
+      <li>
+        <span class="pn">Forearm Forklift</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH536</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Speed Pack <span class="pill">Uline 1 &middot; ours 2</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Speed Pack Box</span>
+         <span class="meta">Moving Boxes</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">2 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Speed Packs - Triple Walled</span>
+        <span class="meta">New Haven Moving Equipment &middot; 49 x 20 x 24&quot; &middot; NH727A-492024TW; NH727C-392830TW; NH727E-482428TW</span>
+      </li>
+      <li>
+        <span class="pn">Speed Pack - Double Wall</span>
+        <span class="meta">New Haven Moving Equipment &middot; 41.5 x 25.75 x 29&quot; &middot; NH727D-412629DW</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Lamp Box <span class="pill">Uline 1 &middot; ours 2</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Lamp Boxes</span>
+         <span class="meta">Moving Boxes</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">2 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Lamp Base Carton</span>
+        <span class="meta">New Haven Moving Equipment &middot; 12 x 12 x 40&quot; &middot; NH705</span>
+      </li>
+      <li>
+        <span class="pn">LAMP CARTON 14&quot; x 14&quot; x 40&quot;</span>
+        <span class="meta">CDS Moving Equipment &middot; 14 x 14 x 40&quot; &middot; .LAMP</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Foam <span class="pill">Uline 1 &middot; ours 10</span></h3>
+    <p class="note">We stock foam sheets and microfoam; Uline's entry is a foam dispenser box.</p>
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Foam Dispenser Boxes</span>
+         <span class="meta">Packing Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip warn">Adjacent</span><span class="count">10 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">Packing Peanuts</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH759-14CF; NH759-14CF-BIO</span>
+      </li>
+      <li>
+        <span class="pn">Microfoam 1/4&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NHMF250-225/24P; NHMF250-250/24P; NHMF250-250/48</span>
+      </li>
+      <li>
+        <span class="pn">Microfoam 1/8&quot;</span>
+        <span class="meta">New Haven Moving Equipment &middot; NHMF125-450/12P; NHMF125-450/24P; NHMF125-550/24; NHMF125-550/48</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Kraft Paper <span class="pill">Uline 1 &middot; ours 3</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Kraft Paper Dispenser Box</span>
+         <span class="meta">Packing Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">3 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">SLIP SHEET 39-1/2&quot; X 47-1/2&quot; NON-TEST</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH730-3947</span>
+      </li>
+      <li>
+        <span class="pn">Kraft Paper 48&quot; Wide Roll</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH744-48X250; NH744-48X825; NH744-48X1275#40</span>
+      </li>
+      <li>
+        <span class="pn">Kraft/Cellulose Wadding</span>
+        <span class="meta">New Haven Moving Equipment &middot; NH743-48X250</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section><section class="typeblock">
+    <h3>Knife <span class="pill">Uline 1 &middot; ours 1</span></h3>
+    
+    <table class="cmp"><thead><tr><th>Uline</th><th>Match</th><th>Our equivalent</th></tr></thead><tbody><tr>
+      <td><span class="pn">Uline Comfort Grip Knives</span>
+         <span class="meta">Packing Supplies</span>
+         <span class="tag">category</span></td>
+      <td><span class="chip ok">Same product</span><span class="count">1 of ours in this type</span></td>
+      <td><ul class="eq">
+      <li>
+        <span class="pn">PAK-N-MOVE UTILITY KNIFE</span>
+        <span class="meta">New Haven Moving Equipment &middot; PNM-KNIFE</span>
+      </li></ul></td>
+    </tr></tbody></table>
+  </section>
+
+  <h2 id="sec2">2. We carry it, Uline doesn't <span class="n">— 68 of our products</span></h2>
+  <p class="lede">Our products whose type never appears anywhere in Uline's 15 moving-box categories. This is the bulk of our catalogue — it is weighted to moving equipment and cargo control rather than consumer cartons.</p>
+  
+  <section class="typeblock">
+    <h3>Mattress Bag <span class="pill">21</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">MATTRESS BAG TWIN 5 MIL 35/RL NON VENTED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">MATTRESS BAG TWIN 5 MIL 35/RL NON VENTED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">MATTRESS BAG TWIN 5 MIL 35/RL NON VENTED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">MATTRESS BAG TWIN 5 MIL 35/RL NON VENTED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">MATTRESS BAG TWIN 5 MIL 35/RL NON VENTED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Mattress Bag Full 5.0 ML 25 Bags Per Roll Non Vented</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Mattress Bag Full 5.0 ML 25 Bags Per Roll Non Vented</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Mattress Bag Full 5.0 ML 25 Bags Per Roll Non Vented</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Mattress Bag Full 5.0 ML 25 Bags Per Roll Non Vented</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Mattress Bag Full 5.0 ML 25 Bags Per Roll Non Vented</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Mattress &amp; Furniture Bags</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Pak-N-Move Mattress Bags</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Pak-N-Move Kits</td>
+      <td class="meta">76 x 14 x 103&quot;</td>
+    </tr><tr>
+      <td class="pn">KING MATTRESS BAG - PACEASE</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Boxes &gt; Mattress</td>
+      <td class="meta">77 x 15 x 100&quot;</td>
+    </tr><tr>
+      <td class="pn">WHITE HEAVY DUTY KING MATTRESS BAG</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Boxes &gt; Mattress</td>
+      <td class="meta">76 x 15 x 102&quot;</td>
+    </tr><tr>
+      <td class="pn">QUEEN MATTRESS BAG - PACEASE</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Boxes &gt; Mattress</td>
+      <td class="meta">61 x 15 x 100&quot;</td>
+    </tr><tr>
+      <td class="pn">TWIN MATTRESS BAG - PACEASE</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Boxes &gt; Mattress</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">FULL MATTRESS BAG/PAC EASE</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Boxes &gt; Mattress</td>
+      <td class="meta">54 x 10 x 86&quot;</td>
+    </tr><tr>
+      <td class="pn">CLEAR POLYETHYLENE MATTRESS COVER KING / BLUE TINT</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">74.5 x 12 x 94.5&quot;</td>
+    </tr><tr>
+      <td class="pn">CLEAR POLYETHYLENE MATTRESS COVER KING - BLUE TINT</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">76 x 15 x 102&quot;</td>
+    </tr><tr>
+      <td class="pn">CLEAR POLYETHYLENE MATTRESS COVER - QUEEN - GREEN TINT</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">60 x 10 x 90&quot;</td>
+    </tr><tr>
+      <td class="pn">CLEAR POLYETHYLENE MATTRESS COVER TWIN</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">39 x 10 x 87&quot;</td>
+    </tr><tr>
+      <td class="pn">CLEAR POLYETHYLENE MATTRESS COVER- QUEEN / GREEN TINT</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">61 x 15 x 104&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Pad <span class="pill">17</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Camouflage Grey Furniture Pad 72x80</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Pads</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">10oz BURLAP MOLESKIN PAD - 54&quot; x 72&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Pads</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Dreadnaught Professional Grade SpaceSaver 3-Ply Skin Pad 72&quot; x 80&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Listing of Products (separated by categories) - Informational Text Blocks (separated by same categories as product listings)</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">10oz. Burlap Moleskin Pad-  72&quot; x 80&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Pads</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Premium Furniture Pad 72&quot; x 80&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Listing of Products (separated by categories) - Informational Text Blocks (separated by same categories as product listings)</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Heavy Duty Storage &amp; Multi-Purpose Pad 72&quot; x 80&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Pads</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Storage &amp; Multi Purpose Pad 72&quot; x 80&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Pads</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Premium Heavy Duty Furniture Pad 72&quot; x 80&quot;</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Pads</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">BLUE/BLUE MEDIUM WEIGHT FURNITURE PAD</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">BLUE/BLUE PREMIUM FURNITURE PAD</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">72&quot; X 80&quot; DELUXE PALLET PADS</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">DELUXE HEAVY DUTY SPACE SAVER</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">DOOR JAM PROTECTOR PAD 62&quot;</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">ECONOMY BLUE / BLUE FURNITURE PAD</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">72&quot;X80&quot; Pallet Pads / LT WT.</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">FURNITURE PAD - BLUE / BLUE MEDIUM WEIGHT</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Furniture Pads &amp; Blankets</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">INTERNATIONAL PAD - SECONDS</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Cover <span class="pill">10</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Door Cover Protector</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">BANISTER COVER-72Lx12W w/VELCRO CLOSURE</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">TABLE TOP COVER PADDED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta">74 x 65 x 5&quot;</td>
+    </tr><tr>
+      <td class="pn">TABLE TOP COVER PADDED</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta">74 x 65 x 5&quot;</td>
+    </tr><tr>
+      <td class="pn">Adjustable Padded Appliance Cover</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Padded Table Top Cover</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta">74 x 65 x 5&quot;</td>
+    </tr><tr>
+      <td class="pn">Appliance Cover Padded Form Fit</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Covers</td>
+      <td class="meta">27 x 28 x 44&quot;</td>
+    </tr><tr>
+      <td class="pn">CHAIR COVERS 2 ea. BAGS / PACK</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">72 x 46 x 1.5&quot;</td>
+    </tr><tr>
+      <td class="pn">SOFA COVER - PACEASE</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta">45 x 153 x 1.5&quot;</td>
+    </tr><tr>
+      <td class="pn">160&quot; x 61&quot; x.002MIL / PALLET &amp; RACK COVER</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Floor Protection <span class="pill">8</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Neoprene Floor Runner Red- by the FT</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Neoprene Floor Runners</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Neoprene Floor Runner Blue- by the FT</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Neoprene Floor Runners</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Neoprene Floor Runner - Blue 15' &amp; 20'</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Neoprene Floor Runners</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Neoprene Floor Runner - Red 15' &amp; 20'</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Neoprene Floor Runners</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">HIGH CLARITY POLY SHEET / 10' x100'</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Bags and Covers</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">180' BLUE NEOPRENE RUNNER</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Equipment &gt; Carpet &amp; Floor Protector</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">20'FT / RED NEOPRENE FLOOR RUNNER</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Equipment &gt; Carpet &amp; Floor Protector</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">20'FT BLUE NEOPRENE FLOOR RUNNER</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Equipment &gt; Carpet &amp; Floor Protector</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Corrugated Sheet <span class="pill">4</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Corrugated Paper 250' Roll</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Corrugated / Kraft Paper &amp; Wadding</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">48X96 CORRUGATED SHEETS 200# TEST</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Cushioning Material</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">CORRUGATED PAPER - 48&quot; X 250'</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Cushioning Material</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">48X96 CORRUGATED SHEET 275#</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Packing Material &gt; Cushioning Material</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Bin <span class="pill">2</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Commercial Bin - Double Wall</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Speed pack/commercial bins</td>
+      <td class="meta">48 x 24 x 28&quot;</td>
+    </tr><tr>
+      <td class="pn">COMMERCIAL BIN 48&quot;X24&quot;X28&quot;</td>
+      <td class="meta">CDS</td>
+      <td class="meta">Boxes &gt; All Boxes</td>
+      <td class="meta">48 x 24 x 28&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Dispenser <span class="pill">2</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Steel Strapping Dispenser</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Warehouse Supplies</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Dispenser</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Stretch Wrap and Dispensers</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Clock Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">GRANDFATHER CLOCK CARTON</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Specialty Cartons</td>
+      <td class="meta">90 x 25 x 16&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Wine Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Wine Boxes</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Specialty Cartons</td>
+      <td class="meta">13.88 x 9.75 x 14.75&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Crate <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Corrugated Crate-Lift Van</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Moving Containers</td>
+      <td class="meta">88.5 x 47.38 x 89&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Sofa Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Supplier</th><th>Category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Sofa Box</td>
+      <td class="meta">New Haven</td>
+      <td class="meta">Specialty Cartons</td>
+      <td class="meta">100 x 40 x 40&quot;</td>
+    </tr></tbody></table>
+  </section>
+
+  <h2 id="sec3">3. Uline carries it, we don't <span class="n">— 87 Uline entries</span></h2>
+  <p class="lede">Uline product lines with no equivalent product type in our catalogue at all.</p>
+  
+  <section class="typeblock">
+    <h3>Tall Box <span class="pill">30</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">4 x 4 x 8&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 8&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 9&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 9&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 10&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 10&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 12&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 12&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 16&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 16&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 18&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 18&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 20&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 20&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 24&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 28&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 28&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 30&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 30&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 32&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 32&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 36&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 36&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 38&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 38&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 40&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 40&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 46&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 46&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 48&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 48&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 50&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 50&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 60&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 60&quot;</td>
+    </tr><tr>
+      <td class="pn">4 x 4 x 74&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">4 x 4 x 74&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 10&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 10&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 12&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 12&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 24&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 36&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 36&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 40&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 40&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 48&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 48&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 50&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 50&quot;</td>
+    </tr><tr>
+      <td class="pn">5 x 5 x 60&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">5 x 5 x 60&quot;</td>
+    </tr><tr>
+      <td class="pn">6 x 6 x 12&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Tall Boxes</td>
+      <td class="meta">6 x 6 x 12&quot;</td>
+    </tr><tr>
+      <td class="pn">12 x 12 x 40&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Lamp Boxes</td>
+      <td class="meta">12 x 12 x 40&quot;</td>
+    </tr><tr>
+      <td class="pn">12 x 12 x 48&quot; Tall Corrugated Boxes</td>
+      <td class="meta">Lamp Boxes</td>
+      <td class="meta">12 x 12 x 48&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Side Loader Box <span class="pill">23</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">24 x 5 x 18&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">24 x 5 x 18&quot;</td>
+    </tr><tr>
+      <td class="pn">28 x 5 1/2 x 38&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">28 x 5.5 x 38&quot;</td>
+    </tr><tr>
+      <td class="pn">30 x 5 x 24&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">30 x 5 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">36 x 5 x 30&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">36 x 5 x 30&quot;</td>
+    </tr><tr>
+      <td class="pn">36 x 6 x 42&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">36 x 6 x 42&quot;</td>
+    </tr><tr>
+      <td class="pn">36 x 5 1/2 x 48&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">36 x 5.5 x 48&quot;</td>
+    </tr><tr>
+      <td class="pn">8 x 4 x 46&quot; FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">8 x 4 x 46&quot;</td>
+    </tr><tr>
+      <td class="pn">8 x 4 x 52&quot; FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">8 x 4 x 52&quot;</td>
+    </tr><tr>
+      <td class="pn">14 x 4 x 42&quot; FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">14 x 4 x 42&quot;</td>
+    </tr><tr>
+      <td class="pn">14 x 4 x 52&quot; FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">14 x 4 x 52&quot;</td>
+    </tr><tr>
+      <td class="pn">14 x 4 x 68&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">14 x 4 x 68&quot;</td>
+    </tr><tr>
+      <td class="pn">20 x 8 x 60&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">20 x 8 x 60&quot;</td>
+    </tr><tr>
+      <td class="pn">24 x 5 x 24&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">24 x 5 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">24 x 6 x 18&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">24 x 6 x 18&quot;</td>
+    </tr><tr>
+      <td class="pn">26 x 6 x 20&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">26 x 6 x 20&quot;</td>
+    </tr><tr>
+      <td class="pn">28 x 4 x 24&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">28 x 4 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">30 x 6 x 24&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">30 x 6 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">30 x 6 x 30&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">30 x 6 x 30&quot;</td>
+    </tr><tr>
+      <td class="pn">30 x 6 x 40&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">30 x 6 x 40&quot;</td>
+    </tr><tr>
+      <td class="pn">36 x 5 x 24&quot; 200 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">36 x 5 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">36 x 6 x 36&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">36 x 6 x 36&quot;</td>
+    </tr><tr>
+      <td class="pn">36 x 8 x 30&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">36 x 8 x 30&quot;</td>
+    </tr><tr>
+      <td class="pn">40 x 5 x 45&quot; 275 lb FOL Side Loading Corrugated Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">40 x 5 x 45&quot;</td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Telescopic Box <span class="pill">4</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">30 x 6 x 24 - 44&quot; 2-piece Telescopic Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">30 x 6 x 24&quot;</td>
+    </tr><tr>
+      <td class="pn">37 x 4 x 30 - 60&quot; 2-piece Telescopic Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">37 x 4 x 30&quot;</td>
+    </tr><tr>
+      <td class="pn">48 x 6 x 38 - 72&quot; 275 lb 2-piece Telescopic Boxes</td>
+      <td class="meta">Artwork/Mirror Boxes</td>
+      <td class="meta">48 x 6 x 38&quot;</td>
+    </tr><tr>
+      <td class="pn">Telescopic Bulk Cargo</td>
+      <td class="meta">Bulk Cargo</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Guitar Box <span class="pill">4</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">18 x 6 x 45&quot; 275 lb FOL Side Loading Corrugated Guitar Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">18 x 6 x 45&quot;</td>
+    </tr><tr>
+      <td class="pn">18 x 7 x 52&quot; 275 lb FOL Side Loading Corrugated Guitar Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">18 x 7 x 52&quot;</td>
+    </tr><tr>
+      <td class="pn">20 x 8 x 50&quot; 275 lb FOL Side Loading Corrugated Guitar Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">20 x 8 x 50&quot;</td>
+    </tr><tr>
+      <td class="pn">Guitar Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Moving Kit <span class="pill">4</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Moving Kits</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Apartment Moving Kit - 1 to 2 bedrooms</td>
+      <td class="meta">Moving Kits</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Small Home Moving Kit - 2 to 4 bedrooms</td>
+      <td class="meta">Moving Kits</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Deluxe Home Moving Kit - 5 to 8 bedrooms</td>
+      <td class="meta">Moving Kits</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Board Box <span class="pill">3</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Ski Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Snowboard Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Surfboard Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Racquet Box <span class="pill">2</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">13 x 3 x 30&quot; FOL Side Loading Corrugated Tennis Racquet Boxes</td>
+      <td class="meta">Large Side Loaders</td>
+      <td class="meta">13 x 3 x 30&quot;</td>
+    </tr><tr>
+      <td class="pn">Tennis Racquet Box</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Suitcase Box <span class="pill">2</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Suit Shippers</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Suitcase Box</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Unclassified <span class="pill">2</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Uline Air</td>
+      <td class="meta">Packing Supplies</td>
+      <td class="meta"></td>
+    </tr><tr>
+      <td class="pn">Standard</td>
+      <td class="meta">Storage File Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Hand Truck Cover <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Hand Truck Cover</td>
+      <td class="meta">Moving Blankets, Pads and Supplies</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Gondola Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Gondola Box</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Handhole Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Boxes with Hand Holes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Corrugated Tote <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Corrugated Totes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Electronics Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Electronics Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Golf Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Golf Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Long Gun Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Rifle Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Skateboard Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Skateboard Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Keyboard Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Keyboard Boxes</td>
+      <td class="meta">Moving Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Storage Drawer <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Storage Drawers</td>
+      <td class="meta">Storage File Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Plastic Storage Box <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Plastic Storage Boxes</td>
+      <td class="meta">Storage File Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>Milk Crate <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">Milk Crates</td>
+      <td class="meta">Storage File Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+  <section class="typeblock">
+    <h3>File Folder <span class="pill">1</span></h3>
+    <table class="simple"><thead><tr><th>Product</th><th>Uline category</th><th>Size</th></tr></thead>
+    <tbody><tr>
+      <td class="pn">File Folders</td>
+      <td class="meta">Storage File Boxes</td>
+      <td class="meta"></td>
+    </tr></tbody></table>
+  </section>
+
+  <footer>
+    <strong>How this was built.</strong> Uline's 205 scraped rows collapse to 195 unique entries
+    (108 product SKUs and 87 category links). Each side is classified into a product type,
+    then compared on type, with physical dimensions used to confirm a match. 51 distinct Uline types vs 41 of ours.
+    <br>Regenerate with <code>node scripts/cross-reference.mjs &amp;&amp; node scripts/build-comparison-report.mjs</code>.
+  </footer>
+
+</div>
+</body>
+</html>
