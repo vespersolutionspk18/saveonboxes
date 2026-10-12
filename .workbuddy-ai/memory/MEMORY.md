@@ -3,12 +3,19 @@
 ## Repo and pushing
 
 - Remote: `https://github.com/vespersolutionspk18/saveonboxes.git` (branch `main`).
-- Two GitHub accounts are logged into `gh` on this machine:
-  - `54thventuresinfo-byte` — currently the **active** account, but read-only on this repo (403 on push).
+- Three GitHub accounts are logged into `gh` on this machine:
+  - `EMDC-24` — read-only on this repo (403 on push).
+  - `54thventuresinfo-byte` — read-only on this repo (403 on push).
   - `vespersolutionspk18` — the repo owner, has admin + push.
-- Git uses `gh auth git-credential`, which follows the *active* gh account, so a plain
-  `git push` fails with `403 ... denied to 54thventuresinfo-byte`.
-- Working push command (no global state change):
+- Git uses `gh auth git-credential`, which follows the *active* gh account. As of
+  2026-10-12 the active account is `vespersolutionspk18`, so a plain `git push` works.
+- If a push 403s with `denied to <account>`, that account got switched back to active.
+  Fix by switching rather than by token juggling:
+  ```
+  gh auth switch --user vespersolutionspk18
+  git push origin main
+  ```
+- Per-command alternative (no global state change):
   ```
   GH_TOKEN=$(gh auth token --user vespersolutionspk18) git push origin main
   ```
@@ -19,6 +26,8 @@
 
 `.gitignore` covers node_modules, .next, out, .vercel, *.log, .data, .env.local, .env.*.local.
 The `.workbuddy-ai/` agent-memory folder is NOT ignored — deliberately kept out of commits.
+Note: the user has since committed it themselves (commit `9b277a5` "t3"), so it may appear
+in history even though agent runs do not stage it.
 
 ## Customer inventory UI (as of 2026-10-12)
 
