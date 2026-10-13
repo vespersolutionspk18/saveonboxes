@@ -1,8 +1,10 @@
 "use client";
 
+
 import Link from "next/link";
 import { getHomeBoxSections, kits, movingCategories, supplies } from "./catalog";
 import { Icon, ProductSection } from "./components/Storefront";
+
 
 function BrandHero() {
   return <section className="brand-hero" aria-labelledby="hero-title">
