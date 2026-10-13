@@ -1,0 +1,55 @@
+/* Category listing page: breadcrumb, title, subcategory chips, then one grid of
+   product cards per Uline subcategory. Light theme only — all text is dark on
+   light. Kept in a module so the homepage `.category-card` tiles are untouched. */
+
+.page { width: var(--content-width); margin: 34px auto 72px; }
+
+.breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; color: var(--muted); font-size: 13px; }
+.breadcrumb a { color: var(--muted); }
+.breadcrumb a:hover { color: var(--orange); text-decoration: underline; }
+
+.title { margin: 0 0 8px; color: var(--navy); font-size: clamp(30px, 3.4vw, 46px); line-height: 1.06; letter-spacing: -.045em; text-transform: uppercase; }
+.count { margin: 0 0 26px; color: var(--muted); font-size: 14px; }
+
+/* Subcategory jump chips — plain anchors, no JavaScript, no active state. */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 34px; }
+.chip { display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px; border: 1px solid #cfd3d6; border-radius: 4px; background: var(--paper); color: var(--navy); font-size: 14px; font-weight: 600; transition: border-color .18s ease, color .18s ease; }
+.chip:hover { border-color: var(--orange); color: var(--action-orange); }
+.chipCount { color: var(--muted); font-size: 12px; font-weight: 500; }
+
+.section { scroll-margin-top: 96px; }
+.section + .section { margin-top: 44px; }
+.sectionTitle { display: flex; align-items: baseline; gap: 10px; margin: 0 0 18px; padding-bottom: 10px; border-bottom: 1px solid var(--quiet); color: var(--navy); font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+.sectionCount { color: var(--muted); font-size: 13px; font-weight: 500; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 26px 18px; }
+
+.card { display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid #cfd3d6; border-radius: 4px; background: var(--paper); color: var(--navy); transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.card:hover { transform: translateY(-3px); border-color: var(--navy); box-shadow: 0 10px 26px #17324b1a; }
+
+.cardImage { display: grid; aspect-ratio: 1.45; place-items: center; overflow: hidden; padding: 10px; background: #fff; }
+.cardImage img { display: block; max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.cardBody { display: flex; flex-direction: column; gap: 4px; padding: 12px; border-top: 1px solid var(--quiet); text-align: center; }
+.cardName { font-size: 14px; font-weight: 600; line-height: 1.35; }
+.cardSize { color: var(--muted); font-size: 12px; }
+.cardPrice { margin-top: 2px; color: var(--action-orange); font-size: 15px; font-weight: 700; }
+.cardPriceQuiet { margin-top: 2px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 820px) {
+  .page { margin: 26px auto 54px; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 22px 14px; }
+  .section + .section { margin-top: 36px; }
+}
+
+@media (max-width: 560px) {
+  .page { margin: 18px auto 44px; }
+  .breadcrumb { font-size: 12px; }
+  .count { margin-bottom: 18px; }
+  .chips { margin-bottom: 26px; }
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+  .section + .section { margin-top: 30px; }
+  .sectionTitle { font-size: 17px; }
+  .cardBody { padding: 9px; }
+  .cardName { font-size: 13px; }
+}

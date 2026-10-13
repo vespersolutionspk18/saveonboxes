@@ -45,6 +45,41 @@ in history even though agent runs do not stage it.
 its own cache and trips the sandbox guard. Fix: `rm -rf .next` first (this needs
 escalation approval), then build. A clean build takes ~25-40s.
 
+## Scraping Uline (network reality, 2026-10-13)
+
+- **Node's built-in `fetch` cannot reach `www.uline.com`** — it fails with
+  `getaddrinfo ENOTFOUND`. Node's DNS in this sandbox does not resolve it.
+  `WebFetch` fails the same way.
+- **`curl` works, but only through the local proxy** that is already exported as
+  `HTTPS_PROXY` (`http://127.0.0.1:58923`). Direct curl returns 000.
+- **The proxy is intermittent.** The same URL can return 200, then 502
+  `Bad Gateway` on CONNECT, then 200 again seconds later. Roughly half of
+  requests fail on any given attempt, so **everything must retry**.
+- `img.uline.com` is much more reliable than `www.uline.com`, and its image
+  server resolves any item number: `https://img.uline.com/is/image/uline/<SKU>`.
+  It returns **JPEG**, not WebP — re-encode with sharp.
+- Use `scripts/lib/uline-fetch.mjs` for everything. Do not call `fetch` directly.
+- Headless Chrome with `--proxy-server` produced empty output; the raw HTML is
+  enough anyway, because Uline's browse pages are server-side rendered.
+
+### Uline page anatomy
+
+- `Grp_*` — a group hub linking out to `BL_*` browse pages.
+- `BL_*` — a browse page; the product table is `<table class="subgroupChart">`
+  and each row links to `/Product/Detail/<SKU>/...`. A BL page is a *family*,
+  its SKUs are the *variants*.
+- `Product/Detail/S-*` — one SKU. Carries two data islands:
+  - a schema.org **JSON-LD** block in a `<script type="application/ld&#x2B;json">`
+    (note the `+` is HTML-escaped) with name, description, sku, image, colour,
+    the `size` triple, `width`/`height`, and `offers` with both the per-unit
+    price and the bundle price plus bundle quantity. **Parse the JSON before
+    decoding entities** — Uline escapes embedded quotes as `&quot;`, and that is
+    what keeps it valid.
+  - a `dataLayer.push({ 'event': 'Product_Details', ... })` block carrying
+    Uline's own taxonomy: `productClassDesc`, `productGroupDesc`,
+    `productSubgroupDesc`, `productItemDesc`, `productPrice`.
+- There is no `depth` field; the `size` triple is the reliable dimension source.
+
 ## Catalogue analysis tooling
 
 - `scripts/lib/taxonomy.mjs` is the single source of truth for product
@@ -59,5 +94,42 @@ escalation approval), then build. A clean build takes ~25-40s.
   - `cross-reference.mjs` → `product-cross-reference.json`
   - `build-comparison-report.mjs` → `product-comparison.html` + 3 CSVs
   - `category-coverage.mjs` → `category-coverage.json` + HTML + CSV
-- `/category/<slug>` subpages (15, Uline-derived) are built from
-  `src/app/category-data/*.json`; see `scripts/fetch-uline-category.mjs`.
+- `/category/<slug>` subpages (15) are now built from `src/app/catalog-tree.js`,
+  **not** from `src/app/category-data/*.json`. That folder is a stale separate
+  scrape (205 cards, 88 of which we do not stock) and is no longer imported by
+  anything — candidate for deletion, along with `public/categories/<slug>/`.
+  `scripts/fetch-uline-category.mjs` belongs to that older pipeline.
+
+## Storefront catalogue tree (2026-10-13)
+
+- `src/app/supplier-catalog.json` holds `{ uline: [ ...446 records ] }`. Each
+  record = one Uline SKU = one *variant*. `variants` is a human-readable string
+  (`15 × 12 × 10" · White · 25 per bundle`), not an array; sibling variants are
+  linked by `uline.family` (78 families, 53 with more than one variant).
+  They are rendered as separate product cards, not grouped into a size picker.
+- `src/app/supplier-products.js` maps each record onto the storefront's
+  vocabulary. Every product carries `slug` (`s-4576`), `ulineCategorySlug`
+  (the primary of the 15), `ulineTaxonomy`, `size`, `color`, `condition`,
+  `priceValidUntil`, `variantLabel`, `bundlePrice`, `bundleQty`, `partial`.
+- **`src/app/catalog-tree.js` is the single source of truth** for anything that
+  needs the category/subcategory structure or a product lookup. Do not
+  re-derive the tree elsewhere. Exports: `allProducts`, `categoryTree`,
+  `getCategoryTree`, `getProductBySlug`, `subcategoryFor`, `subcategoryName`,
+  `relatedProducts`, `imageFor`, `formatPrice`, `productSpecs`, `slugify`.
+- Category = the 15 on the homepage (`movingCategories` in `catalog.js`).
+  Subcategory = Uline's `subgroup`, trademark symbols stripped. 12 products have
+  no taxonomy; for those the family is parsed from the product name
+  (`"<family> - <variant>"`). 446 products → 15 categories → 74 subcategories.
+- Routes: `/category/[slug]` (server component, no client JS, subcategory jump
+  chips + one grid per subcategory) and `/product/[slug]` (446 SSG pages,
+  `ProductBuyPanel` is the only client component).
+- **Never call `formatPrice` / `productImage` / `productTitle` from
+  `Storefront.js` inside a server component** — that file is `"use client"`, so
+  those are client references. Use the equivalents in `catalog-tree.js`.
+- `additional_categories` in the catalogue is a duplicate of `uline.subgroup`
+  for all 446 records. Ignore it.
+- `npm run start` binds `0.0.0.0`; use
+  `npx next start --hostname 127.0.0.1 --port 3000` for a local preview.
+  A server started with `nohup … &` inside a Bash call dies when that call
+  returns — use the Bash tool's `run_in_background` instead.
+

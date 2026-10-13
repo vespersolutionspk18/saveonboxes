@@ -263,6 +263,7 @@ export default function Storefront({ children }) {
           {quickProduct.estimatedPrice && <p className="quick-product-detail">Estimated USD price. Confirm the final price when placing an order.</p>}
           {quickProduct.packQty && <p className="quick-product-detail">Pack of {quickProduct.packQty}</p>}
           <button className="checkout-button" onClick={() => { addToCart(quickProduct); setQuickProduct(null); }}>Add to cart</button>
+          {quickProduct.slug && <Link className="quick-full-details" href={`/product/${quickProduct.slug}`} onClick={() => setQuickProduct(null)}>Full details</Link>}
         </>}
       </div>
     </section></div>}
